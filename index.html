@@ -16,7 +16,7 @@ body {
     min-height: 100vh;
     font-family: Tahoma, Arial, sans-serif;
     background: #07140f;
-    color: white;
+    color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,6 +38,53 @@ h1 {
     color: #b9c8c1;
     margin-bottom: 20px;
     font-size: 14px;
+}
+
+/* ================= CODE SCREEN ================= */
+
+#codeScreen {
+    background: #10271f;
+    border: 1px solid #29493d;
+    border-radius: 20px;
+    padding: 28px 20px;
+    margin: 25px auto;
+    max-width: 420px;
+}
+
+#codeScreen h2 {
+    margin-top: 0;
+    font-size: 21px;
+}
+
+#codeInput {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #416456;
+    background: #07140f;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    outline: none;
+    margin: 15px 0 10px;
+    text-transform: uppercase;
+}
+
+#codeInput:focus {
+    border-color: white;
+}
+
+#errorMessage {
+    display: none;
+    color: #ff8d8d;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+/* ================= WHEEL ================= */
+
+#wheelScreen {
+    display: none;
 }
 
 .wheel-area {
@@ -63,7 +110,7 @@ canvas {
     height: 0;
     border-left: 18px solid transparent;
     border-right: 18px solid transparent;
-    border-top: 42px solid #ffffff;
+    border-top: 42px solid #fff;
     z-index: 5;
     filter: drop-shadow(0 3px 3px rgba(0,0,0,.5));
 }
@@ -109,6 +156,8 @@ button:disabled {
     transform: none;
 }
 
+/* ================= RESULT ================= */
+
 .result {
     display: none;
     margin-top: 25px;
@@ -148,7 +197,6 @@ button:disabled {
 .final-price {
     font-size: 18px;
     font-weight: bold;
-    color: #fff;
 }
 
 .note {
@@ -169,6 +217,7 @@ button:disabled {
 }
 
 @media (max-width: 400px) {
+
     h1 {
         font-size: 24px;
     }
@@ -190,125 +239,282 @@ button:disabled {
 <div class="container">
 
     <h1>🎡 گردونه شانس علی فرد</h1>
+
     <div class="subtitle">
-        شانس خودتو امتحان کن و جایزه‌ات رو ببر!
+        شانست رو امتحان کن و جایزه‌ات رو ببر!
     </div>
 
-    <div class="wheel-area">
-        <div class="pointer"></div>
-        <canvas id="wheel" width="900" height="900"></canvas>
-        <div class="center-dot">ALi<br>Fard</div>
-    </div>
 
-    <button id="spinBtn">چرخوندن گردونه 🎡</button>
+    <!-- ================= CODE SCREEN ================= -->
 
-    <div class="result" id="result">
-        <div class="result-title">🎉 جایزه شما</div>
+    <div id="codeScreen">
 
-        <div class="prize-name" id="prizeName"></div>
+        <h2>🔐 کد شانس امروزت رو وارد کن</h2>
 
-        <div class="details" id="details"></div>
-
-        <div class="note">
-            برای استفاده از جایزه، هنگام مراجعه این صفحه را نشان دهید.
+        <div>
+            کدی که از علی فرد دریافت کردی وارد کن
         </div>
+
+        <input
+            id="codeInput"
+            type="text"
+            placeholder="کد شانس"
+            autocomplete="off"
+        >
+
+        <button id="enterBtn">
+            ورود به گردونه 🎁
+        </button>
+
+        <div id="errorMessage">
+            ❌ کد وارد شده صحیح نیست.
+        </div>
+
+    </div>
+
+
+    <!-- ================= WHEEL SCREEN ================= -->
+
+    <div id="wheelScreen">
+
+        <div class="wheel-area">
+
+            <div class="pointer"></div>
+
+            <canvas
+                id="wheel"
+                width="900"
+                height="900">
+            </canvas>
+
+            <div class="center-dot">
+                ALi<br>Fard
+            </div>
+
+        </div>
+
+        <button id="spinBtn">
+            چرخوندن گردونه 🎡
+        </button>
+
+
+        <!-- RESULT -->
+
+        <div class="result" id="result">
+
+            <div class="result-title">
+                🎉 جایزه شما
+            </div>
+
+            <div
+                class="prize-name"
+                id="prizeName">
+            </div>
+
+            <div
+                class="details"
+                id="details">
+            </div>
+
+            <div class="note">
+                برای استفاده از جایزه، هنگام مراجعه این صفحه را نشان دهید.
+            </div>
+
+        </div>
+
     </div>
 
 </div>
 
+
 <script>
 
-const canvas = document.getElementById("wheel");
-const ctx = canvas.getContext("2d");
+/* =====================================================
+   SETTINGS
+===================================================== */
 
-const spinBtn = document.getElementById("spinBtn");
-const resultBox = document.getElementById("result");
-const prizeName = document.getElementById("prizeName");
-const details = document.getElementById("details");
+// 🔐 کد ورود به گردونه
+const ACCESS_CODE = "ALIFARD";
+
+
+/* =====================================================
+   PRIZES
+===================================================== */
 
 const prizes = [
 
     {
         name: "کد تخفیف ۶۰۰ هزار تومنی پاکسازی",
+
         detail: `
-            پاکسازی: <span class="old-price">۱,۲۰۰,۰۰۰ تومان</span><br>
-            <b>۶۰۰,۰۰۰ تومان تخفیف</b><br>
-            قیمت با تخفیف: <span class="final-price">۶۰۰,۰۰۰ تومان</span>
+            پاکسازی:
+            <span class="old-price">
+                ۱,۲۰۰,۰۰۰ تومان
+            </span>
+            <br>
+
+            <b>
+                ۶۰۰,۰۰۰ تومان تخفیف
+            </b>
+
+            <br>
+
+            قیمت با تخفیف:
+            <span class="final-price">
+                ۶۰۰,۰۰۰ تومان
+            </span>
         `
     },
 
     {
         name: "کد تخفیف ۵۰۰ هزار تومنی ماساژ",
+
         detail: `
-            ماساژ نیم‌ساعته: <span class="old-price">۱,۰۰۰,۰۰۰ تومان</span><br>
-            <b>۵۰۰,۰۰۰ تومان تخفیف</b><br>
-            قیمت با تخفیف: <span class="final-price">۵۰۰,۰۰۰ تومان</span>
+            ماساژ نیم‌ساعته:
+            <span class="old-price">
+                ۱,۰۰۰,۰۰۰ تومان
+            </span>
+            <br>
+
+            <b>
+                ۵۰۰,۰۰۰ تومان تخفیف
+            </b>
+
+            <br>
+
+            قیمت با تخفیف:
+            <span class="final-price">
+                ۵۰۰,۰۰۰ تومان
+            </span>
         `
     },
 
     {
         name: "کد تخفیف ۳۰۰ هزار تومنی خرید تیشرت",
+
         detail: `
-            <b>۳۰۰,۰۰۰ تومان تخفیف</b><br>
+            <b>
+                ۳۰۰,۰۰۰ تومان تخفیف
+            </b>
+
+            <br>
+
             ویژه خرید تیشرت
         `
     },
 
     {
         name: "ماسک مو رایگان",
+
         detail: `
-            ارزش واقعی: <span class="old-price">۱۰۰,۰۰۰ تومان</span><br>
-            قیمت برای شما: <span class="final-price">رایگان 🎁</span>
+            ارزش واقعی:
+            <span class="old-price">
+                ۱۰۰,۰۰۰ تومان
+            </span>
+
+            <br>
+
+            قیمت برای شما:
+            <span class="final-price">
+                رایگان 🎁
+            </span>
         `
     },
 
     {
         name: "شمع گوش رایگان",
+
         detail: `
-            ارزش واقعی: <span class="old-price">۱۰۰,۰۰۰ تومان</span><br>
-            قیمت برای شما: <span class="final-price">رایگان 🎁</span>
+            ارزش واقعی:
+            <span class="old-price">
+                ۱۰۰,۰۰۰ تومان
+            </span>
+
+            <br>
+
+            قیمت برای شما:
+            <span class="final-price">
+                رایگان 🎁
+            </span>
         `
     },
 
     {
         name: "قهوه رایگان",
+
         detail: `
-            ارزش واقعی: <span class="old-price">۱۰۰,۰۰۰ تومان</span><br>
-            قیمت برای شما: <span class="final-price">رایگان ☕</span>
+            ارزش واقعی:
+            <span class="old-price">
+                ۱۰۰,۰۰۰ تومان
+            </span>
+
+            <br>
+
+            قیمت برای شما:
+            <span class="final-price">
+                رایگان ☕
+            </span>
         `
     },
 
     {
         name: "با خرید ۲ تیشرت، ۱ تیشرت رایگان",
+
         detail: `
-            با خرید ۲ تیشرت<br>
-            <span class="final-price">۱ تیشرت رایگان 🎁</span>
+            با خرید ۲ تیشرت
+
+            <br>
+
+            <span class="final-price">
+                ۱ تیشرت رایگان 🎁
+            </span>
         `
     },
 
     {
         name: "شانس دوباره 🍀",
+
         detail: `
-            <span class="final-price">یک بار دیگه گردونه رو بچرخون!</span>
+            <span class="final-price">
+                یک بار دیگه گردونه رو بچرخون!
+            </span>
         `
     },
 
     {
         name: "قهوه رایگان",
+
         detail: `
-            ارزش واقعی: <span class="old-price">۱۰۰,۰۰۰ تومان</span><br>
-            قیمت برای شما: <span class="final-price">رایگان ☕</span>
+            ارزش واقعی:
+            <span class="old-price">
+                ۱۰۰,۰۰۰ تومان
+            </span>
+
+            <br>
+
+            قیمت برای شما:
+            <span class="final-price">
+                رایگان ☕
+            </span>
         `
     },
 
     {
         name: "شانس دوباره 🍀",
+
         detail: `
-            <span class="final-price">یک بار دیگه گردونه رو بچرخون!</span>
+            <span class="final-price">
+                یک بار دیگه گردونه رو بچرخون!
+            </span>
         `
     }
 
 ];
+
+
+/* =====================================================
+   WHEEL
+===================================================== */
 
 const colors = [
     "#174936",
@@ -323,199 +529,519 @@ const colors = [
     "#397c61"
 ];
 
+const canvas =
+    document.getElementById("wheel");
+
+const ctx =
+    canvas.getContext("2d");
+
+const spinBtn =
+    document.getElementById("spinBtn");
+
+const resultBox =
+    document.getElementById("result");
+
+const prizeName =
+    document.getElementById("prizeName");
+
+const details =
+    document.getElementById("details");
+
+const slice =
+    (Math.PI * 2) / prizes.length;
+
 let rotation = 0;
 let spinning = false;
 
-const slice = (Math.PI * 2) / prizes.length;
 
-
-/* =========================
-   DRAW WHEEL
-========================= */
+/* =====================================================
+   DRAW
+===================================================== */
 
 function drawWheel() {
 
     const size = canvas.width;
-    const center = size / 2;
-    const radius = size / 2 - 12;
 
-    ctx.clearRect(0, 0, size, size);
+    const center =
+        size / 2;
 
-    for (let i = 0; i < prizes.length; i++) {
+    const radius =
+        size / 2 - 12;
 
-        const start = -Math.PI / 2 + i * slice;
-        const end = start + slice;
+    ctx.clearRect(
+        0,
+        0,
+        size,
+        size
+    );
+
+
+    for (
+        let i = 0;
+        i < prizes.length;
+        i++
+    ) {
+
+        const start =
+            -Math.PI / 2 +
+            i * slice;
+
+        const end =
+            start + slice;
+
 
         ctx.beginPath();
-        ctx.moveTo(center, center);
-        ctx.arc(center, center, radius, start, end);
+
+        ctx.moveTo(
+            center,
+            center
+        );
+
+        ctx.arc(
+            center,
+            center,
+            radius,
+            start,
+            end
+        );
+
         ctx.closePath();
 
-        ctx.fillStyle = colors[i];
+        ctx.fillStyle =
+            colors[i];
+
         ctx.fill();
 
-        ctx.strokeStyle = "#ffffff";
+        ctx.strokeStyle =
+            "#ffffff";
+
         ctx.lineWidth = 5;
+
         ctx.stroke();
 
-        // متن داخل گردونه
+
+        /* TEXT */
+
         ctx.save();
 
-        ctx.translate(center, center);
-        ctx.rotate(start + slice / 2);
+        ctx.translate(
+            center,
+            center
+        );
 
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 25px Tahoma";
+        ctx.rotate(
+            start + slice / 2
+        );
 
-        let text = prizes[i].name;
+        ctx.textAlign =
+            "center";
 
-        // کوتاه کردن متن برای نمایش روی گردونه
-        if (text.includes("کد تخفیف ۶۰۰")) {
-            text = "۶۰۰ هزار تومان\nپاکسازی";
+        ctx.textBaseline =
+            "middle";
+
+        ctx.fillStyle =
+            "#ffffff";
+
+        ctx.font =
+            "bold 25px Tahoma";
+
+
+        let text = "";
+
+
+        if (
+            prizes[i].name.includes(
+                "۶۰۰"
+            )
+        ) {
+
+            text =
+                "۶۰۰ هزار تومان\nپاکسازی";
+
         }
-        else if (text.includes("کد تخفیف ۵۰۰")) {
-            text = "۵۰۰ هزار تومان\nماساژ";
+
+        else if (
+            prizes[i].name.includes(
+                "۵۰۰"
+            )
+        ) {
+
+            text =
+                "۵۰۰ هزار تومان\nماساژ";
+
         }
-        else if (text.includes("کد تخفیف ۳۰۰")) {
-            text = "۳۰۰ هزار تومان\nتیشرت";
+
+        else if (
+            prizes[i].name.includes(
+                "۳۰۰"
+            )
+        ) {
+
+            text =
+                "۳۰۰ هزار تومان\nتیشرت";
+
         }
-        else if (text.includes("ماسک مو")) {
-            text = "ماسک مو\nرایگان";
+
+        else if (
+            prizes[i].name.includes(
+                "ماسک مو"
+            )
+        ) {
+
+            text =
+                "ماسک مو\nرایگان";
+
         }
-        else if (text.includes("شمع گوش")) {
-            text = "شمع گوش\nرایگان";
+
+        else if (
+            prizes[i].name.includes(
+                "شمع گوش"
+            )
+        ) {
+
+            text =
+                "شمع گوش\nرایگان";
+
         }
-        else if (text.includes("قهوه")) {
-            text = "قهوه\nرایگان";
+
+        else if (
+            prizes[i].name.includes(
+                "قهوه"
+            )
+        ) {
+
+            text =
+                "قهوه\nرایگان";
+
         }
-        else if (text.includes("۲ تیشرت")) {
-            text = "۲ تیشرت بخر\n۱ تیشرت رایگان";
+
+        else if (
+            prizes[i].name.includes(
+                "۲ تیشرت"
+            )
+        ) {
+
+            text =
+                "۲ تیشرت بخر\n۱ تیشرت رایگان";
+
         }
+
         else {
-            text = "شانس\nدوباره 🍀";
+
+            text =
+                "شانس\nدوباره 🍀";
         }
 
-        const lines = text.split("\n");
 
-        // متن را کمی به سمت بیرون می‌بریم
-        const textRadius = radius * 0.67;
+        const lines =
+            text.split("\n");
 
-        for (let j = 0; j < lines.length; j++) {
+        const textRadius =
+            radius * 0.67;
+
+
+        for (
+            let j = 0;
+            j < lines.length;
+            j++
+        ) {
+
             ctx.fillText(
+
                 lines[j],
+
                 textRadius,
-                (j - (lines.length - 1) / 2) * 32
+
+                (
+                    j -
+                    (lines.length - 1) / 2
+                ) * 32
+
             );
         }
 
         ctx.restore();
     }
 
-    // حلقه بیرونی
+
+    /* OUTER CIRCLE */
+
     ctx.beginPath();
-    ctx.arc(center, center, radius, 0, Math.PI * 2);
-    ctx.strokeStyle = "#ffffff";
+
+    ctx.arc(
+        center,
+        center,
+        radius,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.strokeStyle =
+        "#ffffff";
+
     ctx.lineWidth = 10;
+
     ctx.stroke();
 }
+
 
 drawWheel();
 
 
-/* =========================
+/* =====================================================
+   CHECK ACCESS CODE
+===================================================== */
+
+const codeInput =
+    document.getElementById(
+        "codeInput"
+    );
+
+const enterBtn =
+    document.getElementById(
+        "enterBtn"
+    );
+
+const errorMessage =
+    document.getElementById(
+        "errorMessage"
+    );
+
+const codeScreen =
+    document.getElementById(
+        "codeScreen"
+    );
+
+const wheelScreen =
+    document.getElementById(
+        "wheelScreen"
+    );
+
+
+function checkCode() {
+
+    const enteredCode =
+        codeInput.value
+        .trim()
+        .toUpperCase();
+
+
+    if (
+        enteredCode ===
+        ACCESS_CODE
+    ) {
+
+        errorMessage.style.display =
+            "none";
+
+        codeScreen.style.display =
+            "none";
+
+        wheelScreen.style.display =
+            "block";
+
+    }
+
+    else {
+
+        errorMessage.style.display =
+            "block";
+
+        codeInput.value = "";
+
+        codeInput.focus();
+    }
+}
+
+
+enterBtn.addEventListener(
+    "click",
+    checkCode
+);
+
+
+codeInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            checkCode();
+        }
+
+    }
+);
+
+
+/* =====================================================
    SPIN
-========================= */
+===================================================== */
 
 function spin() {
 
-    if (spinning) return;
+    if (spinning)
+        return;
+
 
     spinning = true;
-    spinBtn.disabled = true;
-    resultBox.classList.remove("show");
 
-    // انتخاب تصادفی جایزه
+    spinBtn.disabled =
+        true;
+
+    resultBox.classList.remove(
+        "show"
+    );
+
+
     const selectedIndex =
-        Math.floor(Math.random() * prizes.length);
+        Math.floor(
+            Math.random() *
+            prizes.length
+        );
 
-    /*
-       زاویه‌ای که باید گردونه بچرخد تا
-       مرکز خانه انتخاب‌شده دقیقاً زیر فلش قرار بگیرد.
-    */
 
     const targetAngle =
-        -(selectedIndex * slice + slice / 2);
+        -(
+            selectedIndex * slice +
+            slice / 2
+        );
+
 
     const currentNormalized =
-        rotation % (Math.PI * 2);
+        rotation %
+        (Math.PI * 2);
+
 
     let difference =
-        targetAngle - currentNormalized;
+        targetAngle -
+        currentNormalized;
 
-    while (difference < 0) {
-        difference += Math.PI * 2;
+
+    while (
+        difference < 0
+    ) {
+
+        difference +=
+            Math.PI * 2;
     }
 
-    // حداقل 6 دور کامل
-    const extraSpins = 6 * Math.PI * 2;
+
+    const extraSpins =
+        6 *
+        Math.PI *
+        2;
+
 
     const finalRotation =
-        rotation + extraSpins + difference;
+        rotation +
+        extraSpins +
+        difference;
 
-    const startRotation = rotation;
-    const duration = 5000;
-    const startTime = performance.now();
+
+    const startRotation =
+        rotation;
+
+    const duration =
+        5000;
+
+    const startTime =
+        performance.now();
+
 
     function animate(now) {
 
-        const elapsed = now - startTime;
-        const progress =
-            Math.min(elapsed / duration, 1);
+        const elapsed =
+            now -
+            startTime;
 
-        // easing
+
+        const progress =
+            Math.min(
+                elapsed /
+                duration,
+                1
+            );
+
+
         const ease =
-            1 - Math.pow(1 - progress, 4);
+            1 -
+            Math.pow(
+                1 - progress,
+                4
+            );
+
 
         rotation =
             startRotation +
-            (finalRotation - startRotation) * ease;
+            (
+                finalRotation -
+                startRotation
+            ) *
+            ease;
+
 
         canvas.style.transform =
             `rotate(${rotation}rad)`;
 
-        if (progress < 1) {
 
-            requestAnimationFrame(animate);
+        if (
+            progress < 1
+        ) {
 
-        } else {
+            requestAnimationFrame(
+                animate
+            );
 
-            rotation = finalRotation;
+        }
 
-            showPrize(selectedIndex);
+        else {
 
-            spinning = false;
-            spinBtn.disabled = false;
+            rotation =
+                finalRotation;
+
+            showPrize(
+                selectedIndex
+            );
+
+            spinning =
+                false;
+
+            spinBtn.disabled =
+                false;
         }
     }
 
-    requestAnimationFrame(animate);
+
+    requestAnimationFrame(
+        animate
+    );
 }
 
 
-/* =========================
-   SHOW RESULT
-========================= */
+/* =====================================================
+   RESULT
+===================================================== */
 
 function showPrize(index) {
 
-    const prize = prizes[index];
+    const prize =
+        prizes[index];
 
-    prizeName.textContent = prize.name;
-    details.innerHTML = prize.detail;
 
-    resultBox.classList.add("show");
+    prizeName.textContent =
+        prize.name;
+
+
+    details.innerHTML =
+        prize.detail;
+
+
+    resultBox.classList.add(
+        "show"
+    );
+
 
     resultBox.scrollIntoView({
         behavior: "smooth",
@@ -524,7 +1050,10 @@ function showPrize(index) {
 }
 
 
-spinBtn.addEventListener("click", spin);
+spinBtn.addEventListener(
+    "click",
+    spin
+);
 
 </script>
 
