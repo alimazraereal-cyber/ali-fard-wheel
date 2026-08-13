@@ -20,7 +20,6 @@ body {
         radial-gradient(circle at top, #123c31 0%, #071b16 45%, #020806 100%);
 
     color: #fff;
-
     font-family: Tahoma, Arial, sans-serif;
 
     display: flex;
@@ -28,20 +27,19 @@ body {
     align-items: center;
 
     padding: 22px;
-
     overflow-x: hidden;
 }
 
 body::before {
     content: "";
     position: fixed;
+
     width: 320px;
     height: 320px;
 
     background: rgba(35, 105, 83, .15);
 
     border-radius: 50%;
-
     filter: blur(80px);
 
     top: -120px;
@@ -53,13 +51,13 @@ body::before {
 body::after {
     content: "";
     position: fixed;
+
     width: 280px;
     height: 280px;
 
     background: rgba(255,255,255,.04);
 
     border-radius: 50%;
-
     filter: blur(70px);
 
     bottom: -100px;
@@ -77,8 +75,6 @@ body::after {
     position: relative;
     z-index: 2;
 }
-
-/* عنوان */
 
 h1 {
     margin: 0;
@@ -99,11 +95,8 @@ h1 {
     margin-bottom: 28px;
 
     color: #c9ddd7;
-
     font-size: 15px;
 }
-
-/* قاب گردونه */
 
 .wheel-box {
     position: relative;
@@ -117,8 +110,6 @@ h1 {
     justify-content: center;
     align-items: center;
 }
-
-/* هاله پشت گردونه */
 
 .wheel-box::before {
     content: "";
@@ -139,8 +130,6 @@ h1 {
     z-index: -1;
 }
 
-/* گردونه */
-
 #wheel {
     width: 100%;
     height: 100%;
@@ -159,8 +148,6 @@ h1 {
     transition:
         transform 4s cubic-bezier(.12,.7,.18,1);
 }
-
-/* فلش */
 
 .pointer {
     position: absolute;
@@ -185,8 +172,6 @@ h1 {
         drop-shadow(0 0 8px rgba(255,255,255,.25));
 }
 
-/* دکمه */
-
 button {
     margin-top: 38px;
 
@@ -196,7 +181,6 @@ button {
     padding: 17px 20px;
 
     border: 2px solid #ffffff;
-
     border-radius: 16px;
 
     background:
@@ -246,8 +230,6 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* نتیجه */
-
 .result {
     display: none;
 
@@ -278,9 +260,7 @@ button:disabled {
 
 .result-title {
     color: #c9ddd7;
-
     font-size: 16px;
-
     margin-bottom: 5px;
 }
 
@@ -295,8 +275,6 @@ button:disabled {
     text-shadow:
         0 3px 12px rgba(0,0,0,.7);
 }
-
-/* موبایل */
 
 @media (max-width: 430px) {
 
@@ -380,18 +358,31 @@ const result = document.getElementById("result");
 const prizeText = document.getElementById("prize");
 
 /* =========================
-   جوایز
+   ۱۰ جایزه نهایی
 ========================= */
 
 const prizes = [
+
     "ماسک مو رایگان",
+
     "۵۰٪ تخفیف پاکسازی",
+
     "شمع گوش رایگان",
+
     "شمع رایگان",
+
     "قهوه رایگان",
+
     "۳۰٪ تخفیف تیشرت",
+
     "با خرید ۲ تیشرت\n۱ تیشرت رایگان",
-    "تخلیه چربی بینی رایگان"
+
+    "تخلیه چربی بینی رایگان",
+
+    "پوچ — این بار نشد!",
+
+    "۵۰٪ تخفیف ماساژ"
+
 ];
 
 /* =========================
@@ -399,6 +390,7 @@ const prizes = [
 ========================= */
 
 const colors = [
+
     "#0b3329",
     "#123f32",
     "#071b16",
@@ -406,14 +398,17 @@ const colors = [
     "#0a2921",
     "#184b3c",
     "#06150f",
-    "#1b5945"
+    "#1b5945",
+    "#09251d",
+    "#123a2f"
+
 ];
 
 let currentRotation = 0;
 let isSpinning = false;
 
 /* =========================
-   شکستن متن
+   شکستن متن به چند خط
 ========================= */
 
 function wrapText(text, maxLength) {
@@ -475,7 +470,7 @@ function drawWheel() {
         const start = i * slice;
         const end = start + slice;
 
-        /* بخش */
+        /* بخش گردونه */
 
         ctx.beginPath();
 
@@ -499,7 +494,7 @@ function drawWheel() {
 
         ctx.strokeStyle = "#020806";
 
-        ctx.lineWidth = 6;
+        ctx.lineWidth = 5;
 
         ctx.stroke();
 
@@ -516,20 +511,20 @@ function drawWheel() {
         ctx.fillStyle = "#ffffff";
 
         ctx.font =
-            "bold 16px Tahoma";
+            "bold 14px Tahoma";
 
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
 
         ctx.shadowColor =
-            "rgba(0,0,0,.8)";
+            "rgba(0,0,0,.9)";
 
         ctx.shadowBlur = 5;
 
         const lines =
-            wrapText(prizes[i], 15);
+            wrapText(prizes[i], 12);
 
-        const lineHeight = 22;
+        const lineHeight = 20;
 
         const startY =
             -((lines.length - 1) * lineHeight) / 2;
@@ -538,7 +533,7 @@ function drawWheel() {
 
             ctx.fillText(
                 line,
-                radius - 18,
+                radius - 12,
                 startY + index * lineHeight
             );
 
@@ -547,7 +542,9 @@ function drawWheel() {
         ctx.restore();
     }
 
-    /* مرکز گردونه */
+    /* =====================
+       مرکز گردونه
+    ===================== */
 
     ctx.beginPath();
 
@@ -585,7 +582,7 @@ function drawWheel() {
 }
 
 /* =========================
-   چرخش
+   چرخاندن گردونه
 ========================= */
 
 function spin() {
@@ -600,7 +597,7 @@ function spin() {
 
     result.style.display = "none";
 
-    /* انتخاب جایزه */
+    /* انتخاب تصادفی جایزه */
 
     const winner =
         Math.floor(
@@ -610,11 +607,16 @@ function spin() {
     const slice =
         360 / prizes.length;
 
+    /*
+       مرکز قسمت برنده
+    */
+
     const winnerCenter =
         winner * slice + slice / 2;
 
     /*
-       فلش در زاویه -90
+       فلش در بالای گردونه
+       قرار دارد: -90 درجه
     */
 
     const targetRotation =
@@ -646,7 +648,7 @@ function spin() {
         finalRotation +
         "deg)";
 
-    /* نتیجه */
+    /* نمایش نتیجه */
 
     setTimeout(function() {
 
