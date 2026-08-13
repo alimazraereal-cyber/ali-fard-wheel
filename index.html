@@ -173,24 +173,42 @@ const button = document.getElementById("spinButton");
 const result = document.getElementById("result");
 const prizeText = document.getElementById("prize");
 
+/* =========================
+   جوایز گردونه
+========================= */
+
 const prizes = [
     "ماسک مو رایگان",
     "۵۰٪ تخفیف پاکسازی",
     "شمع گوش رایگان",
     "شمع رایگان",
-    "۳۰٪ تخفیف تیشرت"
+    "قهوه رایگان",
+    "۳۰٪ تخفیف تیشرت",
+    "با خرید ۲ تیشرت، ۱ تیشرت رایگان",
+    "تخلیه چربی بینی رایگان"
 ];
+
+/* =========================
+   رنگ بخش‌های گردونه
+========================= */
 
 const colors = [
     "#123d32",
     "#d5b46a",
     "#0d2c24",
     "#b99750",
-    "#184d3e"
+    "#184d3e",
+    "#8f753f",
+    "#0b352b",
+    "#c3a55d"
 ];
 
 let currentRotation = 0;
 let isSpinning = false;
+
+/* =========================
+   رسم گردونه
+========================= */
 
 function drawWheel() {
 
@@ -228,6 +246,8 @@ function drawWheel() {
         ctx.lineWidth = 5;
         ctx.stroke();
 
+        /* متن جایزه */
+
         ctx.save();
 
         ctx.translate(center, center);
@@ -239,19 +259,21 @@ function drawWheel() {
         ctx.fillStyle = "#ffffff";
 
         ctx.font =
-            "bold 21px Tahoma";
+            "bold 17px Tahoma";
 
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
 
         ctx.fillText(
             prizes[i],
-            radius - 20,
+            radius - 15,
             0
         );
 
         ctx.restore();
     }
+
+    /* دایره وسط */
 
     ctx.beginPath();
 
@@ -285,6 +307,10 @@ function drawWheel() {
     );
 }
 
+/* =========================
+   چرخاندن گردونه
+========================= */
+
 function spin() {
 
     if (isSpinning) {
@@ -297,6 +323,8 @@ function spin() {
 
     result.style.display = "none";
 
+    /* انتخاب تصادفی جایزه */
+
     const winner =
         Math.floor(
             Math.random() * prizes.length
@@ -306,20 +334,43 @@ function spin() {
         360 / prizes.length;
 
     /*
-       فلش بالای گردونه است.
-       این محاسبه باعث می‌شود
-       بخش برنده مقابل فلش قرار بگیرد.
+      مرکز هر قسمت:
+      winner * slice + slice / 2
+
+      فلش در بالای گردونه است:
+      -90 درجه
+
+      بنابراین گردونه باید طوری بچرخد
+      که مرکز جایزه دقیقاً روی -90 درجه قرار بگیرد.
     */
 
-    const target =
-        360 - (winner * slice + slice / 2);
+    const winnerCenter =
+        winner * slice + slice / 2;
 
-    const extraSpins = 360 * 6;
+    const targetRotation =
+        -90 - winnerCenter;
+
+    /*
+      اختلاف چرخش نسبت به وضعیت فعلی
+      را طوری محاسبه می‌کنیم که همیشه
+      چند دور کامل هم داشته باشیم.
+    */
+
+    let delta =
+        targetRotation -
+        (currentRotation % 360);
+
+    if (delta < 0) {
+        delta += 360;
+    }
+
+    const extraSpins =
+        360 * 6;
 
     const finalRotation =
         currentRotation +
         extraSpins +
-        target;
+        delta;
 
     currentRotation =
         finalRotation;
@@ -328,6 +379,11 @@ function spin() {
         "rotate(" +
         finalRotation +
         "deg)";
+
+    /*
+      بعد از پایان انیمیشن،
+      دقیقاً همان winner نمایش داده می‌شود.
+    */
 
     setTimeout(function() {
 
@@ -343,6 +399,10 @@ function spin() {
 
     }, 4200);
 }
+
+/* =========================
+   شروع
+========================= */
 
 button.addEventListener(
     "click",
