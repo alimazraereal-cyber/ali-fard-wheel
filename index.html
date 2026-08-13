@@ -63,7 +63,7 @@ canvas {
     height: 0;
     border-left: 18px solid transparent;
     border-right: 18px solid transparent;
-    border-top: 42px solid #ffffff;
+    border-top: 42px solid white;
     z-index: 5;
     filter: drop-shadow(0 3px 4px #000);
 }
@@ -137,9 +137,9 @@ button:disabled {
 </div>
 
 <script>
-
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
+
 const spinButton = document.getElementById("spinButton");
 const resultBox = document.getElementById("result");
 const prizeText = document.getElementById("prize");
@@ -164,7 +164,6 @@ let rotation = 0;
 let spinning = false;
 
 function drawWheel() {
-
     const center = canvas.width / 2;
     const radius = center - 8;
     const slice = (Math.PI * 2) / prizes.length;
@@ -172,7 +171,6 @@ function drawWheel() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < prizes.length; i++) {
-
         const start = rotation + i * slice;
         const end = start + slice;
 
@@ -196,4 +194,92 @@ function drawWheel() {
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 22px T
+        ctx.font = "bold 22px Tahoma";
+
+        ctx.fillText(prizes[i], radius - 25, 0);
+
+        ctx.restore();
+    }
+
+    // دایره وسط گردونه
+    ctx.beginPath();
+    ctx.arc(center, center, 48, 0, Math.PI * 2);
+    ctx.fillStyle = "#071b16";
+    ctx.fill();
+
+    ctx.strokeStyle = "#d5b46a";
+    ctx.lineWidth = 5;
+    ctx.stroke();
+
+    ctx.fillStyle = "#d5b46a";
+    ctx.font = "bold 18px Tahoma";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("علی فرد", center, center);
+}
+
+function spinWheel() {
+    if (spinning) return;
+
+    spinning = true;
+    spinButton.disabled = true;
+    resultBox.style.display = "none";
+
+    const winner = Math.floor(Math.random() * prizes.length);
+
+    const slice = (Math.PI * 2) / prizes.length;
+
+    // زاویه‌ای که جایزه برنده را زیر فلش قرار می‌دهد
+    const targetAngle =
+        (Math.PI * 3 / 2) -
+        (winner * slice + slice / 2);
+
+    const extraSpins = 6 * Math.PI * 2;
+
+    const startRotation = rotation;
+    const finalRotation =
+        startRotation +
+        extraSpins +
+        targetAngle -
+        (startRotation % (Math.PI * 2));
+
+    const duration = 4500;
+    const startTime = performance.now();
+
+    function animate(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // حرکت نرم: شروع سریع، پایان آرام
+        const easeOut = 1 - Math.pow(1 - progress, 4);
+
+        rotation =
+            startRotation +
+            (finalRotation - startRotation) * easeOut;
+
+        drawWheel();
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            rotation = finalRotation;
+            drawWheel();
+
+            prizeText.textContent = prizes[winner];
+            resultBox.style.display = "block";
+
+            spinning = false;
+            spinButton.disabled = false;
+        }
+    }
+
+    requestAnimationFrame(animate);
+}
+
+spinButton.addEventListener("click", spinWheel);
+
+drawWheel();
+</script>
+
+</body>
+</html>
