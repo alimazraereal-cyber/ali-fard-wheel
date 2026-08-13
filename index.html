@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>گردونه شانس علی فرد</title>
 
 <style>
@@ -30,7 +31,7 @@ body {
 
 h1 {
     margin: 0 0 8px;
-    font-size: 30px;
+    font-size: 29px;
 }
 
 .subtitle {
@@ -40,31 +41,35 @@ h1 {
 
 .wheel-box {
     position: relative;
-    width: min(90vw, 420px);
-    height: min(90vw, 420px);
+    width: min(88vw, 420px);
+    height: min(88vw, 420px);
     margin: auto;
 }
 
-canvas {
+#wheel {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     box-shadow:
         0 0 0 8px #d5b46a,
-        0 0 30px rgba(0,0,0,.6);
+        0 0 30px rgba(0,0,0,.7);
+
+    transition: transform 4s cubic-bezier(.12,.7,.18,1);
 }
 
 .pointer {
     position: absolute;
-    top: -15px;
+    top: -17px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
+
     border-left: 18px solid transparent;
     border-right: 18px solid transparent;
     border-top: 42px solid white;
-    z-index: 5;
+
+    z-index: 10;
     filter: drop-shadow(0 3px 4px #000);
 }
 
@@ -73,12 +78,16 @@ button {
     width: 90%;
     max-width: 350px;
     padding: 17px;
+
     border: none;
     border-radius: 14px;
+
     background: #d5b46a;
     color: #071b16;
+
     font-size: 20px;
     font-weight: bold;
+
     cursor: pointer;
     box-shadow: 0 7px 0 #9d8145;
 }
@@ -97,8 +106,10 @@ button:disabled {
     display: none;
     margin-top: 25px;
     padding: 20px;
+
     border: 1px solid #d5b46a;
     border-radius: 15px;
+
     background: rgba(255,255,255,.06);
 }
 
@@ -120,28 +131,46 @@ button:disabled {
 <div class="container">
 
     <h1>🎁 گردونه شانس علی فرد</h1>
-    <div class="subtitle">گردونه رو بچرخون و جایزه‌ات رو ببر!</div>
 
-    <div class="wheel-box">
-        <div class="pointer"></div>
-        <canvas id="wheel" width="500" height="500"></canvas>
+    <div class="subtitle">
+        گردونه رو بچرخون و جایزه‌ات رو ببر!
     </div>
 
-    <button id="spinButton">چرخاندن گردونه 🎡</button>
+    <div class="wheel-box">
+
+        <div class="pointer"></div>
+
+        <canvas
+            id="wheel"
+            width="500"
+            height="500">
+        </canvas>
+
+    </div>
+
+    <button id="spinButton">
+        چرخاندن گردونه 🎡
+    </button>
 
     <div class="result" id="result">
-        <div class="result-title">🎉 جایزه شما:</div>
+
+        <div class="result-title">
+            🎉 جایزه شما:
+        </div>
+
         <div class="prize" id="prize"></div>
+
     </div>
 
 </div>
 
 <script>
+
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 
-const spinButton = document.getElementById("spinButton");
-const resultBox = document.getElementById("result");
+const button = document.getElementById("spinButton");
+const result = document.getElementById("result");
 const prizeText = document.getElementById("prize");
 
 const prizes = [
@@ -160,23 +189,36 @@ const colors = [
     "#184d3e"
 ];
 
-let rotation = 0;
-let spinning = false;
+let currentRotation = 0;
+let isSpinning = false;
 
 function drawWheel() {
-    const center = canvas.width / 2;
-    const radius = center - 8;
-    const slice = (Math.PI * 2) / prizes.length;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const center = 250;
+    const radius = 240;
+
+    const slice =
+        (Math.PI * 2) / prizes.length;
+
+    ctx.clearRect(0, 0, 500, 500);
 
     for (let i = 0; i < prizes.length; i++) {
-        const start = rotation + i * slice;
+
+        const start = i * slice;
         const end = start + slice;
 
         ctx.beginPath();
+
         ctx.moveTo(center, center);
-        ctx.arc(center, center, radius, start, end);
+
+        ctx.arc(
+            center,
+            center,
+            radius,
+            start,
+            end
+        );
+
         ctx.closePath();
 
         ctx.fillStyle = colors[i];
@@ -189,21 +231,38 @@ function drawWheel() {
         ctx.save();
 
         ctx.translate(center, center);
-        ctx.rotate(start + slice / 2);
+
+        ctx.rotate(
+            start + slice / 2
+        );
+
+        ctx.fillStyle = "#ffffff";
+
+        ctx.font =
+            "bold 21px Tahoma";
 
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 22px Tahoma";
 
-        ctx.fillText(prizes[i], radius - 25, 0);
+        ctx.fillText(
+            prizes[i],
+            radius - 20,
+            0
+        );
 
         ctx.restore();
     }
 
-    // دایره وسط گردونه
     ctx.beginPath();
-    ctx.arc(center, center, 48, 0, Math.PI * 2);
+
+    ctx.arc(
+        center,
+        center,
+        48,
+        0,
+        Math.PI * 2
+    );
+
     ctx.fillStyle = "#071b16";
     ctx.fill();
 
@@ -212,73 +271,86 @@ function drawWheel() {
     ctx.stroke();
 
     ctx.fillStyle = "#d5b46a";
-    ctx.font = "bold 18px Tahoma";
+
+    ctx.font =
+        "bold 18px Tahoma";
+
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("علی فرد", center, center);
+
+    ctx.fillText(
+        "علی فرد",
+        center,
+        center
+    );
 }
 
-function spinWheel() {
-    if (spinning) return;
+function spin() {
 
-    spinning = true;
-    spinButton.disabled = true;
-    resultBox.style.display = "none";
-
-    const winner = Math.floor(Math.random() * prizes.length);
-
-    const slice = (Math.PI * 2) / prizes.length;
-
-    // زاویه‌ای که جایزه برنده را زیر فلش قرار می‌دهد
-    const targetAngle =
-        (Math.PI * 3 / 2) -
-        (winner * slice + slice / 2);
-
-    const extraSpins = 6 * Math.PI * 2;
-
-    const startRotation = rotation;
-    const finalRotation =
-        startRotation +
-        extraSpins +
-        targetAngle -
-        (startRotation % (Math.PI * 2));
-
-    const duration = 4500;
-    const startTime = performance.now();
-
-    function animate(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-
-        // حرکت نرم: شروع سریع، پایان آرام
-        const easeOut = 1 - Math.pow(1 - progress, 4);
-
-        rotation =
-            startRotation +
-            (finalRotation - startRotation) * easeOut;
-
-        drawWheel();
-
-        if (progress < 1) {
-            requestAnimationFrame(animate);
-        } else {
-            rotation = finalRotation;
-            drawWheel();
-
-            prizeText.textContent = prizes[winner];
-            resultBox.style.display = "block";
-
-            spinning = false;
-            spinButton.disabled = false;
-        }
+    if (isSpinning) {
+        return;
     }
 
-    requestAnimationFrame(animate);
+    isSpinning = true;
+
+    button.disabled = true;
+
+    result.style.display = "none";
+
+    const winner =
+        Math.floor(
+            Math.random() * prizes.length
+        );
+
+    const slice =
+        360 / prizes.length;
+
+    /*
+       فلش بالای گردونه است.
+       این محاسبه باعث می‌شود
+       بخش برنده مقابل فلش قرار بگیرد.
+    */
+
+    const target =
+        360 - (winner * slice + slice / 2);
+
+    const extraSpins = 360 * 6;
+
+    const finalRotation =
+        currentRotation +
+        extraSpins +
+        target;
+
+    currentRotation =
+        finalRotation;
+
+    canvas.style.transform =
+        "rotate(" +
+        finalRotation +
+        "deg)";
+
+    setTimeout(function() {
+
+        prizeText.textContent =
+            prizes[winner];
+
+        result.style.display =
+            "block";
+
+        isSpinning = false;
+
+        button.disabled = false;
+
+    }, 4200);
 }
 
-spinButton.addEventListener("click", spinWheel);
+button.addEventListener(
+    "click",
+    spin
+);
 
 drawWheel();
+
 </script>
 
 </body>
