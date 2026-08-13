@@ -140,11 +140,7 @@ button:disabled {
 
         <div class="pointer"></div>
 
-        <canvas
-            id="wheel"
-            width="500"
-            height="500">
-        </canvas>
+        <canvas id="wheel" width="500" height="500"></canvas>
 
     </div>
 
@@ -174,7 +170,7 @@ const result = document.getElementById("result");
 const prizeText = document.getElementById("prize");
 
 /* =========================
-   جوایز گردونه
+   جوایز
 ========================= */
 
 const prizes = [
@@ -184,12 +180,12 @@ const prizes = [
     "شمع رایگان",
     "قهوه رایگان",
     "۳۰٪ تخفیف تیشرت",
-    "با خرید ۲ تیشرت، ۱ تیشرت رایگان",
+    "با خرید ۲ تیشرت\n۱ تیشرت رایگان",
     "تخلیه چربی بینی رایگان"
 ];
 
 /* =========================
-   رنگ بخش‌های گردونه
+   رنگ‌ها
 ========================= */
 
 const colors = [
@@ -205,6 +201,47 @@ const colors = [
 
 let currentRotation = 0;
 let isSpinning = false;
+
+/* =========================
+   تبدیل متن به چند خط
+========================= */
+
+function wrapText(text, maxLength) {
+
+    if (text.includes("\n")) {
+        return text.split("\n");
+    }
+
+    const words = text.split(" ");
+    const lines = [];
+    let line = "";
+
+    words.forEach(word => {
+
+        const testLine =
+            line ? line + " " + word : word;
+
+        if (testLine.length > maxLength) {
+
+            if (line) {
+                lines.push(line);
+            }
+
+            line = word;
+
+        } else {
+
+            line = testLine;
+
+        }
+    });
+
+    if (line) {
+        lines.push(line);
+    }
+
+    return lines;
+}
 
 /* =========================
    رسم گردونه
@@ -224,6 +261,8 @@ function drawWheel() {
 
         const start = i * slice;
         const end = start + slice;
+
+        /* بخش گردونه */
 
         ctx.beginPath();
 
@@ -246,34 +285,51 @@ function drawWheel() {
         ctx.lineWidth = 5;
         ctx.stroke();
 
-        /* متن جایزه */
+        /* =====================
+           متن جایزه
+        ===================== */
 
         ctx.save();
 
         ctx.translate(center, center);
 
-        ctx.rotate(
-            start + slice / 2
-        );
+        const middleAngle =
+            start + slice / 2;
+
+        ctx.rotate(middleAngle);
 
         ctx.fillStyle = "#ffffff";
 
         ctx.font =
-            "bold 17px Tahoma";
+            "bold 16px Tahoma";
 
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
 
-        ctx.fillText(
-            prizes[i],
-            radius - 15,
-            0
-        );
+        const lines =
+            wrapText(prizes[i], 15);
+
+        const lineHeight = 22;
+
+        const startY =
+            -((lines.length - 1) * lineHeight) / 2;
+
+        lines.forEach((line, index) => {
+
+            ctx.fillText(
+                line,
+                radius - 18,
+                startY + index * lineHeight
+            );
+
+        });
 
         ctx.restore();
     }
 
-    /* دایره وسط */
+    /* =====================
+       دایره وسط
+    ===================== */
 
     ctx.beginPath();
 
@@ -318,12 +374,11 @@ function spin() {
     }
 
     isSpinning = true;
-
     button.disabled = true;
 
     result.style.display = "none";
 
-    /* انتخاب تصادفی جایزه */
+    /* انتخاب تصادفی */
 
     const winner =
         Math.floor(
@@ -334,27 +389,19 @@ function spin() {
         360 / prizes.length;
 
     /*
-      مرکز هر قسمت:
-      winner * slice + slice / 2
-
-      فلش در بالای گردونه است:
-      -90 درجه
-
-      بنابراین گردونه باید طوری بچرخد
-      که مرکز جایزه دقیقاً روی -90 درجه قرار بگیرد.
+       مرکز قسمت برنده
     */
 
     const winnerCenter =
         winner * slice + slice / 2;
 
+    /*
+       فلش بالای گردونه است
+       یعنی زاویه -90 درجه
+    */
+
     const targetRotation =
         -90 - winnerCenter;
-
-    /*
-      اختلاف چرخش نسبت به وضعیت فعلی
-      را طوری محاسبه می‌کنیم که همیشه
-      چند دور کامل هم داشته باشیم.
-    */
 
     let delta =
         targetRotation -
@@ -363,6 +410,8 @@ function spin() {
     if (delta < 0) {
         delta += 360;
     }
+
+    /* ۶ دور کامل */
 
     const extraSpins =
         360 * 6;
@@ -380,21 +429,17 @@ function spin() {
         finalRotation +
         "deg)";
 
-    /*
-      بعد از پایان انیمیشن،
-      دقیقاً همان winner نمایش داده می‌شود.
-    */
+    /* نمایش نتیجه */
 
     setTimeout(function() {
 
         prizeText.textContent =
-            prizes[winner];
+            prizes[winner].replace("\n", " ");
 
         result.style.display =
             "block";
 
         isSpinning = false;
-
         button.disabled = false;
 
     }, 4200);
