@@ -7,6 +7,7 @@
 <title>گردونه شانس علی فرد</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -14,115 +15,320 @@
 body {
     margin: 0;
     min-height: 100vh;
-    background: #071b16;
-    color: white;
+
+    background:
+        radial-gradient(circle at top, #123c31 0%, #071b16 45%, #020806 100%);
+
+    color: #fff;
+
     font-family: Tahoma, Arial, sans-serif;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+
+    padding: 22px;
+
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 320px;
+    height: 320px;
+
+    background: rgba(35, 105, 83, .15);
+
+    border-radius: 50%;
+
+    filter: blur(80px);
+
+    top: -120px;
+    right: -100px;
+
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 280px;
+    height: 280px;
+
+    background: rgba(255,255,255,.04);
+
+    border-radius: 50%;
+
+    filter: blur(70px);
+
+    bottom: -100px;
+    left: -80px;
+
+    pointer-events: none;
 }
 
 .container {
     width: 100%;
     max-width: 520px;
+
     text-align: center;
+
+    position: relative;
+    z-index: 2;
 }
 
+/* عنوان */
+
 h1 {
-    margin: 0 0 8px;
-    font-size: 29px;
+    margin: 0;
+
+    font-size: 30px;
+    font-weight: 800;
+
+    letter-spacing: -1px;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 3px 15px rgba(0,0,0,.7);
 }
 
 .subtitle {
-    color: #b9d4cb;
-    margin-bottom: 25px;
+    margin-top: 10px;
+    margin-bottom: 28px;
+
+    color: #c9ddd7;
+
+    font-size: 15px;
 }
+
+/* قاب گردونه */
 
 .wheel-box {
     position: relative;
+
     width: min(88vw, 420px);
     height: min(88vw, 420px);
+
     margin: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+/* هاله پشت گردونه */
+
+.wheel-box::before {
+    content: "";
+
+    position: absolute;
+
+    width: 94%;
+    height: 94%;
+
+    border-radius: 50%;
+
+    background: #000;
+
+    box-shadow:
+        0 0 50px rgba(0,0,0,.9),
+        0 0 80px rgba(15,75,59,.35);
+
+    z-index: -1;
+}
+
+/* گردونه */
 
 #wheel {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    box-shadow:
-        0 0 0 8px #d5b46a,
-        0 0 30px rgba(0,0,0,.7);
 
-    transition: transform 4s cubic-bezier(.12,.7,.18,1);
+    border-radius: 50%;
+
+    border: 7px solid #ffffff;
+
+    box-shadow:
+        0 0 0 4px #0b2b22,
+        0 0 0 8px #020605,
+        0 15px 40px rgba(0,0,0,.8);
+
+    background: #071b16;
+
+    transition:
+        transform 4s cubic-bezier(.12,.7,.18,1);
 }
+
+/* فلش */
 
 .pointer {
     position: absolute;
-    top: -17px;
+
+    top: -14px;
     left: 50%;
+
     transform: translateX(-50%);
+
     width: 0;
     height: 0;
 
-    border-left: 18px solid transparent;
-    border-right: 18px solid transparent;
-    border-top: 42px solid white;
+    border-left: 19px solid transparent;
+    border-right: 19px solid transparent;
 
-    z-index: 10;
-    filter: drop-shadow(0 3px 4px #000);
+    border-top: 45px solid #ffffff;
+
+    z-index: 20;
+
+    filter:
+        drop-shadow(0 3px 2px #000)
+        drop-shadow(0 0 8px rgba(255,255,255,.25));
 }
 
+/* دکمه */
+
 button {
-    margin-top: 35px;
+    margin-top: 38px;
+
     width: 90%;
     max-width: 350px;
-    padding: 17px;
 
-    border: none;
-    border-radius: 14px;
+    padding: 17px 20px;
 
-    background: #d5b46a;
+    border: 2px solid #ffffff;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #dce9e5 100%
+        );
+
     color: #071b16;
 
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 19px;
+    font-weight: 900;
 
     cursor: pointer;
-    box-shadow: 0 7px 0 #9d8145;
+
+    box-shadow:
+        0 8px 0 #020605,
+        0 12px 30px rgba(0,0,0,.45);
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        background .2s ease;
+}
+
+button:hover {
+    background: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 0 #020605,
+        0 16px 35px rgba(0,0,0,.55);
 }
 
 button:active {
-    transform: translateY(5px);
-    box-shadow: 0 2px 0 #9d8145;
+    transform: translateY(6px);
+
+    box-shadow:
+        0 2px 0 #020605,
+        0 7px 18px rgba(0,0,0,.4);
 }
 
 button:disabled {
-    opacity: .6;
+    opacity: .55;
     cursor: not-allowed;
 }
 
+/* نتیجه */
+
 .result {
     display: none;
-    margin-top: 25px;
-    padding: 20px;
 
-    border: 1px solid #d5b46a;
-    border-radius: 15px;
+    margin: 28px auto 0;
 
-    background: rgba(255,255,255,.06);
+    width: 90%;
+    max-width: 400px;
+
+    padding: 20px 18px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.09),
+            rgba(0,0,0,.25)
+        );
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.4),
+        inset 0 1px 0 rgba(255,255,255,.08);
+
+    backdrop-filter: blur(10px);
 }
 
 .result-title {
-    color: #d5b46a;
-    font-size: 18px;
+    color: #c9ddd7;
+
+    font-size: 16px;
+
+    margin-bottom: 5px;
 }
 
 .prize {
     margin-top: 8px;
+
+    color: #ffffff;
+
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 900;
+
+    text-shadow:
+        0 3px 12px rgba(0,0,0,.7);
 }
+
+/* موبایل */
+
+@media (max-width: 430px) {
+
+    body {
+        padding: 18px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+
+    .pointer {
+        border-left-width: 16px;
+        border-right-width: 16px;
+        border-top-width: 39px;
+    }
+
+    button {
+        font-size: 18px;
+        padding: 16px;
+    }
+
+    .prize {
+        font-size: 21px;
+    }
+}
+
 </style>
 </head>
 
@@ -140,7 +346,11 @@ button:disabled {
 
         <div class="pointer"></div>
 
-        <canvas id="wheel" width="500" height="500"></canvas>
+        <canvas
+            id="wheel"
+            width="500"
+            height="500">
+        </canvas>
 
     </div>
 
@@ -151,7 +361,7 @@ button:disabled {
     <div class="result" id="result">
 
         <div class="result-title">
-            🎉 جایزه شما:
+            🎉 جایزه شما
         </div>
 
         <div class="prize" id="prize"></div>
@@ -185,25 +395,25 @@ const prizes = [
 ];
 
 /* =========================
-   رنگ‌ها
+   رنگ‌های گردونه
 ========================= */
 
 const colors = [
-    "#123d32",
-    "#d5b46a",
-    "#0d2c24",
-    "#b99750",
-    "#184d3e",
-    "#8f753f",
-    "#0b352b",
-    "#c3a55d"
+    "#0b3329",
+    "#123f32",
+    "#071b16",
+    "#15503f",
+    "#0a2921",
+    "#184b3c",
+    "#06150f",
+    "#1b5945"
 ];
 
 let currentRotation = 0;
 let isSpinning = false;
 
 /* =========================
-   تبدیل متن به چند خط
+   شکستن متن
 ========================= */
 
 function wrapText(text, maxLength) {
@@ -213,7 +423,9 @@ function wrapText(text, maxLength) {
     }
 
     const words = text.split(" ");
+
     const lines = [];
+
     let line = "";
 
     words.forEach(word => {
@@ -234,6 +446,7 @@ function wrapText(text, maxLength) {
             line = testLine;
 
         }
+
     });
 
     if (line) {
@@ -262,7 +475,7 @@ function drawWheel() {
         const start = i * slice;
         const end = start + slice;
 
-        /* بخش گردونه */
+        /* بخش */
 
         ctx.beginPath();
 
@@ -279,24 +492,26 @@ function drawWheel() {
         ctx.closePath();
 
         ctx.fillStyle = colors[i];
+
         ctx.fill();
 
-        ctx.strokeStyle = "#071b16";
-        ctx.lineWidth = 5;
+        /* خطوط جداکننده */
+
+        ctx.strokeStyle = "#020806";
+
+        ctx.lineWidth = 6;
+
         ctx.stroke();
 
-        /* =====================
-           متن جایزه
-        ===================== */
+        /* متن */
 
         ctx.save();
 
         ctx.translate(center, center);
 
-        const middleAngle =
-            start + slice / 2;
-
-        ctx.rotate(middleAngle);
+        ctx.rotate(
+            start + slice / 2
+        );
 
         ctx.fillStyle = "#ffffff";
 
@@ -305,6 +520,11 @@ function drawWheel() {
 
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
+
+        ctx.shadowColor =
+            "rgba(0,0,0,.8)";
+
+        ctx.shadowBlur = 5;
 
         const lines =
             wrapText(prizes[i], 15);
@@ -327,28 +547,29 @@ function drawWheel() {
         ctx.restore();
     }
 
-    /* =====================
-       دایره وسط
-    ===================== */
+    /* مرکز گردونه */
 
     ctx.beginPath();
 
     ctx.arc(
         center,
         center,
-        48,
+        50,
         0,
         Math.PI * 2
     );
 
-    ctx.fillStyle = "#071b16";
+    ctx.fillStyle = "#020806";
+
     ctx.fill();
 
-    ctx.strokeStyle = "#d5b46a";
-    ctx.lineWidth = 5;
+    ctx.strokeStyle = "#ffffff";
+
+    ctx.lineWidth = 4;
+
     ctx.stroke();
 
-    ctx.fillStyle = "#d5b46a";
+    ctx.fillStyle = "#ffffff";
 
     ctx.font =
         "bold 18px Tahoma";
@@ -364,7 +585,7 @@ function drawWheel() {
 }
 
 /* =========================
-   چرخاندن گردونه
+   چرخش
 ========================= */
 
 function spin() {
@@ -374,11 +595,12 @@ function spin() {
     }
 
     isSpinning = true;
+
     button.disabled = true;
 
     result.style.display = "none";
 
-    /* انتخاب تصادفی */
+    /* انتخاب جایزه */
 
     const winner =
         Math.floor(
@@ -388,16 +610,11 @@ function spin() {
     const slice =
         360 / prizes.length;
 
-    /*
-       مرکز قسمت برنده
-    */
-
     const winnerCenter =
         winner * slice + slice / 2;
 
     /*
-       فلش بالای گردونه است
-       یعنی زاویه -90 درجه
+       فلش در زاویه -90
     */
 
     const targetRotation =
@@ -411,7 +628,7 @@ function spin() {
         delta += 360;
     }
 
-    /* ۶ دور کامل */
+    /* شش دور کامل */
 
     const extraSpins =
         360 * 6;
@@ -429,7 +646,7 @@ function spin() {
         finalRotation +
         "deg)";
 
-    /* نمایش نتیجه */
+    /* نتیجه */
 
     setTimeout(function() {
 
@@ -440,13 +657,14 @@ function spin() {
             "block";
 
         isSpinning = false;
+
         button.disabled = false;
 
     }, 4200);
 }
 
 /* =========================
-   شروع
+   اجرا
 ========================= */
 
 button.addEventListener(
