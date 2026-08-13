@@ -7,7 +7,6 @@
 <title>گردونه شانس علی فرد</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -15,298 +14,174 @@
 body {
     margin: 0;
     min-height: 100vh;
-
-    background:
-        radial-gradient(circle at top, #123c31 0%, #071b16 45%, #020806 100%);
-
-    color: #fff;
     font-family: Tahoma, Arial, sans-serif;
-
+    background: #07140f;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    padding: 22px;
-    overflow-x: hidden;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-
-    width: 320px;
-    height: 320px;
-
-    background: rgba(35, 105, 83, .15);
-
-    border-radius: 50%;
-    filter: blur(80px);
-
-    top: -120px;
-    right: -100px;
-
-    pointer-events: none;
-}
-
-body::after {
-    content: "";
-    position: fixed;
-
-    width: 280px;
-    height: 280px;
-
-    background: rgba(255,255,255,.04);
-
-    border-radius: 50%;
-    filter: blur(70px);
-
-    bottom: -100px;
-    left: -80px;
-
-    pointer-events: none;
+    padding: 20px;
 }
 
 .container {
     width: 100%;
     max-width: 520px;
-
     text-align: center;
-
-    position: relative;
-    z-index: 2;
 }
 
 h1 {
-    margin: 0;
-
-    font-size: 30px;
-    font-weight: 800;
-
-    letter-spacing: -1px;
-
-    color: #ffffff;
-
-    text-shadow:
-        0 3px 15px rgba(0,0,0,.7);
+    margin: 5px 0 8px;
+    font-size: 28px;
 }
 
 .subtitle {
-    margin-top: 10px;
-    margin-bottom: 28px;
-
-    color: #c9ddd7;
-    font-size: 15px;
+    color: #b9c8c1;
+    margin-bottom: 20px;
+    font-size: 14px;
 }
 
-.wheel-box {
+.wheel-area {
     position: relative;
-
-    width: min(88vw, 420px);
-    height: min(88vw, 420px);
-
+    width: min(90vw, 440px);
+    aspect-ratio: 1;
     margin: auto;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-.wheel-box::before {
-    content: "";
-
-    position: absolute;
-
-    width: 94%;
-    height: 94%;
-
-    border-radius: 50%;
-
-    background: #000;
-
-    box-shadow:
-        0 0 50px rgba(0,0,0,.9),
-        0 0 80px rgba(15,75,59,.35);
-
-    z-index: -1;
-}
-
-#wheel {
+canvas {
     width: 100%;
     height: 100%;
-
-    border-radius: 50%;
-
-    border: 7px solid #ffffff;
-
-    box-shadow:
-        0 0 0 4px #0b2b22,
-        0 0 0 8px #020605,
-        0 15px 40px rgba(0,0,0,.8);
-
-    background: #071b16;
-
-    transition:
-        transform 4s cubic-bezier(.12,.7,.18,1);
+    display: block;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
 }
 
 .pointer {
     position: absolute;
-
-    top: -14px;
+    top: -7px;
     left: 50%;
-
     transform: translateX(-50%);
-
     width: 0;
     height: 0;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-top: 42px solid #ffffff;
+    z-index: 5;
+    filter: drop-shadow(0 3px 3px rgba(0,0,0,.5));
+}
 
-    border-left: 19px solid transparent;
-    border-right: 19px solid transparent;
-
-    border-top: 45px solid #ffffff;
-
-    z-index: 20;
-
-    filter:
-        drop-shadow(0 3px 2px #000)
-        drop-shadow(0 0 8px rgba(255,255,255,.25));
+.center-dot {
+    position: absolute;
+    width: 62px;
+    height: 62px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: #0d241b;
+    border: 5px solid #fff;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 button {
-    margin-top: 38px;
-
-    width: 90%;
-    max-width: 350px;
-
-    padding: 17px 20px;
-
-    border: 2px solid #ffffff;
-    border-radius: 16px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff 0%,
-            #dce9e5 100%
-        );
-
-    color: #071b16;
-
-    font-size: 19px;
-    font-weight: 900;
-
+    border: none;
+    background: #fff;
+    color: #07140f;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 14px 38px;
+    border-radius: 12px;
     cursor: pointer;
-
-    box-shadow:
-        0 8px 0 #020605,
-        0 12px 30px rgba(0,0,0,.45);
-
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease,
-        background .2s ease;
+    margin-top: 22px;
+    transition: .2s;
 }
 
 button:hover {
-    background: #ffffff;
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 10px 0 #020605,
-        0 16px 35px rgba(0,0,0,.55);
-}
-
-button:active {
-    transform: translateY(6px);
-
-    box-shadow:
-        0 2px 0 #020605,
-        0 7px 18px rgba(0,0,0,.4);
+    transform: scale(1.03);
 }
 
 button:disabled {
-    opacity: .55;
+    opacity: .5;
     cursor: not-allowed;
+    transform: none;
 }
 
 .result {
     display: none;
-
-    margin: 28px auto 0;
-
-    width: 90%;
-    max-width: 400px;
-
-    padding: 20px 18px;
-
+    margin-top: 25px;
+    padding: 22px;
     border-radius: 18px;
+    background: #10271f;
+    border: 1px solid #29493d;
+}
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.09),
-            rgba(0,0,0,.25)
-        );
-
-    border: 1px solid rgba(255,255,255,.25);
-
-    box-shadow:
-        0 15px 40px rgba(0,0,0,.4),
-        inset 0 1px 0 rgba(255,255,255,.08);
-
-    backdrop-filter: blur(10px);
+.result.show {
+    display: block;
+    animation: appear .4s ease;
 }
 
 .result-title {
-    color: #c9ddd7;
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: 17px;
+    color: #b9c8c1;
+    margin-bottom: 12px;
 }
 
-.prize {
-    margin-top: 8px;
-
-    color: #ffffff;
-
-    font-size: 24px;
-    font-weight: 900;
-
-    text-shadow:
-        0 3px 12px rgba(0,0,0,.7);
+.prize-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
-@media (max-width: 430px) {
+.details {
+    line-height: 2;
+    font-size: 15px;
+}
 
-    body {
-        padding: 18px;
+.old-price {
+    text-decoration: line-through;
+    color: #9da9a4;
+}
+
+.final-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.note {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #9eaea7;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+@media (max-width: 400px) {
     h1 {
-        font-size: 25px;
+        font-size: 24px;
     }
 
-    .subtitle {
-        font-size: 14px;
-        margin-bottom: 24px;
+    .prize-name {
+        font-size: 19px;
     }
 
-    .pointer {
-        border-left-width: 16px;
-        border-right-width: 16px;
-        border-top-width: 39px;
-    }
-
-    button {
-        font-size: 18px;
-        padding: 16px;
-    }
-
-    .prize {
-        font-size: 21px;
+    .center-dot {
+        width: 52px;
+        height: 52px;
     }
 }
-
 </style>
 </head>
 
@@ -314,36 +189,29 @@ button:disabled {
 
 <div class="container">
 
-    <h1>🎁 گردونه شانس علی فرد</h1>
-
+    <h1>🎡 گردونه شانس علی فرد</h1>
     <div class="subtitle">
-        گردونه رو بچرخون و جایزه‌ات رو ببر!
+        شانس خودتو امتحان کن و جایزه‌ات رو ببر!
     </div>
 
-    <div class="wheel-box">
-
+    <div class="wheel-area">
         <div class="pointer"></div>
-
-        <canvas
-            id="wheel"
-            width="500"
-            height="500">
-        </canvas>
-
+        <canvas id="wheel" width="900" height="900"></canvas>
+        <div class="center-dot">ALi<br>Fard</div>
     </div>
 
-    <button id="spinButton">
-        چرخاندن گردونه 🎡
-    </button>
+    <button id="spinBtn">چرخوندن گردونه 🎡</button>
 
     <div class="result" id="result">
+        <div class="result-title">🎉 جایزه شما</div>
 
-        <div class="result-title">
-            🎉 جایزه شما
+        <div class="prize-name" id="prizeName"></div>
+
+        <div class="details" id="details"></div>
+
+        <div class="note">
+            برای استفاده از جایزه، هنگام مراجعه این صفحه را نشان دهید.
         </div>
-
-        <div class="prize" id="prize"></div>
-
     </div>
 
 </div>
@@ -353,328 +221,310 @@ button:disabled {
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 
-const button = document.getElementById("spinButton");
-const result = document.getElementById("result");
-const prizeText = document.getElementById("prize");
-
-/* =========================
-   ۱۰ جایزه نهایی
-========================= */
+const spinBtn = document.getElementById("spinBtn");
+const resultBox = document.getElementById("result");
+const prizeName = document.getElementById("prizeName");
+const details = document.getElementById("details");
 
 const prizes = [
 
-    "ماسک مو رایگان",
+    {
+        name: "کد تخفیف ۶۰۰ هزار تومنی پاکسازی",
+        detail: `
+            پاکسازی: <span class="old-price">۱,۲۰۰,۰۰۰ تومان</span><br>
+            <b>۶۰۰,۰۰۰ تومان تخفیف</b><br>
+            قیمت با تخفیف: <span class="final-price">۶۰۰,۰۰۰ تومان</span>
+        `
+    },
 
-    "۵۰٪ تخفیف پاکسازی",
+    {
+        name: "کد تخفیف ۵۰۰ هزار تومنی ماساژ",
+        detail: `
+            ماساژ نیم‌ساعته: <span class="old-price">۱,۰۰۰,۰۰۰ تومان</span><br>
+            <b>۵۰۰,۰۰۰ تومان تخفیف</b><br>
+            قیمت با تخفیف: <span class="final-price">۵۰۰,۰۰۰ تومان</span>
+        `
+    },
 
-    "شمع گوش رایگان",
+    {
+        name: "کد تخفیف ۳۰۰ هزار تومنی خرید تیشرت",
+        detail: `
+            <b>۳۰۰,۰۰۰ تومان تخفیف</b><br>
+            ویژه خرید تیشرت
+        `
+    },
 
-    "شمع رایگان",
+    {
+        name: "ماسک مو رایگان",
+        detail: `
+            ارزش واقعی: <span class="old-price">۱۰۰,۰۰۰ تومان</span><br>
+            قیمت برای شما: <span class="final-price">رایگان 🎁</span>
+        `
+    },
 
-    "قهوه رایگان",
+    {
+        name: "شمع گوش رایگان",
+        detail: `
+            ارزش واقعی: <span class="old-price">۱۰۰,۰۰۰ تومان</span><br>
+            قیمت برای شما: <span class="final-price">رایگان 🎁</span>
+        `
+    },
 
-    "۳۰٪ تخفیف تیشرت",
+    {
+        name: "قهوه رایگان",
+        detail: `
+            ارزش واقعی: <span class="old-price">۱۰۰,۰۰۰ تومان</span><br>
+            قیمت برای شما: <span class="final-price">رایگان ☕</span>
+        `
+    },
 
-    "با خرید ۲ تیشرت\n۱ تیشرت رایگان",
+    {
+        name: "با خرید ۲ تیشرت، ۱ تیشرت رایگان",
+        detail: `
+            با خرید ۲ تیشرت<br>
+            <span class="final-price">۱ تیشرت رایگان 🎁</span>
+        `
+    },
 
-    "تخلیه چربی بینی رایگان",
+    {
+        name: "شانس دوباره 🍀",
+        detail: `
+            <span class="final-price">یک بار دیگه گردونه رو بچرخون!</span>
+        `
+    },
 
-    "پوچ — این بار نشد!",
+    {
+        name: "قهوه رایگان",
+        detail: `
+            ارزش واقعی: <span class="old-price">۱۰۰,۰۰۰ تومان</span><br>
+            قیمت برای شما: <span class="final-price">رایگان ☕</span>
+        `
+    },
 
-    "۵۰٪ تخفیف ماساژ"
+    {
+        name: "شانس دوباره 🍀",
+        detail: `
+            <span class="final-price">یک بار دیگه گردونه رو بچرخون!</span>
+        `
+    }
 
 ];
-
-/* =========================
-   رنگ‌های گردونه
-========================= */
 
 const colors = [
-
-    "#0b3329",
-    "#123f32",
-    "#071b16",
-    "#15503f",
-    "#0a2921",
-    "#184b3c",
-    "#06150f",
-    "#1b5945",
-    "#09251d",
-    "#123a2f"
-
+    "#174936",
+    "#0d2f24",
+    "#245c48",
+    "#123b2d",
+    "#2d7057",
+    "#0b251c",
+    "#1c503d",
+    "#316e58",
+    "#143a2c",
+    "#397c61"
 ];
 
-let currentRotation = 0;
-let isSpinning = false;
+let rotation = 0;
+let spinning = false;
+
+const slice = (Math.PI * 2) / prizes.length;
+
 
 /* =========================
-   شکستن متن به چند خط
-========================= */
-
-function wrapText(text, maxLength) {
-
-    if (text.includes("\n")) {
-        return text.split("\n");
-    }
-
-    const words = text.split(" ");
-
-    const lines = [];
-
-    let line = "";
-
-    words.forEach(word => {
-
-        const testLine =
-            line ? line + " " + word : word;
-
-        if (testLine.length > maxLength) {
-
-            if (line) {
-                lines.push(line);
-            }
-
-            line = word;
-
-        } else {
-
-            line = testLine;
-
-        }
-
-    });
-
-    if (line) {
-        lines.push(line);
-    }
-
-    return lines;
-}
-
-/* =========================
-   رسم گردونه
+   DRAW WHEEL
 ========================= */
 
 function drawWheel() {
 
-    const center = 250;
-    const radius = 240;
+    const size = canvas.width;
+    const center = size / 2;
+    const radius = size / 2 - 12;
 
-    const slice =
-        (Math.PI * 2) / prizes.length;
-
-    ctx.clearRect(0, 0, 500, 500);
+    ctx.clearRect(0, 0, size, size);
 
     for (let i = 0; i < prizes.length; i++) {
 
-        const start = i * slice;
+        const start = -Math.PI / 2 + i * slice;
         const end = start + slice;
 
-        /* بخش گردونه */
-
         ctx.beginPath();
-
         ctx.moveTo(center, center);
-
-        ctx.arc(
-            center,
-            center,
-            radius,
-            start,
-            end
-        );
-
+        ctx.arc(center, center, radius, start, end);
         ctx.closePath();
 
         ctx.fillStyle = colors[i];
-
         ctx.fill();
 
-        /* خطوط جداکننده */
-
-        ctx.strokeStyle = "#020806";
-
+        ctx.strokeStyle = "#ffffff";
         ctx.lineWidth = 5;
-
         ctx.stroke();
 
-        /* متن */
-
+        // متن داخل گردونه
         ctx.save();
 
         ctx.translate(center, center);
+        ctx.rotate(start + slice / 2);
 
-        ctx.rotate(
-            start + slice / 2
-        );
-
-        ctx.fillStyle = "#ffffff";
-
-        ctx.font =
-            "bold 14px Tahoma";
-
-        ctx.textAlign = "right";
+        ctx.textAlign = "center";
         ctx.textBaseline = "middle";
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 25px Tahoma";
 
-        ctx.shadowColor =
-            "rgba(0,0,0,.9)";
+        let text = prizes[i].name;
 
-        ctx.shadowBlur = 5;
+        // کوتاه کردن متن برای نمایش روی گردونه
+        if (text.includes("کد تخفیف ۶۰۰")) {
+            text = "۶۰۰ هزار تومان\nپاکسازی";
+        }
+        else if (text.includes("کد تخفیف ۵۰۰")) {
+            text = "۵۰۰ هزار تومان\nماساژ";
+        }
+        else if (text.includes("کد تخفیف ۳۰۰")) {
+            text = "۳۰۰ هزار تومان\nتیشرت";
+        }
+        else if (text.includes("ماسک مو")) {
+            text = "ماسک مو\nرایگان";
+        }
+        else if (text.includes("شمع گوش")) {
+            text = "شمع گوش\nرایگان";
+        }
+        else if (text.includes("قهوه")) {
+            text = "قهوه\nرایگان";
+        }
+        else if (text.includes("۲ تیشرت")) {
+            text = "۲ تیشرت بخر\n۱ تیشرت رایگان";
+        }
+        else {
+            text = "شانس\nدوباره 🍀";
+        }
 
-        const lines =
-            wrapText(prizes[i], 12);
+        const lines = text.split("\n");
 
-        const lineHeight = 20;
+        // متن را کمی به سمت بیرون می‌بریم
+        const textRadius = radius * 0.67;
 
-        const startY =
-            -((lines.length - 1) * lineHeight) / 2;
-
-        lines.forEach((line, index) => {
-
+        for (let j = 0; j < lines.length; j++) {
             ctx.fillText(
-                line,
-                radius - 12,
-                startY + index * lineHeight
+                lines[j],
+                textRadius,
+                (j - (lines.length - 1) / 2) * 32
             );
-
-        });
+        }
 
         ctx.restore();
     }
 
-    /* =====================
-       مرکز گردونه
-    ===================== */
-
+    // حلقه بیرونی
     ctx.beginPath();
-
-    ctx.arc(
-        center,
-        center,
-        50,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fillStyle = "#020806";
-
-    ctx.fill();
-
+    ctx.arc(center, center, radius, 0, Math.PI * 2);
     ctx.strokeStyle = "#ffffff";
-
-    ctx.lineWidth = 4;
-
+    ctx.lineWidth = 10;
     ctx.stroke();
-
-    ctx.fillStyle = "#ffffff";
-
-    ctx.font =
-        "bold 18px Tahoma";
-
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    ctx.fillText(
-        "علی فرد",
-        center,
-        center
-    );
 }
 
+drawWheel();
+
+
 /* =========================
-   چرخاندن گردونه
+   SPIN
 ========================= */
 
 function spin() {
 
-    if (isSpinning) {
-        return;
-    }
+    if (spinning) return;
 
-    isSpinning = true;
+    spinning = true;
+    spinBtn.disabled = true;
+    resultBox.classList.remove("show");
 
-    button.disabled = true;
-
-    result.style.display = "none";
-
-    /* انتخاب تصادفی جایزه */
-
-    const winner =
-        Math.floor(
-            Math.random() * prizes.length
-        );
-
-    const slice =
-        360 / prizes.length;
+    // انتخاب تصادفی جایزه
+    const selectedIndex =
+        Math.floor(Math.random() * prizes.length);
 
     /*
-       مرکز قسمت برنده
+       زاویه‌ای که باید گردونه بچرخد تا
+       مرکز خانه انتخاب‌شده دقیقاً زیر فلش قرار بگیرد.
     */
 
-    const winnerCenter =
-        winner * slice + slice / 2;
+    const targetAngle =
+        -(selectedIndex * slice + slice / 2);
 
-    /*
-       فلش در بالای گردونه
-       قرار دارد: -90 درجه
-    */
+    const currentNormalized =
+        rotation % (Math.PI * 2);
 
-    const targetRotation =
-        -90 - winnerCenter;
+    let difference =
+        targetAngle - currentNormalized;
 
-    let delta =
-        targetRotation -
-        (currentRotation % 360);
-
-    if (delta < 0) {
-        delta += 360;
+    while (difference < 0) {
+        difference += Math.PI * 2;
     }
 
-    /* شش دور کامل */
-
-    const extraSpins =
-        360 * 6;
+    // حداقل 6 دور کامل
+    const extraSpins = 6 * Math.PI * 2;
 
     const finalRotation =
-        currentRotation +
-        extraSpins +
-        delta;
+        rotation + extraSpins + difference;
 
-    currentRotation =
-        finalRotation;
+    const startRotation = rotation;
+    const duration = 5000;
+    const startTime = performance.now();
 
-    canvas.style.transform =
-        "rotate(" +
-        finalRotation +
-        "deg)";
+    function animate(now) {
 
-    /* نمایش نتیجه */
+        const elapsed = now - startTime;
+        const progress =
+            Math.min(elapsed / duration, 1);
 
-    setTimeout(function() {
+        // easing
+        const ease =
+            1 - Math.pow(1 - progress, 4);
 
-        prizeText.textContent =
-            prizes[winner].replace("\n", " ");
+        rotation =
+            startRotation +
+            (finalRotation - startRotation) * ease;
 
-        result.style.display =
-            "block";
+        canvas.style.transform =
+            `rotate(${rotation}rad)`;
 
-        isSpinning = false;
+        if (progress < 1) {
 
-        button.disabled = false;
+            requestAnimationFrame(animate);
 
-    }, 4200);
+        } else {
+
+            rotation = finalRotation;
+
+            showPrize(selectedIndex);
+
+            spinning = false;
+            spinBtn.disabled = false;
+        }
+    }
+
+    requestAnimationFrame(animate);
 }
 
+
 /* =========================
-   اجرا
+   SHOW RESULT
 ========================= */
 
-button.addEventListener(
-    "click",
-    spin
-);
+function showPrize(index) {
 
-drawWheel();
+    const prize = prizes[index];
+
+    prizeName.textContent = prize.name;
+    details.innerHTML = prize.detail;
+
+    resultBox.classList.add("show");
+
+    resultBox.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+}
+
+
+spinBtn.addEventListener("click", spin);
 
 </script>
 
