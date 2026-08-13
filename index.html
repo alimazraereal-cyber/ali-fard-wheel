@@ -1,1 +1,199 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گردونه شانس علی فرد</title>
 
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #071b16;
+    color: white;
+    font-family: Tahoma, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+.subtitle {
+    color: #b9d4cb;
+    margin-bottom: 25px;
+}
+
+.wheel-box {
+    position: relative;
+    width: min(90vw, 420px);
+    height: min(90vw, 420px);
+    margin: auto;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 8px #d5b46a,
+        0 0 30px rgba(0,0,0,.6);
+}
+
+.pointer {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-top: 42px solid #ffffff;
+    z-index: 5;
+    filter: drop-shadow(0 3px 4px #000);
+}
+
+button {
+    margin-top: 35px;
+    width: 90%;
+    max-width: 350px;
+    padding: 17px;
+    border: none;
+    border-radius: 14px;
+    background: #d5b46a;
+    color: #071b16;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 7px 0 #9d8145;
+}
+
+button:active {
+    transform: translateY(5px);
+    box-shadow: 0 2px 0 #9d8145;
+}
+
+button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.result {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px solid #d5b46a;
+    border-radius: 15px;
+    background: rgba(255,255,255,.06);
+}
+
+.result-title {
+    color: #d5b46a;
+    font-size: 18px;
+}
+
+.prize {
+    margin-top: 8px;
+    font-size: 24px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎁 گردونه شانس علی فرد</h1>
+    <div class="subtitle">گردونه رو بچرخون و جایزه‌ات رو ببر!</div>
+
+    <div class="wheel-box">
+        <div class="pointer"></div>
+        <canvas id="wheel" width="500" height="500"></canvas>
+    </div>
+
+    <button id="spinButton">چرخاندن گردونه 🎡</button>
+
+    <div class="result" id="result">
+        <div class="result-title">🎉 جایزه شما:</div>
+        <div class="prize" id="prize"></div>
+    </div>
+
+</div>
+
+<script>
+
+const canvas = document.getElementById("wheel");
+const ctx = canvas.getContext("2d");
+const spinButton = document.getElementById("spinButton");
+const resultBox = document.getElementById("result");
+const prizeText = document.getElementById("prize");
+
+const prizes = [
+    "ماسک مو رایگان",
+    "۵۰٪ تخفیف پاکسازی",
+    "شمع گوش رایگان",
+    "شمع رایگان",
+    "۳۰٪ تخفیف تیشرت"
+];
+
+const colors = [
+    "#123d32",
+    "#d5b46a",
+    "#0d2c24",
+    "#b99750",
+    "#184d3e"
+];
+
+let rotation = 0;
+let spinning = false;
+
+function drawWheel() {
+
+    const center = canvas.width / 2;
+    const radius = center - 8;
+    const slice = (Math.PI * 2) / prizes.length;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < prizes.length; i++) {
+
+        const start = rotation + i * slice;
+        const end = start + slice;
+
+        ctx.beginPath();
+        ctx.moveTo(center, center);
+        ctx.arc(center, center, radius, start, end);
+        ctx.closePath();
+
+        ctx.fillStyle = colors[i];
+        ctx.fill();
+
+        ctx.strokeStyle = "#071b16";
+        ctx.lineWidth = 5;
+        ctx.stroke();
+
+        ctx.save();
+
+        ctx.translate(center, center);
+        ctx.rotate(start + slice / 2);
+
+        ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 22px T
