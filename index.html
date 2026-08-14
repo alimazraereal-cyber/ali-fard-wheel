@@ -40,7 +40,7 @@ h1 {
     font-size: 14px;
 }
 
-/* CODE */
+/* LOGIN */
 
 #codeScreen {
     background: #10271f;
@@ -99,6 +99,7 @@ canvas {
     height: 100%;
     display: block;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
+    transform-origin: center center;
 }
 
 .pointer {
@@ -206,6 +207,31 @@ button:disabled {
     line-height: 1.8;
 }
 
+.extra-input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #416456;
+    background: #07140f;
+    color: white;
+    text-align: center;
+    font-size: 17px;
+    text-transform: uppercase;
+    outline: none;
+    margin-top: 12px;
+}
+
+.extra-error {
+    display: none;
+    color: #ff8d8d;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.success-message {
+    color: #9ff0c5;
+    font-weight: bold;
+}
 </style>
 </head>
 
@@ -219,8 +245,7 @@ button:disabled {
 شانست رو امتحان کن و جایزه‌ات رو ببر!
 </div>
 
-
-<!-- CODE SCREEN -->
+<!-- LOGIN -->
 
 <div id="codeScreen">
 
@@ -247,7 +272,6 @@ autocomplete="off"
 
 </div>
 
-
 <!-- WHEEL -->
 
 <div id="wheelScreen">
@@ -271,7 +295,6 @@ ALi<br>Fard
 <button id="spinBtn">
 چرخوندن گردونه 🎡
 </button>
-
 
 <div class="result" id="result">
 
@@ -305,14 +328,19 @@ style="display:none;">
 
 </div>
 
-
 <script>
 
 /* =========================
-   ACCESS CODE
+   ACCESS CODES
 ========================= */
 
 const ACCESS_CODE = "ALIFARD";
+
+/*
+کد ثابت چرخش مجدد
+بعد از پرداخت ۵۰,۰۰۰ تومان
+*/
+const EXTRA_SPIN_CODE = "AF50000";
 
 
 /* =========================
@@ -494,15 +522,19 @@ document.getElementById("paymentNote");
 function checkCode() {
 
 const code =
-codeInput.value.trim().toUpperCase();
+document.getElementById("codeInput").value
+.trim()
+.toUpperCase();
 
-if(code === ACCESS_CODE) {
+if(code === "ALIFARD") {
 
-errorMessage.style.display = "none";
+document.getElementById("errorMessage").style.display = "none";
 
-codeScreen.style.display = "none";
+document.getElementById("codeScreen").style.display = "none";
 
-wheelScreen.style.display = "block";
+document.getElementById("wheelScreen").style.display = "block";
+
+drawWheel();
 
 updateButton();
 
@@ -510,11 +542,11 @@ updateButton();
 
 else {
 
-errorMessage.style.display = "block";
+document.getElementById("errorMessage").style.display = "block";
 
-codeInput.value = "";
+document.getElementById("codeInput").value = "";
 
-codeInput.focus();
+document.getElementById("codeInput").focus();
 
 }
 
@@ -665,7 +697,6 @@ canvas.width,
 canvas.height
 );
 
-
 for(
 let i = 0;
 i < prizes.length;
@@ -677,7 +708,6 @@ const start =
 
 const end =
 start + slice;
-
 
 ctx.beginPath();
 
@@ -708,7 +738,6 @@ ctx.lineWidth = 5;
 
 ctx.stroke();
 
-
 ctx.save();
 
 ctx.translate(
@@ -732,9 +761,7 @@ ctx.fillStyle =
 ctx.font =
 "bold 24px Tahoma";
 
-
 let text;
-
 
 if(prizes[i].name.includes("۶۰۰")) {
 
@@ -805,13 +832,11 @@ text =
 
 }
 
-
 const lines =
 text.split("\n");
 
 const textRadius =
 radius * .67;
-
 
 for(
 let j = 0;
@@ -838,9 +863,6 @@ ctx.restore();
 
 }
 
-
-/* BORDER */
-
 ctx.beginPath();
 
 ctx.arc(
@@ -860,8 +882,6 @@ ctx.stroke();
 
 }
 
-drawWheel();
-
 
 /* =========================
    SPIN
@@ -871,7 +891,8 @@ function spin() {
 
 /*
 اگر شانس رایگان تمام شده
-فقط پیام پرداخت نشان داده شود.
+و شانس اضافه هم نداریم،
+صفحه پرداخت نمایش داده می‌شود.
 */
 
 if(
@@ -886,10 +907,8 @@ return;
 
 }
 
-
 if(spinning)
 return;
-
 
 spinning = true;
 
@@ -897,12 +916,10 @@ spinBtn.disabled = true;
 
 result.classList.remove("show");
 
-
 const selectedIndex =
 Math.floor(
 Math.random() * prizes.length
 );
-
 
 const targetAngle =
 -(
@@ -910,15 +927,12 @@ selectedIndex * slice +
 slice / 2
 );
 
-
 const current =
 rotation %
 (Math.PI * 2);
 
-
 let difference =
 targetAngle - current;
-
 
 while(difference < 0) {
 
@@ -927,16 +941,13 @@ Math.PI * 2;
 
 }
 
-
 const extraSpins =
 6 * Math.PI * 2;
-
 
 const finalRotation =
 rotation +
 extraSpins +
 difference;
-
 
 const startRotation =
 rotation;
@@ -946,7 +957,6 @@ const duration =
 
 const startTime =
 performance.now();
-
 
 function animate(now) {
 
@@ -965,7 +975,6 @@ const ease =
 4
 );
 
-
 rotation =
 startRotation +
 (
@@ -974,10 +983,8 @@ startRotation
 ) *
 ease;
 
-
 canvas.style.transform =
 `rotate(${rotation}rad)`;
-
 
 if(progress < 1) {
 
@@ -1020,7 +1027,7 @@ prizes[index];
 
 
 /*
-اولین چرخش
+اگر اولین چرخش بود
 */
 
 if(!state.firstSpinUsed) {
@@ -1029,10 +1036,8 @@ state.firstSpinUsed = true;
 
 }
 
-
 /*
-اگر در چرخش دوم هستیم،
-شانس دوباره مصرف می‌شود.
+اگر شانس اضافه استفاده شد
 */
 
 else if(
@@ -1048,9 +1053,7 @@ state.extraChanceAvailable = false;
 
 
 /*
-اگر روی شانس دوباره افتاد
-و هنوز قبلاً استفاده نشده،
-یک چرخش اضافه فعال می‌شود.
+اگر جایزه شانس دوباره بود
 */
 
 if(
@@ -1062,7 +1065,6 @@ state.extraChanceAvailable = true;
 
 }
 
-
 saveState();
 
 showPrize(prize);
@@ -1073,7 +1075,7 @@ updateButton();
 
 
 /* =========================
-   RESULT
+   SHOW PRIZE
 ========================= */
 
 function showPrize(prize) {
@@ -1109,8 +1111,40 @@ prizeName.textContent =
 details.innerHTML =
 "برای چرخاندن دوباره گردونه، مبلغ <b>۵۰,۰۰۰ تومان</b> پرداخت کنید.";
 
-paymentNote.innerHTML =
-"💰 هزینه چرخش مجدد: <b>۵۰,۰۰۰ تومان</b>";
+paymentNote.innerHTML = `
+
+💰 هزینه چرخش مجدد:
+<b>۵۰,۰۰۰ تومان</b>
+
+<br><br>
+
+بعد از پرداخت، کد
+<b>AF50000</b>
+را وارد کنید.
+
+<input
+id="extraSpinInput"
+class="extra-input"
+type="text"
+placeholder="AF50000"
+autocomplete="off"
+>
+
+<button
+id="activateExtraSpin"
+style="margin-top:12px;"
+>
+فعال کردن چرخش مجدد 🎡
+</button>
+
+<div
+id="extraSpinError"
+class="extra-error"
+>
+❌ کد صحیح نیست.
+</div>
+
+`;
 
 paymentNote.style.display =
 "block";
@@ -1122,8 +1156,97 @@ behavior: "smooth",
 block: "nearest"
 });
 
+
+document
+.getElementById("activateExtraSpin")
+.addEventListener(
+"click",
+activateExtraSpin
+);
+
+
+/* Enter برای کد AF50000 */
+
+document
+.getElementById("extraSpinInput")
+.addEventListener(
+"keydown",
+function(e) {
+
+if(e.key === "Enter") {
+
+activateExtraSpin();
+
 }
 
+}
+);
+
+}
+
+
+/* =========================
+   ACTIVATE EXTRA SPIN
+========================= */
+
+function activateExtraSpin() {
+
+const input =
+document.getElementById("extraSpinInput");
+
+const error =
+document.getElementById("extraSpinError");
+
+const code =
+input.value.trim().toUpperCase();
+
+
+if(code !== EXTRA_SPIN_CODE) {
+
+error.style.display =
+"block";
+
+return;
+
+}
+
+
+/*
+کد AF50000 صحیح است.
+یک شانس اضافه فعال می‌شود.
+*/
+
+state.extraChanceAvailable = true;
+
+state.extraChanceUsed = false;
+
+saveState();
+
+
+paymentNote.style.display =
+"none";
+
+prizeName.textContent =
+"✅ چرخش مجدد فعال شد";
+
+details.innerHTML = `
+<span class="success-message">
+کد شما تأیید شد.
+</span>
+<br>
+اکنون یک بار دیگر می‌توانید گردونه را بچرخانید 🎡
+`;
+
+result.classList.add("show");
+
+updateButton();
+
+}
+
+
+/* =========================
+   SPIN BUTTON
+========================= */
 
 spinBtn.addEventListener(
 "click",
