@@ -40,7 +40,7 @@ h1 {
     font-size: 14px;
 }
 
-/* CODE SCREEN */
+/* CODE */
 
 #codeScreen {
     background: #10271f;
@@ -112,7 +112,6 @@ canvas {
     border-right: 18px solid transparent;
     border-top: 42px solid #fff;
     z-index: 5;
-    filter: drop-shadow(0 3px 3px rgba(0,0,0,.5));
 }
 
 .center-dot {
@@ -143,17 +142,11 @@ button {
     border-radius: 12px;
     cursor: pointer;
     margin-top: 22px;
-    transition: .2s;
-}
-
-button:hover {
-    transform: scale(1.03);
 }
 
 button:disabled {
     opacity: .5;
     cursor: not-allowed;
-    transform: none;
 }
 
 /* RESULT */
@@ -169,7 +162,6 @@ button:disabled {
 
 .result.show {
     display: block;
-    animation: appear .4s ease;
 }
 
 .result-title {
@@ -211,37 +203,9 @@ button:disabled {
     border-radius: 10px;
     background: #07140f;
     border: 1px solid #416456;
-    color: #fff;
     line-height: 1.8;
 }
 
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (max-width: 400px) {
-
-    h1 {
-        font-size: 24px;
-    }
-
-    .prize-name {
-        font-size: 19px;
-    }
-
-    .center-dot {
-        width: 52px;
-        height: 52px;
-    }
-}
 </style>
 </head>
 
@@ -249,1032 +213,924 @@ button:disabled {
 
 <div class="container">
 
-    <h1>🎡 گردونه شانس علی فرد</h1>
+<h1>🎡 گردونه شانس علی فرد</h1>
 
-    <div class="subtitle">
-        شانست رو امتحان کن و جایزه‌ات رو ببر!
-    </div>
+<div class="subtitle">
+شانست رو امتحان کن و جایزه‌ات رو ببر!
+</div>
 
-    <!-- CODE SCREEN -->
 
-    <div id="codeScreen">
+<!-- CODE SCREEN -->
 
-        <h2>🔐 کد شانس امروزت رو وارد کن</h2>
+<div id="codeScreen">
 
-        <div>
-            کدی که از علی فرد دریافت کردی وارد کن
-        </div>
+<h2>🔐 کد شانس امروزت رو وارد کن</h2>
 
-        <input
-            id="codeInput"
-            type="text"
-            placeholder="کد شانس"
-            autocomplete="off"
-        >
+<div>
+کدی که از علی فرد دریافت کردی وارد کن
+</div>
 
-        <button id="enterBtn">
-            ورود به گردونه 🎁
-        </button>
+<input
+id="codeInput"
+type="text"
+placeholder="کد شانس"
+autocomplete="off"
+>
 
-        <div id="errorMessage">
-            ❌ کد وارد شده صحیح نیست.
-        </div>
+<button id="enterBtn">
+ورود به گردونه 🎁
+</button>
 
-    </div>
-
-    <!-- WHEEL SCREEN -->
-
-    <div id="wheelScreen">
-
-        <div class="wheel-area">
-
-            <div class="pointer"></div>
-
-            <canvas
-                id="wheel"
-                width="900"
-                height="900">
-            </canvas>
-
-            <div class="center-dot">
-                ALi<br>Fard
-            </div>
-
-        </div>
-
-        <button id="spinBtn">
-            چرخوندن گردونه 🎡
-        </button>
-
-        <!-- RESULT -->
-
-        <div class="result" id="result">
-
-            <div class="result-title">
-                🎉 نتیجه گردونه
-            </div>
-
-            <div
-                class="prize-name"
-                id="prizeName">
-            </div>
-
-            <div
-                class="details"
-                id="details">
-            </div>
-
-            <div
-                class="payment-note"
-                id="paymentNote"
-                style="display:none;">
-            </div>
-
-            <div class="note">
-                برای استفاده از جایزه، هنگام مراجعه این صفحه را نشان دهید.
-            </div>
-
-        </div>
-
-    </div>
+<div id="errorMessage">
+❌ کد وارد شده صحیح نیست.
+</div>
 
 </div>
 
+
+<!-- WHEEL -->
+
+<div id="wheelScreen">
+
+<div class="wheel-area">
+
+<div class="pointer"></div>
+
+<canvas
+id="wheel"
+width="900"
+height="900">
+</canvas>
+
+<div class="center-dot">
+ALi<br>Fard
+</div>
+
+</div>
+
+<button id="spinBtn">
+چرخوندن گردونه 🎡
+</button>
+
+
+<div class="result" id="result">
+
+<div class="result-title">
+🎉 نتیجه گردونه
+</div>
+
+<div
+class="prize-name"
+id="prizeName">
+</div>
+
+<div
+class="details"
+id="details">
+</div>
+
+<div
+class="payment-note"
+id="paymentNote"
+style="display:none;">
+</div>
+
+<div class="note">
+برای استفاده از جایزه، هنگام مراجعه این صفحه را نشان دهید.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
 <script>
 
-/* =====================================================
-   SETTINGS
-===================================================== */
+/* =========================
+   ACCESS CODE
+========================= */
 
 const ACCESS_CODE = "ALIFARD";
 
-const STORAGE_KEY =
-    "ali_fard_wheel_state";
 
-
-/* =====================================================
+/* =========================
    PRIZES
-===================================================== */
+========================= */
 
 const prizes = [
 
-    {
-        name: "کد تخفیف ۶۰۰ هزار تومنی پاکسازی",
+{
+name: "کد تخفیف ۶۰۰ هزار تومنی پاکسازی",
 
-        detail: `
-            پاکسازی:
-            <span class="old-price">
-                ۱,۲۰۰,۰۰۰ تومان
-            </span>
-            <br>
+detail: `
+پاکسازی:
+<span class="old-price">۱,۲۰۰,۰۰۰ تومان</span>
+<br>
+<b>۶۰۰,۰۰۰ تومان تخفیف</b>
+<br>
+قیمت با تخفیف:
+<span class="final-price">۶۰۰,۰۰۰ تومان</span>
+`
+},
 
-            <b>
-                ۶۰۰,۰۰۰ تومان تخفیف
-            </b>
+{
+name: "کد تخفیف ۵۰۰ هزار تومنی ماساژ",
 
-            <br>
+detail: `
+ماساژ نیم‌ساعته:
+<span class="old-price">۱,۰۰۰,۰۰۰ تومان</span>
+<br>
+<b>۵۰۰,۰۰۰ تومان تخفیف</b>
+<br>
+قیمت با تخفیف:
+<span class="final-price">۵۰۰,۰۰۰ تومان</span>
+`
+},
 
-            قیمت با تخفیف:
-            <span class="final-price">
-                ۶۰۰,۰۰۰ تومان
-            </span>
-        `
-    },
+{
+name: "کد تخفیف ۳۰۰ هزار تومنی خرید تیشرت",
 
-    {
-        name: "کد تخفیف ۵۰۰ هزار تومنی ماساژ",
+detail: `
+<b>۳۰۰,۰۰۰ تومان تخفیف</b>
+<br>
+ویژه خرید تیشرت
+`
+},
 
-        detail: `
-            ماساژ نیم‌ساعته:
-            <span class="old-price">
-                ۱,۰۰۰,۰۰۰ تومان
-            </span>
-            <br>
+{
+name: "ماسک مو رایگان",
 
-            <b>
-                ۵۰۰,۰۰۰ تومان تخفیف
-            </b>
+detail: `
+ارزش واقعی:
+<span class="old-price">۱۰۰,۰۰۰ تومان</span>
+<br>
+قیمت برای شما:
+<span class="final-price">رایگان 🎁</span>
+`
+},
 
-            <br>
+{
+name: "شمع گوش رایگان",
 
-            قیمت با تخفیف:
-            <span class="final-price">
-                ۵۰۰,۰۰۰ تومان
-            </span>
-        `
-    },
+detail: `
+ارزش واقعی:
+<span class="old-price">۱۰۰,۰۰۰ تومان</span>
+<br>
+قیمت برای شما:
+<span class="final-price">رایگان 🎁</span>
+`
+},
 
-    {
-        name: "کد تخفیف ۳۰۰ هزار تومنی خرید تیشرت",
+{
+name: "قهوه رایگان",
 
-        detail: `
-            <b>
-                ۳۰۰,۰۰۰ تومان تخفیف
-            </b>
+detail: `
+ارزش واقعی:
+<span class="old-price">۱۰۰,۰۰۰ تومان</span>
+<br>
+قیمت برای شما:
+<span class="final-price">رایگان ☕</span>
+`
+},
 
-            <br>
+{
+name: "با خرید ۲ تیشرت، ۱ تیشرت رایگان",
 
-            ویژه خرید تیشرت
-        `
-    },
+detail: `
+با خرید ۲ تیشرت
+<br>
+<span class="final-price">
+۱ تیشرت رایگان 🎁
+</span>
+`
+},
 
-    {
-        name: "ماسک مو رایگان",
+{
+name: "شانس دوباره 🍀",
 
-        detail: `
-            ارزش واقعی:
-            <span class="old-price">
-                ۱۰۰,۰۰۰ تومان
-            </span>
+detail: `
+<span class="final-price">
+یک بار دیگه گردونه رو بچرخون!
+</span>
+`,
 
-            <br>
+extraChance: true
+},
 
-            قیمت برای شما:
-            <span class="final-price">
-                رایگان 🎁
-            </span>
-        `
-    },
+{
+name: "قهوه رایگان",
 
-    {
-        name: "شمع گوش رایگان",
+detail: `
+ارزش واقعی:
+<span class="old-price">۱۰۰,۰۰۰ تومان</span>
+<br>
+قیمت برای شما:
+<span class="final-price">رایگان ☕</span>
+`
+},
 
-        detail: `
-            ارزش واقعی:
-            <span class="old-price">
-                ۱۰۰,۰۰۰ تومان
-            </span>
+{
+name: "پوچ 😶",
 
-            <br>
-
-            قیمت برای شما:
-            <span class="final-price">
-                رایگان 🎁
-            </span>
-        `
-    },
-
-    {
-        name: "قهوه رایگان",
-
-        detail: `
-            ارزش واقعی:
-            <span class="old-price">
-                ۱۰۰,۰۰۰ تومان
-            </span>
-
-            <br>
-
-            قیمت برای شما:
-            <span class="final-price">
-                رایگان ☕
-            </span>
-        `
-    },
-
-    {
-        name: "با خرید ۲ تیشرت، ۱ تیشرت رایگان",
-
-        detail: `
-            با خرید ۲ تیشرت
-
-            <br>
-
-            <span class="final-price">
-                ۱ تیشرت رایگان 🎁
-            </span>
-        `
-    },
-
-    {
-        name: "شانس دوباره 🍀",
-
-        detail: `
-            <span class="final-price">
-                یک بار دیگه گردونه رو بچرخون!
-            </span>
-        `,
-        extraChance: true
-    },
-
-    {
-        name: "قهوه رایگان",
-
-        detail: `
-            ارزش واقعی:
-            <span class="old-price">
-                ۱۰۰,۰۰۰ تومان
-            </span>
-
-            <br>
-
-            قیمت برای شما:
-            <span class="final-price">
-                رایگان ☕
-            </span>
-        `
-    },
-
-    {
-        name: "پوچ 😶",
-
-        detail: `
-            <span class="final-price">
-                این بار چیزی نصیبت نشد 😅
-            </span>
-            <br>
-            ولی دفعه بعد شانست رو امتحان کن!
-        `,
-        empty: true
-    }
+detail: `
+<span class="final-price">
+این بار چیزی نصیبت نشد 😅
+</span>
+<br>
+دفعه بعد شانست رو امتحان کن!
+`
+}
 
 ];
 
 
-/* =====================================================
+/* =========================
+   ELEMENTS
+========================= */
+
+const codeInput =
+document.getElementById("codeInput");
+
+const enterBtn =
+document.getElementById("enterBtn");
+
+const errorMessage =
+document.getElementById("errorMessage");
+
+const codeScreen =
+document.getElementById("codeScreen");
+
+const wheelScreen =
+document.getElementById("wheelScreen");
+
+const canvas =
+document.getElementById("wheel");
+
+const ctx =
+canvas.getContext("2d");
+
+const spinBtn =
+document.getElementById("spinBtn");
+
+const result =
+document.getElementById("result");
+
+const prizeName =
+document.getElementById("prizeName");
+
+const details =
+document.getElementById("details");
+
+const paymentNote =
+document.getElementById("paymentNote");
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function checkCode() {
+
+const code =
+codeInput.value.trim().toUpperCase();
+
+if(code === ACCESS_CODE) {
+
+errorMessage.style.display = "none";
+
+codeScreen.style.display = "none";
+
+wheelScreen.style.display = "block";
+
+updateButton();
+
+}
+
+else {
+
+errorMessage.style.display = "block";
+
+codeInput.value = "";
+
+codeInput.focus();
+
+}
+
+}
+
+enterBtn.addEventListener(
+"click",
+checkCode
+);
+
+codeInput.addEventListener(
+"keydown",
+function(e) {
+
+if(e.key === "Enter") {
+checkCode();
+}
+
+}
+);
+
+
+/* =========================
    STATE
-===================================================== */
+========================= */
 
 let state = {
-    firstSpinUsed: false,
-    extraChanceAvailable: false,
-    extraChanceUsed: false,
-    spinCount: 0
+
+firstSpinUsed: false,
+
+extraChanceAvailable: false,
+
+extraChanceUsed: false
+
 };
+
+const STORAGE_KEY =
+"ali_fard_wheel_state";
+
 
 try {
 
-    const saved =
-        localStorage.getItem(
-            STORAGE_KEY
-        );
+const saved =
+localStorage.getItem(STORAGE_KEY);
 
-    if (saved) {
+if(saved) {
 
-        state = {
-            ...state,
-            ...JSON.parse(saved)
-        };
+state =
+JSON.parse(saved);
 
-    }
-
-} catch (error) {
-
-    console.log(
-        "Storage unavailable"
-    );
 }
+
+} catch(e) {}
 
 
 function saveState() {
 
-    try {
+try {
 
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(state)
-        );
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(state)
+);
 
-    } catch (error) {
+} catch(e) {}
 
-        console.log(
-            "Could not save state"
-        );
-    }
 }
 
 
-/* =====================================================
-   WHEEL
-===================================================== */
+/* =========================
+   BUTTON
+========================= */
+
+function updateButton() {
+
+if(!state.firstSpinUsed) {
+
+spinBtn.disabled = false;
+
+spinBtn.textContent =
+"چرخوندن گردونه 🎡";
+
+}
+
+else if(
+state.extraChanceAvailable &&
+!state.extraChanceUsed
+) {
+
+spinBtn.disabled = false;
+
+spinBtn.textContent =
+"استفاده از شانس دوباره 🍀";
+
+}
+
+else {
+
+spinBtn.disabled = false;
+
+spinBtn.textContent =
+"چرخش مجدد — ۵۰,۰۰۰ تومان";
+
+}
+
+}
+
+
+/* =========================
+   WHEEL DRAW
+========================= */
 
 const colors = [
-    "#174936",
-    "#0d2f24",
-    "#245c48",
-    "#123b2d",
-    "#2d7057",
-    "#0b251c",
-    "#1c503d",
-    "#316e58",
-    "#143a2c",
-    "#397c61"
+
+"#174936",
+"#0d2f24",
+"#245c48",
+"#123b2d",
+"#2d7057",
+"#0b251c",
+"#1c503d",
+"#316e58",
+"#143a2c",
+"#397c61"
+
 ];
 
-const canvas =
-    document.getElementById("wheel");
-
-const ctx =
-    canvas.getContext("2d");
-
-const spinBtn =
-    document.getElementById("spinBtn");
-
-const resultBox =
-    document.getElementById("result");
-
-const prizeName =
-    document.getElementById("prizeName");
-
-const details =
-    document.getElementById("details");
-
-const paymentNote =
-    document.getElementById("paymentNote");
-
 const slice =
-    (Math.PI * 2) / prizes.length;
+(Math.PI * 2) / prizes.length;
 
 let rotation = 0;
+
 let spinning = false;
 
 
-/* =====================================================
-   DRAW WHEEL
-===================================================== */
-
 function drawWheel() {
 
-    const size =
-        canvas.width;
+const center =
+canvas.width / 2;
 
-    const center =
-        size / 2;
+const radius =
+canvas.width / 2 - 12;
 
-    const radius =
-        size / 2 - 12;
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
 
-    ctx.clearRect(
-        0,
-        0,
-        size,
-        size
-    );
 
+for(
+let i = 0;
+i < prizes.length;
+i++
+) {
 
-    for (
-        let i = 0;
-        i < prizes.length;
-        i++
-    ) {
+const start =
+-Math.PI / 2 + i * slice;
 
-        const start =
-            -Math.PI / 2 +
-            i * slice;
+const end =
+start + slice;
 
-        const end =
-            start + slice;
 
+ctx.beginPath();
 
-        ctx.beginPath();
+ctx.moveTo(
+center,
+center
+);
 
-        ctx.moveTo(
-            center,
-            center
-        );
+ctx.arc(
+center,
+center,
+radius,
+start,
+end
+);
 
-        ctx.arc(
-            center,
-            center,
-            radius,
-            start,
-            end
-        );
+ctx.closePath();
 
-        ctx.closePath();
+ctx.fillStyle =
+colors[i];
 
-        ctx.fillStyle =
-            colors[i];
+ctx.fill();
 
-        ctx.fill();
+ctx.strokeStyle =
+"#ffffff";
 
-        ctx.strokeStyle =
-            "#ffffff";
+ctx.lineWidth = 5;
 
-        ctx.lineWidth =
-            5;
+ctx.stroke();
 
-        ctx.stroke();
 
+ctx.save();
 
-        /* TEXT */
+ctx.translate(
+center,
+center
+);
 
-        ctx.save();
+ctx.rotate(
+start + slice / 2
+);
 
-        ctx.translate(
-            center,
-            center
-        );
+ctx.textAlign =
+"center";
 
-        ctx.rotate(
-            start + slice / 2
-        );
+ctx.textBaseline =
+"middle";
 
-        ctx.textAlign =
-            "center";
+ctx.fillStyle =
+"#ffffff";
 
-        ctx.textBaseline =
-            "middle";
+ctx.font =
+"bold 24px Tahoma";
 
-        ctx.fillStyle =
-            "#ffffff";
 
-        ctx.font =
-            "bold 25px Tahoma";
+let text;
 
 
-        let text = "";
+if(prizes[i].name.includes("۶۰۰")) {
 
+text =
+"۶۰۰ هزار تومان\nپاکسازی";
 
-        if (
-            prizes[i].name.includes("۶۰۰")
-        ) {
-
-            text =
-                "۶۰۰ هزار تومان\nپاکسازی";
-
-        }
-
-        else if (
-            prizes[i].name.includes("۵۰۰")
-        ) {
-
-            text =
-                "۵۰۰ هزار تومان\nماساژ";
-
-        }
-
-        else if (
-            prizes[i].name.includes("۳۰۰")
-        ) {
-
-            text =
-                "۳۰۰ هزار تومان\nتیشرت";
-
-        }
-
-        else if (
-            prizes[i].name.includes("ماسک مو")
-        ) {
-
-            text =
-                "ماسک مو\nرایگان";
-
-        }
-
-        else if (
-            prizes[i].name.includes("شمع گوش")
-        ) {
-
-            text =
-                "شمع گوش\nرایگان";
-
-        }
-
-        else if (
-            prizes[i].name.includes("قهوه")
-        ) {
-
-            text =
-                "قهوه\nرایگان";
-
-        }
-
-        else if (
-            prizes[i].name.includes("۲ تیشرت")
-        ) {
-
-            text =
-                "۲ تیشرت بخر\n۱ تیشرت رایگان";
-
-        }
-
-        else if (
-            prizes[i].name.includes("پوچ")
-        ) {
-
-            text =
-                "پوچ 😶";
-
-        }
-
-        else {
-
-            text =
-                "شانس\nدوباره 🍀";
-        }
-
-
-        const lines =
-            text.split("\n");
-
-        const textRadius =
-            radius * 0.67;
-
-
-        for (
-            let j = 0;
-            j < lines.length;
-            j++
-        ) {
-
-            ctx.fillText(
-
-                lines[j],
-
-                textRadius,
-
-                (
-                    j -
-                    (lines.length - 1) / 2
-                ) * 32
-
-            );
-
-        }
-
-        ctx.restore();
-    }
-
-
-    ctx.beginPath();
-
-    ctx.arc(
-        center,
-        center,
-        radius,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.strokeStyle =
-        "#ffffff";
-
-    ctx.lineWidth =
-        10;
-
-    ctx.stroke();
 }
 
+else if(prizes[i].name.includes("۵۰۰")) {
+
+text =
+"۵۰۰ هزار تومان\nماساژ";
+
+}
+
+else if(prizes[i].name.includes("۳۰۰")) {
+
+text =
+"۳۰۰ هزار تومان\nتیشرت";
+
+}
+
+else if(prizes[i].name.includes("ماسک")) {
+
+text =
+"ماسک مو\nرایگان";
+
+}
+
+else if(prizes[i].name.includes("شمع")) {
+
+text =
+"شمع گوش\nرایگان";
+
+}
+
+else if(
+prizes[i].name.includes("۲ تیشرت")
+) {
+
+text =
+"۲ تیشرت بخر\n۱ تیشرت رایگان";
+
+}
+
+else if(
+prizes[i].name.includes("قهوه")
+) {
+
+text =
+"قهوه\nرایگان";
+
+}
+
+else if(
+prizes[i].name.includes("پوچ")
+) {
+
+text =
+"پوچ 😶";
+
+}
+
+else {
+
+text =
+"شانس\nدوباره 🍀";
+
+}
+
+
+const lines =
+text.split("\n");
+
+const textRadius =
+radius * .67;
+
+
+for(
+let j = 0;
+j < lines.length;
+j++
+) {
+
+ctx.fillText(
+
+lines[j],
+
+textRadius,
+
+(
+j -
+(lines.length - 1) / 2
+) * 32
+
+);
+
+}
+
+ctx.restore();
+
+}
+
+
+/* BORDER */
+
+ctx.beginPath();
+
+ctx.arc(
+center,
+center,
+radius,
+0,
+Math.PI * 2
+);
+
+ctx.strokeStyle =
+"#ffffff";
+
+ctx.lineWidth = 10;
+
+ctx.stroke();
+
+}
 
 drawWheel();
 
 
-/* =====================================================
-   ACCESS CODE
-===================================================== */
-
-const codeInput =
-    document.getElementById(
-        "codeInput"
-    );
-
-const enterBtn =
-    document.getElementById(
-        "enterBtn"
-    );
-
-const errorMessage =
-    document.getElementById(
-        "errorMessage"
-    );
-
-const codeScreen =
-    document.getElementById(
-        "codeScreen"
-    );
-
-const wheelScreen =
-    document.getElementById(
-        "wheelScreen"
-    );
-
-
-function checkCode() {
-
-    const enteredCode =
-        codeInput.value
-        .trim()
-        .toUpperCase();
-
-
-    if (
-        enteredCode ===
-        ACCESS_CODE
-    ) {
-
-        errorMessage.style.display =
-            "none";
-
-        codeScreen.style.display =
-            "none";
-
-        wheelScreen.style.display =
-            "block";
-
-        updateSpinButton();
-
-    }
-
-    else {
-
-        errorMessage.style.display =
-            "block";
-
-        codeInput.value =
-            "";
-
-        codeInput.focus();
-    }
-}
-
-
-enterBtn.addEventListener(
-    "click",
-    checkCode
-);
-
-
-codeInput.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key === "Enter"
-        ) {
-
-            checkCode();
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   BUTTON STATUS
-===================================================== */
-
-function updateSpinButton() {
-
-    if (
-        !state.firstSpinUsed
-    ) {
-
-        spinBtn.disabled =
-            false;
-
-        spinBtn.textContent =
-            "چرخوندن گردونه 🎡";
-
-        return;
-    }
-
-
-    if (
-        state.extraChanceAvailable &&
-        !state.extraChanceUsed
-    ) {
-
-        spinBtn.disabled =
-            false;
-
-        spinBtn.textContent =
-            "استفاده از شانس دوباره 🍀";
-
-        return;
-    }
-
-
-    spinBtn.disabled =
-        false;
-
-    spinBtn.textContent =
-        "چرخش مجدد — ۵۰,۰۰۰ تومان";
-
-}
-
-
-/* =====================================================
+/* =========================
    SPIN
-===================================================== */
+========================= */
 
 function spin() {
 
-    if (spinning)
-        return;
+/*
+اگر شانس رایگان تمام شده
+فقط پیام پرداخت نشان داده شود.
+*/
 
+if(
+state.firstSpinUsed &&
+(!state.extraChanceAvailable ||
+state.extraChanceUsed)
+) {
 
-    /*
-       اگر اولین بار نیست و شانس دوباره
-       هم تمام شده، چرخش رایگان نداریم.
-    */
+showPayment();
 
-    if (
-        state.firstSpinUsed &&
-        !state.extraChanceAvailable
-    ) {
+return;
 
-        showPaymentMessage();
-
-        return;
-    }
-
-
-    if (
-        state.firstSpinUsed &&
-        state.extraChanceAvailable &&
-        state.extraChanceUsed
-    ) {
-
-        showPaymentMessage();
-
-        return;
-    }
-
-
-    spinning = true;
-
-    spinBtn.disabled =
-        true;
-
-    resultBox.classList.remove(
-        "show"
-    );
-
-
-    const selectedIndex =
-        Math.floor(
-            Math.random() *
-            prizes.length
-        );
-
-
-    const targetAngle =
-        -(
-            selectedIndex * slice +
-            slice / 2
-        );
-
-
-    const currentNormalized =
-        rotation %
-        (Math.PI * 2);
-
-
-    let difference =
-        targetAngle -
-        currentNormalized;
-
-
-    while (
-        difference < 0
-    ) {
-
-        difference +=
-            Math.PI * 2;
-    }
-
-
-    const extraSpins =
-        6 *
-        Math.PI *
-        2;
-
-
-    const finalRotation =
-        rotation +
-        extraSpins +
-        difference;
-
-
-    const startRotation =
-        rotation;
-
-    const duration =
-        5000;
-
-    const startTime =
-        performance.now();
-
-
-    function animate(now) {
-
-        const elapsed =
-            now -
-            startTime;
-
-
-        const progress =
-            Math.min(
-                elapsed /
-                duration,
-                1
-            );
-
-
-        const ease =
-            1 -
-            Math.pow(
-                1 - progress,
-                4
-            );
-
-
-        rotation =
-            startRotation +
-            (
-                finalRotation -
-                startRotation
-            ) *
-            ease;
-
-
-        canvas.style.transform =
-            `rotate(${rotation}rad)`;
-
-
-        if (
-            progress < 1
-        ) {
-
-            requestAnimationFrame(
-                animate
-            );
-
-        }
-
-        else {
-
-            rotation =
-                finalRotation;
-
-            finishSpin(
-                selectedIndex
-            );
-
-            spinning =
-                false;
-        }
-    }
-
-
-    requestAnimationFrame(
-        animate
-    );
 }
 
 
-/* =====================================================
-   FINISH SPIN
-===================================================== */
+if(spinning)
+return;
+
+
+spinning = true;
+
+spinBtn.disabled = true;
+
+result.classList.remove("show");
+
+
+const selectedIndex =
+Math.floor(
+Math.random() * prizes.length
+);
+
+
+const targetAngle =
+-(
+selectedIndex * slice +
+slice / 2
+);
+
+
+const current =
+rotation %
+(Math.PI * 2);
+
+
+let difference =
+targetAngle - current;
+
+
+while(difference < 0) {
+
+difference +=
+Math.PI * 2;
+
+}
+
+
+const extraSpins =
+6 * Math.PI * 2;
+
+
+const finalRotation =
+rotation +
+extraSpins +
+difference;
+
+
+const startRotation =
+rotation;
+
+const duration =
+5000;
+
+const startTime =
+performance.now();
+
+
+function animate(now) {
+
+const elapsed =
+now - startTime;
+
+const progress =
+Math.min(
+elapsed / duration,
+1
+);
+
+const ease =
+1 - Math.pow(
+1 - progress,
+4
+);
+
+
+rotation =
+startRotation +
+(
+finalRotation -
+startRotation
+) *
+ease;
+
+
+canvas.style.transform =
+`rotate(${rotation}rad)`;
+
+
+if(progress < 1) {
+
+requestAnimationFrame(
+animate
+);
+
+}
+
+else {
+
+rotation =
+finalRotation;
+
+finishSpin(
+selectedIndex
+);
+
+spinning = false;
+
+}
+
+}
+
+requestAnimationFrame(
+animate
+);
+
+}
+
+
+/* =========================
+   FINISH
+========================= */
 
 function finishSpin(index) {
 
-    const prize =
-        prizes[index];
+const prize =
+prizes[index];
 
 
-    state.spinCount++;
+/*
+اولین چرخش
+*/
 
+if(!state.firstSpinUsed) {
 
-    /*
-       اولین چرخش
-    */
+state.firstSpinUsed = true;
 
-    if (
-        !state.firstSpinUsed
-    ) {
-
-        state.firstSpinUsed =
-            true;
-
-    }
-
-    /*
-       چرخش شانس دوباره
-    */
-
-    else if (
-        state.extraChanceAvailable &&
-        !state.extraChanceUsed
-    ) {
-
-        state.extraChanceUsed =
-            true;
-
-        state.extraChanceAvailable =
-            false;
-
-    }
-
-
-    /*
-       اگر نتیجه شانس دوباره باشد
-       فقط در صورتی اجازه یک چرخش
-       اضافه می‌دهیم که قبلاً استفاده نشده باشد.
-    */
-
-    if (
-        prize.extraChance &&
-        !state.extraChanceUsed
-    ) {
-
-        state.extraChanceAvailable =
-            true;
-
-    }
-
-
-    saveState();
-
-    showPrize(index);
-
-    updateSpinButton();
 }
 
 
-/* =====================================================
+/*
+اگر در چرخش دوم هستیم،
+شانس دوباره مصرف می‌شود.
+*/
+
+else if(
+state.extraChanceAvailable &&
+!state.extraChanceUsed
+) {
+
+state.extraChanceUsed = true;
+
+state.extraChanceAvailable = false;
+
+}
+
+
+/*
+اگر روی شانس دوباره افتاد
+و هنوز قبلاً استفاده نشده،
+یک چرخش اضافه فعال می‌شود.
+*/
+
+if(
+prize.extraChance &&
+!state.extraChanceUsed
+) {
+
+state.extraChanceAvailable = true;
+
+}
+
+
+saveState();
+
+showPrize(prize);
+
+updateButton();
+
+}
+
+
+/* =========================
    RESULT
-===================================================== */
+========================= */
 
-function showPrize(index) {
+function showPrize(prize) {
 
-    const prize =
-        prizes[index];
+prizeName.textContent =
+prize.name;
 
+details.innerHTML =
+prize.detail;
 
-    prizeName.textContent =
-        prize.name;
+paymentNote.style.display =
+"none";
 
+result.classList.add("show");
 
-    details.innerHTML =
-        prize.detail;
+result.scrollIntoView({
+behavior: "smooth",
+block: "nearest"
+});
 
-
-    paymentNote.style.display =
-        "none";
-
-    resultBox.classList.add(
-        "show"
-    );
-
-
-    resultBox.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
-    });
 }
 
 
-/* =====================================================
-   PAYMENT MESSAGE
-===================================================== */
+/* =========================
+   PAYMENT
+========================= */
 
-function showPaymentMessage() {
+function showPayment() {
 
-    prizeName.textContent =
-        "🎡 شانس رایگان شما تمام شده";
+prizeName.textContent =
+"🎡 شانس رایگان شما تمام شده";
 
-    details.innerHTML =
-        "برای چرخاندن دوباره گردونه، مبلغ <b>۵۰,۰۰۰ تومان<
+details.innerHTML =
+"برای چرخاندن دوباره گردونه، مبلغ <b>۵۰,۰۰۰ تومان</b> پرداخت کنید.";
+
+paymentNote.innerHTML =
+"💰 هزینه چرخش مجدد: <b>۵۰,۰۰۰ تومان</b>";
+
+paymentNote.style.display =
+"block";
+
+result.classList.add("show");
+
+result.scrollIntoView({
+behavior: "smooth",
+block: "nearest"
+});
+
+}
+
+
+spinBtn.addEventListener(
+"click",
+spin
+);
+
+</script>
+
+</body>
+</html>
