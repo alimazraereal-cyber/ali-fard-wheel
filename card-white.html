@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>کارت دیجیتال علی فرد</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #eeeeec;
+    font-family: Tahoma, Arial, sans-serif;
+    color: #111;
+    padding: 20px 14px 40px;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    margin: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.brand {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #666;
+    letter-spacing: 3px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 26px;
+    padding: 26px 20px 24px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.10);
+    border: 1px solid #ddd;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.card-label {
+    font-size: 12px;
+    color: #777;
+    letter-spacing: 1px;
+}
+
+.card-number {
+    font-size: 12px;
+    color: #999;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.9;
+}
+
+.progress-box {
+    margin-top: 25px;
+}
+
+.progress-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.progress {
+    height: 8px;
+    background: #e5e5e5;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #111;
+    border-radius: 20px;
+    transition: .4s;
+}
+
+.missions {
+    margin-top: 25px;
+}
+
+.mission {
+    position: relative;
+    padding: 17px 15px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    background: #fafafa;
+    transition: .3s;
+}
+
+.mission.active {
+    background: #fff;
+    border-color: #111;
+}
+
+.mission.completed {
+    background: #f1f1f1;
+    border-color: #bbb;
+}
+
+.mission.locked {
+    opacity: .48;
+}
+
+.mission-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mission-number {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.mission.completed .mission-number {
+    background: #555;
+}
+
+.mission-info {
+    flex: 1;
+}
+
+.mission-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.mission-description {
+    font-size: 12px;
+    color: #777;
+    line-height: 1.8;
+}
+
+.mission-button {
+    width: 100%;
+    margin-top: 14px;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    background: #111;
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mission-button:disabled {
+    background: #ccc;
+    color: #777;
+    cursor: not-allowed;
+}
+
+.mission.completed .mission-button {
+    background: #ddd;
+    color: #555;
+}
+
+.reward {
+    margin-top: 24px;
+    padding: 20px;
+    border-radius: 18px;
+    background: #111;
+    color: #fff;
+    text-align: center;
+    display: none;
+}
+
+.reward.show {
+    display: block;
+}
+
+.reward-small {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 8px;
+}
+
+.reward-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.reward-text {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #ddd;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 11px;
+    color: #999;
+    line-height: 1.8;
+}
+
+.reset {
+    margin-top: 15px;
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 10px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div class="logo">
+            علی فرد
+        </div>
+
+        <div class="brand">
+            ALI FARD
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-top">
+
+            <div class="card-label">
+                DIGITAL EXPERIENCE CARD
+            </div>
+
+            <div class="card-number">
+                WHITE 01
+            </div>
+
+        </div>
+
+        <div class="title">
+            کارت سفید
+        </div>
+
+        <div class="subtitle">
+            بعضی چیزها با تخفیف ارزشمند نمی‌شوند؛
+            با تجربه‌ای که می‌سازند ارزشمند می‌شوند.
+        </div>
+
+        <div class="progress-box">
+
+            <div class="progress-head">
+
+                <span>
+                    پیشرفت کارت
+                </span>
+
+                <span id="progressText">
+                    ۰ از ۴
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    class="progress-fill"
+                    id="progressFill">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="missions">
+
+            <div
+                class="mission active"
+                id="mission1">
+
+                <div class="mission-header">
+
+                    <div class="mission-number">
+                        ۱
+                    </div>
+
+                    <div class="mission-info">
+
+                        <div class="mission-title">
+                            اولین تجربه
+                        </div>
+
+                        <div class="mission-description">
+                            اولین اصلاح خودت را در علی فرد انجام بده.
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="mission-button"
+                    onclick="completeMission(1)">
+                    انجام شد ✓
+                </button>
+
+            </div>
+
+
+            <div
+                class="mission locked"
+                id="mission2">
+
+                <div class="mission-header">
+
+                    <div class="mission-number">
+                        ۲
+                    </div>
+
+                    <div class="mission-info">
+
+                        <div class="mission-title">
+                            قرار بعدی
+                        </div>
+
+                        <div class="mission-description">
+                            برای مراجعه بعدی خودت وقت رزرو کن.
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="mission-button"
+                    disabled
+                    onclick="completeMission(2)">
+                    قفل است 🔒
+                </button>
+
+            </div>
+
+
+            <div
+                class="mission locked"
+                id="mission3">
+
+                <div class="mission-header">
+
+                    <div class="mission-number">
+                        ۳
+                    </div>
+
+                    <div class="mission-info">
+
+                        <div class="mission-title">
+                            همراه علی فرد
+                        </div>
+
+                        <div class="mission-description">
+                            صفحه علی فرد را در شبکه‌های اجتماعی دنبال کن.
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="mission-button"
+                    disabled
+                    onclick="completeMission(3)">
+                    قفل است 🔒
+                </button>
+
+            </div>
+
+
+            <div
+                class="mission locked"
+                id="mission4">
+
+                <div class="mission-header">
+
+                    <div class="mission-number">
+                        ۴
+                    </div>
+
+                    <div class="mission-info">
+
+                        <div class="mission-title">
+                            یک تجربه متفاوت
+                        </div>
+
+                        <div class="mission-description">
+                            یکی از خدمات ویژه علی فرد را تجربه کن.
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="mission-button"
+                    disabled
+                    onclick="completeMission(4)">
+                    قفل است 🔒
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="reward"
+            id="reward">
+
+            <div class="reward-small">
+                🎁 تبریک
+            </div>
+
+            <div class="reward-title">
+                جایزه کارت سفید
+            </div>
+
+            <div class="reward-text">
+                با تکمیل تمام مراحل،
+                جایزه ویژه خودت را از علی فرد دریافت کن.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+
+        این کارت دیجیتال متعلق به علی فرد است.
+        <br>
+        تجربه خوب، اتفاقی نیست.
+
+        <br>
+
+        <button
+            class="reset"
+            onclick="resetCard()">
+            بازنشانی آزمایشی
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const STORAGE_KEY =
+"ali_fard_white_card";
+
+let completed =
+    Number(
+        localStorage.getItem(STORAGE_KEY)
+    ) || 0;
+
+
+function persianNumber(number){
+
+    return String(number)
+        .replace(/0/g,"۰")
+        .replace(/1/g,"۱")
+        .replace(/2/g,"۲")
+        .replace(/3/g,"۳")
+        .replace(/4/g,"۴")
+        .replace(/5/g,"۵")
+        .replace(/6/g,"۶")
+        .replace(/7/g,"۷")
+        .replace(/8/g,"۸")
+        .replace(/9/g,"۹");
+
+}
+
+
+function updateCard(){
+
+    const total = 4;
+
+    document.getElementById("progressText")
+        .textContent =
+        persianNumber(completed)
+        + " از "
+        + persianNumber(total);
+
+
+    const percentage =
+        (completed / total) * 100;
+
+
+    document.getElementById("progressFill")
+        .style.width =
+        percentage + "%";
+
+
+    for(let i = 1; i <= total; i++){
+
+        const mission =
+            document.getElementById(
+                "mission" + i
+            );
+
+        const button =
+            mission.querySelector(
+                ".mission-button"
+            );
+
+
+        if(i <= completed){
+
+            mission.classList.remove("locked");
+            mission.classList.remove("active");
+
+            mission.classList.add("completed");
+
+            button.disabled = true;
+
+            button.textContent =
+                "انجام شد ✓";
+
+        }
+
+        else if(i === completed + 1){
+
+            mission.classList.remove("locked");
+
+            mission.classList.add("active");
+
+            button.disabled = false;
+
+            button.textContent =
+                "انجام شد ✓";
+
+        }
+
+        else{
+
+            mission.classList.remove("active");
+
+            mission.classList.add("locked");
+
+            button.disabled = true;
+
+            button.textContent =
+                "قفل است 🔒";
+
+        }
+
+    }
+
+
+    if(completed >= total){
+
+        document
+            .getElementById("reward")
+            .classList.add("show");
+
+    }
+
+}
+
+
+function completeMission(number){
+
+    if(number !== completed + 1){
+
+        return;
+
+    }
+
+
+    completed = number;
+
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        completed
+    );
+
+
+    updateCard();
+
+}
+
+
+function resetCard(){
+
+    const confirmReset =
+        confirm(
+            "وضعیت کارت برای تست از ابتدا شود؟"
+        );
+
+
+    if(!confirmReset){
+
+        return;
+
+    }
+
+
+    completed = 0;
+
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+
+    updateCard();
+
+}
+
+
+updateCard();
+
+</script>
+
+</body>
+</html>
