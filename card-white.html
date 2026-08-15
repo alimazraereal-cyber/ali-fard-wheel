@@ -7,7 +7,6 @@
 <title>ALI FARD — WHITE CARD</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
@@ -15,19 +14,19 @@
 
 :root{
     --green:#123b2a;
-    --green2:#1c5139;
+    --green2:#1d5139;
     --black:#101211;
     --gray:#777;
     --light:#f4f6f3;
     --line:#dfe4df;
-    --white:#ffffff;
+    --white:#fff;
 }
 
 body{
     margin:0;
     min-height:100vh;
     background:
-        radial-gradient(circle at 15% 5%,#ffffff 0%,transparent 28%),
+        radial-gradient(circle at 15% 5%,#fff 0%,transparent 28%),
         linear-gradient(145deg,#eef1ee,#fafbfa 45%,#e9edea);
     font-family:Tahoma,Arial,sans-serif;
     color:var(--black);
@@ -61,7 +60,7 @@ body{
     font-weight:bold;
 }
 
-/* MAIN CARD */
+/* CARD */
 
 .card{
     position:relative;
@@ -69,13 +68,11 @@ body{
     background:rgba(255,255,255,.97);
     border:1px solid #d9dedb;
     border-radius:30px;
-    padding:22px 18px 20px;
+    padding:22px 18px 21px;
     box-shadow:
         0 25px 70px rgba(0,0,0,.12),
         0 2px 7px rgba(0,0,0,.04);
 }
-
-/* DECORATIONS */
 
 .card:before{
     content:"";
@@ -134,7 +131,7 @@ body{
 }
 
 .small-title{
-    font-size:9px;
+    font-size:8px;
     color:var(--green);
     letter-spacing:2px;
     font-weight:bold;
@@ -156,10 +153,8 @@ body{
     font-size:11px;
     color:#777;
     line-height:2;
-    max-width:360px;
+    max-width:350px;
 }
-
-/* SIGNATURE */
 
 .signature{
     position:absolute;
@@ -170,7 +165,19 @@ body{
     font-weight:bold;
     color:var(--green);
     transform:rotate(-8deg);
-    opacity:.9;
+}
+
+/* QUOTE */
+
+.quote{
+    position:relative;
+    z-index:2;
+    margin-top:17px;
+    padding-right:11px;
+    border-right:2px solid var(--green);
+    font-size:10px;
+    color:#555;
+    line-height:1.8;
 }
 
 /* DIVIDER */
@@ -180,7 +187,7 @@ body{
     z-index:2;
     height:1px;
     background:var(--line);
-    margin:25px 0 19px;
+    margin:24px 0 18px;
 }
 
 /* PROGRESS */
@@ -193,8 +200,7 @@ body{
 .progress-top{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    margin-bottom:10px;
+    margin-bottom:9px;
 }
 
 .progress-title{
@@ -218,12 +224,16 @@ body{
 .progress-fill{
     height:100%;
     width:0;
-    background:linear-gradient(90deg,var(--green),var(--green2));
+    background:linear-gradient(
+        90deg,
+        var(--green),
+        var(--green2)
+    );
     border-radius:20px;
     transition:.5s ease;
 }
 
-/* MISSION NAV */
+/* STEPS */
 
 .mission-nav{
     position:relative;
@@ -231,39 +241,39 @@ body{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin:23px 2px 19px;
+    margin:23px 0 19px;
 }
 
 .step{
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:6px;
+    gap:5px;
 }
 
 .step-circle{
-    width:39px;
-    height:39px;
+    width:35px;
+    height:35px;
     border-radius:50%;
     border:1px solid #d5dbd7;
     background:#f5f6f5;
-    color:#999;
+    color:#aaa;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:11px;
+    font-size:9px;
     font-weight:bold;
     transition:.3s;
 }
 
 .step-label{
-    font-size:8px;
+    font-size:7px;
     color:#aaa;
 }
 
 .step.active .step-circle{
     background:var(--green);
-    color:white;
+    color:#fff;
     border-color:var(--green);
     box-shadow:0 5px 18px rgba(18,59,42,.22);
 }
@@ -279,11 +289,15 @@ body{
     border-color:#bfd0c5;
 }
 
+.step.completed .step-label{
+    color:var(--green);
+}
+
 .connector{
     flex:1;
     height:1px;
     background:#dfe3e0;
-    margin:0 6px 19px;
+    margin:0 4px 17px;
 }
 
 /* MISSION */
@@ -295,11 +309,12 @@ body{
     border:1px solid var(--line);
     border-radius:21px;
     padding:18px;
+    margin-bottom:11px;
     transition:.3s;
 }
 
 .mission.active{
-    background:white;
+    background:#fff;
     border-color:var(--green);
     box-shadow:0 12px 30px rgba(18,59,42,.08);
 }
@@ -325,11 +340,12 @@ body{
     min-width:42px;
     border-radius:14px;
     background:var(--black);
-    color:white;
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:14px;
+    font-size:11px;
+    font-weight:bold;
 }
 
 .mission.active .mission-icon,
@@ -342,9 +358,9 @@ body{
 }
 
 .mission-kicker{
-    font-size:8px;
+    font-size:7px;
     color:var(--green);
-    letter-spacing:1px;
+    letter-spacing:1.5px;
     margin-bottom:4px;
 }
 
@@ -367,15 +383,10 @@ body{
     padding:12px;
     border-radius:12px;
     background:var(--green);
-    color:white;
+    color:#fff;
     font-size:11px;
     font-weight:bold;
     cursor:pointer;
-    transition:.2s;
-}
-
-.mission-button:active{
-    transform:scale(.98);
 }
 
 .mission-button:disabled{
@@ -389,6 +400,16 @@ body{
     color:var(--green);
 }
 
+/* FINAL MISSION */
+
+.mission.final{
+    border-style:dashed;
+}
+
+.mission.final .mission-icon{
+    background:#171b18;
+}
+
 /* REWARD */
 
 .reward{
@@ -396,13 +417,15 @@ body{
     z-index:2;
     display:none;
     margin-top:18px;
-    padding:22px 18px;
+    padding:23px 18px;
     border-radius:21px;
-    background:
-        linear-gradient(135deg,#0f3325,#174832);
-    color:white;
+    background:linear-gradient(
+        135deg,
+        #0f3325,
+        #174832
+    );
+    color:#fff;
     text-align:center;
-    overflow:hidden;
     box-shadow:0 15px 35px rgba(18,59,42,.2);
 }
 
@@ -511,14 +534,18 @@ body{
         </h1>
 
         <div class="description">
-            یک مسیر چهار مرحله‌ای برای ساختن
-            یک تجربه متفاوت در علی فرد.
+            شش مرحله برای ساختن یک تجربه متفاوت.
         </div>
 
         <div class="signature">
             AF
         </div>
 
+    </div>
+
+
+    <div class="quote">
+        هر مرحله، یک قدم نزدیک‌تر.
     </div>
 
 
@@ -534,7 +561,7 @@ body{
             </div>
 
             <div class="progress-count" id="progressText">
-                ۰ از ۴
+                ۰ از ۶
             </div>
 
         </div>
@@ -554,61 +581,49 @@ body{
     <div class="mission-nav">
 
         <div class="step active" id="step1">
-
-            <div class="step-circle">
-                ۰۱
-            </div>
-
-            <div class="step-label">
-                شروع
-            </div>
-
+            <div class="step-circle">۰۱</div>
+            <div class="step-label">شروع</div>
         </div>
 
         <div class="connector"></div>
 
         <div class="step" id="step2">
-
-            <div class="step-circle">
-                ۰۲
-            </div>
-
-            <div class="step-label">
-                ادامه
-            </div>
-
+            <div class="step-circle">۰۲</div>
+            <div class="step-label">نوبت</div>
         </div>
 
         <div class="connector"></div>
 
         <div class="step" id="step3">
-
-            <div class="step-circle">
-                ۰۳
-            </div>
-
-            <div class="step-label">
-                مسیر
-            </div>
-
+            <div class="step-circle">۰۳</div>
+            <div class="step-label">حضور</div>
         </div>
 
         <div class="connector"></div>
 
         <div class="step" id="step4">
+            <div class="step-circle">۰۴</div>
+            <div class="step-label">تجربه</div>
+        </div>
 
-            <div class="step-circle">
-                ۰۴
-            </div>
+        <div class="connector"></div>
 
-            <div class="step-label">
-                پایان
-            </div>
+        <div class="step" id="step5">
+            <div class="step-circle">۰۵</div>
+            <div class="step-label">همراهی</div>
+        </div>
 
+        <div class="connector"></div>
+
+        <div class="step" id="step6">
+            <div class="step-circle">۰۶</div>
+            <div class="step-label">پایان</div>
         </div>
 
     </div>
 
+
+    <!-- MISSION 1 -->
 
     <div class="mission active" id="mission1">
 
@@ -645,6 +660,8 @@ body{
     </div>
 
 
+    <!-- MISSION 2 -->
+
     <div class="mission locked" id="mission2">
 
         <div class="mission-head">
@@ -671,14 +688,14 @@ body{
 
         </div>
 
-        <button
-            class="mission-button"
-            disabled>
+        <button class="mission-button" disabled>
             قفل است 🔒
         </button>
 
     </div>
 
+
+    <!-- MISSION 3 -->
 
     <div class="mission locked" id="mission3">
 
@@ -699,21 +716,21 @@ body{
                 </div>
 
                 <div class="mission-description">
-                    نوبت بعدی را دقیق و سر وقت تجربه کن.
+                    سر وقت در نوبت رزروشده حاضر شو.
                 </div>
 
             </div>
 
         </div>
 
-        <button
-            class="mission-button"
-            disabled>
+        <button class="mission-button" disabled>
             قفل است 🔒
         </button>
 
     </div>
 
+
+    <!-- MISSION 4 -->
 
     <div class="mission locked" id="mission4">
 
@@ -726,29 +743,99 @@ body{
             <div class="mission-info">
 
                 <div class="mission-kicker">
-                    FINAL MISSION
+                    MISSION FOUR
                 </div>
 
                 <div class="mission-title">
-                    یک قدم دیگر
+                    یک تجربه متفاوت
                 </div>
 
                 <div class="mission-description">
-                    مرحله آخر را کامل کن و جایزه ویژه کارت سفید را باز کن.
+                    یکی از خدمات ویژه علی فرد را تجربه کن.
                 </div>
 
             </div>
 
         </div>
 
-        <button
-            class="mission-button"
-            disabled>
+        <button class="mission-button" disabled>
             قفل است 🔒
         </button>
 
     </div>
 
+
+    <!-- MISSION 5 -->
+
+    <div class="mission locked" id="mission5">
+
+        <div class="mission-head">
+
+            <div class="mission-icon">
+                05
+            </div>
+
+            <div class="mission-info">
+
+                <div class="mission-kicker">
+                    MISSION FIVE
+                </div>
+
+                <div class="mission-title">
+                    همراه علی فرد
+                </div>
+
+                <div class="mission-description">
+                    صفحه علی فرد را در شبکه‌های اجتماعی دنبال کن.
+                </div>
+
+            </div>
+
+        </div>
+
+        <button class="mission-button" disabled>
+            قفل است 🔒
+        </button>
+
+    </div>
+
+
+    <!-- MISSION 6 -->
+
+    <div class="mission locked final" id="mission6">
+
+        <div class="mission-head">
+
+            <div class="mission-icon">
+                ★
+            </div>
+
+            <div class="mission-info">
+
+                <div class="mission-kicker">
+                    FINAL MISSION
+                </div>
+
+                <div class="mission-title">
+                    آخرین قدم
+                </div>
+
+                <div class="mission-description">
+                    آخرین مرحله را کامل کن و جایزه کارت سفید را باز کن.
+                </div>
+
+            </div>
+
+        </div>
+
+        <button class="mission-button" disabled>
+            قفل است 🔒
+        </button>
+
+    </div>
+
+
+    <!-- REWARD -->
 
     <div class="reward" id="reward">
 
@@ -823,7 +910,7 @@ function persianNumber(number){
 
 function updateSteps(){
 
-    for(let i=1;i<=4;i++){
+    for(let i=1;i<=6;i++){
 
         const step =
         document.getElementById("step"+i);
@@ -856,7 +943,7 @@ function updateSteps(){
 
 function updateCard(){
 
-    const total = 4;
+    const total = 6;
 
     document.getElementById("progressText")
     .textContent =
