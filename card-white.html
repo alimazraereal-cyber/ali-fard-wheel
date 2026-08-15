@@ -4,374 +4,467 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>کارت سفید علی فرد</title>
+<title>ALI FARD — WHITE CARD</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-:root {
-    --green: #123b2a;
-    --green-light: #e8f0eb;
-    --black: #111;
-    --gray: #777;
-    --light: #f5f6f4;
-    --line: #dfe3df;
-    --white: #fff;
+:root{
+    --green:#123b2a;
+    --green2:#1c5139;
+    --black:#101211;
+    --gray:#777;
+    --light:#f4f6f3;
+    --line:#dfe4df;
+    --white:#ffffff;
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
+body{
+    margin:0;
+    min-height:100vh;
     background:
-        radial-gradient(circle at top, #ffffff 0%, #f1f3f0 55%, #e8ebe7 100%);
-    font-family: Tahoma, Arial, sans-serif;
-    color: var(--black);
-    padding: 18px 14px 40px;
+        radial-gradient(circle at 15% 5%,#ffffff 0%,transparent 28%),
+        linear-gradient(145deg,#eef1ee,#fafbfa 45%,#e9edea);
+    font-family:Tahoma,Arial,sans-serif;
+    color:var(--black);
+    padding:18px 14px 45px;
 }
 
-.container {
-    width: 100%;
-    max-width: 480px;
-    margin: auto;
+.container{
+    width:100%;
+    max-width:470px;
+    margin:auto;
 }
 
 /* HEADER */
 
-.header {
-    text-align: center;
-    margin-bottom: 18px;
+.header{
+    text-align:center;
+    margin-bottom:17px;
 }
 
-.logo {
-    font-size: 29px;
-    font-weight: 900;
-    letter-spacing: 1px;
+.logo{
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:1px;
 }
 
-.brand {
-    margin-top: 5px;
-    font-size: 10px;
-    color: var(--green);
-    letter-spacing: 4px;
-    font-weight: bold;
+.brand{
+    margin-top:5px;
+    color:var(--green);
+    font-size:9px;
+    letter-spacing:5px;
+    font-weight:bold;
 }
 
-/* CARD */
+/* MAIN CARD */
 
-.card {
-    position: relative;
-    overflow: hidden;
-    background: rgba(255,255,255,.96);
-    border-radius: 28px;
-    padding: 24px 19px 22px;
-    border: 1px solid #d9ded9;
+.card{
+    position:relative;
+    overflow:hidden;
+    background:rgba(255,255,255,.97);
+    border:1px solid #d9dedb;
+    border-radius:30px;
+    padding:22px 18px 20px;
     box-shadow:
-        0 20px 55px rgba(0,0,0,.10),
-        0 2px 8px rgba(0,0,0,.04);
+        0 25px 70px rgba(0,0,0,.12),
+        0 2px 7px rgba(0,0,0,.04);
 }
 
-/* decorative lines */
+/* DECORATIONS */
 
-.card::before {
-    content: "";
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    border: 1px solid rgba(18,59,42,.08);
-    border-radius: 50%;
-    top: -105px;
-    left: -80px;
+.card:before{
+    content:"";
+    position:absolute;
+    width:250px;
+    height:250px;
+    border:1px solid rgba(18,59,42,.07);
+    border-radius:50%;
+    top:-165px;
+    left:-100px;
 }
 
-.card::after {
-    content: "";
-    position: absolute;
-    width: 130px;
-    height: 130px;
-    border: 1px solid rgba(18,59,42,.06);
-    border-radius: 50%;
-    bottom: -80px;
-    right: -55px;
+.card:after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border:1px solid rgba(18,59,42,.06);
+    border-radius:50%;
+    bottom:-120px;
+    right:-80px;
 }
 
 /* TOP */
 
-.card-top {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 28px;
+.top{
+    position:relative;
+    z-index:2;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.card-label {
-    font-size: 9px;
-    color: #777;
-    letter-spacing: 1.5px;
+.type{
+    font-size:8px;
+    color:#888;
+    letter-spacing:2px;
 }
 
-.card-number {
-    font-size: 10px;
-    color: var(--green);
-    border: 1px solid #cfd9d2;
-    background: #f7faf8;
-    padding: 6px 9px;
-    border-radius: 20px;
-    font-weight: bold;
+.number{
+    font-size:9px;
+    color:var(--green);
+    border:1px solid #cbd6cf;
+    background:#f6f9f7;
+    padding:6px 10px;
+    border-radius:20px;
+    font-weight:bold;
 }
 
-/* TITLE */
+/* HERO */
 
-.title {
-    position: relative;
-    z-index: 2;
-    font-size: 28px;
-    font-weight: 900;
-    margin-bottom: 8px;
+.hero{
+    position:relative;
+    z-index:2;
+    margin-top:30px;
 }
 
-.title::after {
-    content: "";
-    display: block;
-    width: 38px;
-    height: 3px;
-    background: var(--green);
-    border-radius: 10px;
-    margin-top: 11px;
+.small-title{
+    font-size:9px;
+    color:var(--green);
+    letter-spacing:2px;
+    font-weight:bold;
+    margin-bottom:9px;
 }
 
-.subtitle {
-    position: relative;
-    z-index: 2;
-    margin-top: 14px;
-    font-size: 12px;
-    color: #666;
-    line-height: 2;
+.main-title{
+    font-size:31px;
+    font-weight:900;
+    margin:0;
+}
+
+.main-title span{
+    color:var(--green);
+}
+
+.description{
+    margin-top:11px;
+    font-size:11px;
+    color:#777;
+    line-height:2;
+    max-width:360px;
+}
+
+/* SIGNATURE */
+
+.signature{
+    position:absolute;
+    left:4px;
+    top:0;
+    font-family:cursive;
+    font-size:32px;
+    font-weight:bold;
+    color:var(--green);
+    transform:rotate(-8deg);
+    opacity:.9;
+}
+
+/* DIVIDER */
+
+.divider{
+    position:relative;
+    z-index:2;
+    height:1px;
+    background:var(--line);
+    margin:25px 0 19px;
 }
 
 /* PROGRESS */
 
-.progress-box {
-    position: relative;
-    z-index: 2;
-    margin-top: 25px;
-    padding: 15px;
-    background: var(--light);
-    border: 1px solid #e1e5e1;
-    border-radius: 17px;
+.progress-area{
+    position:relative;
+    z-index:2;
 }
 
-.progress-head {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: #666;
-    margin-bottom: 9px;
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
 }
 
-.progress-head span:last-child {
-    color: var(--green);
-    font-weight: bold;
+.progress-title{
+    font-size:10px;
+    font-weight:bold;
 }
 
-.progress {
-    height: 7px;
-    background: #dfe4df;
-    border-radius: 20px;
-    overflow: hidden;
+.progress-count{
+    color:var(--green);
+    font-size:10px;
+    font-weight:bold;
 }
 
-.progress-fill {
-    height: 100%;
-    width: 0%;
-    background: var(--green);
-    border-radius: 20px;
-    transition: .5s ease;
+.progress{
+    height:6px;
+    background:#e3e7e4;
+    border-radius:20px;
+    overflow:hidden;
 }
 
-/* MISSIONS */
-
-.missions {
-    position: relative;
-    z-index: 2;
-    margin-top: 23px;
+.progress-fill{
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,var(--green),var(--green2));
+    border-radius:20px;
+    transition:.5s ease;
 }
 
-.missions-title {
-    font-size: 11px;
-    color: #777;
-    margin-bottom: 12px;
-    padding-right: 3px;
+/* MISSION NAV */
+
+.mission-nav{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:23px 2px 19px;
 }
 
-.mission {
-    position: relative;
-    padding: 15px;
-    margin-bottom: 11px;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    background: #fff;
-    transition: .3s ease;
+.step{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
 }
 
-.mission.active {
-    border-color: var(--green);
-    box-shadow: 0 7px 22px rgba(18,59,42,.08);
+.step-circle{
+    width:39px;
+    height:39px;
+    border-radius:50%;
+    border:1px solid #d5dbd7;
+    background:#f5f6f5;
+    color:#999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-weight:bold;
+    transition:.3s;
 }
 
-.mission.completed {
-    background: var(--green-light);
-    border-color: #bfd0c5;
+.step-label{
+    font-size:8px;
+    color:#aaa;
 }
 
-.mission.locked {
-    opacity: .48;
+.step.active .step-circle{
+    background:var(--green);
+    color:white;
+    border-color:var(--green);
+    box-shadow:0 5px 18px rgba(18,59,42,.22);
 }
 
-.mission-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.step.active .step-label{
+    color:var(--green);
+    font-weight:bold;
 }
 
-.mission-number {
-    width: 37px;
-    height: 37px;
-    min-width: 37px;
-    border-radius: 50%;
-    background: var(--black);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 13px;
-    font-weight: bold;
+.step.completed .step-circle{
+    background:#dce8e0;
+    color:var(--green);
+    border-color:#bfd0c5;
 }
 
-.mission.active .mission-number {
-    background: var(--green);
+.connector{
+    flex:1;
+    height:1px;
+    background:#dfe3e0;
+    margin:0 6px 19px;
 }
 
-.mission.completed .mission-number {
-    background: var(--green);
+/* MISSION */
+
+.mission{
+    position:relative;
+    z-index:2;
+    background:#fafbfa;
+    border:1px solid var(--line);
+    border-radius:21px;
+    padding:18px;
+    transition:.3s;
 }
 
-.mission-info {
-    flex: 1;
+.mission.active{
+    background:white;
+    border-color:var(--green);
+    box-shadow:0 12px 30px rgba(18,59,42,.08);
 }
 
-.mission-title {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
+.mission.locked{
+    opacity:.48;
 }
 
-.mission-description {
-    font-size: 11px;
-    color: #777;
-    line-height: 1.8;
+.mission.completed{
+    background:#eef4ef;
+    border-color:#c9d8ce;
 }
 
-.mission-button {
-    width: 100%;
-    margin-top: 13px;
-    border: none;
-    padding: 12px;
-    border-radius: 11px;
-    background: var(--green);
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: .2s;
+.mission-head{
+    display:flex;
+    gap:13px;
+    align-items:center;
 }
 
-.mission-button:active {
-    transform: scale(.98);
+.mission-icon{
+    width:42px;
+    height:42px;
+    min-width:42px;
+    border-radius:14px;
+    background:var(--black);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
 }
 
-.mission-button:disabled {
-    background: #d7dbd8;
-    color: #777;
-    cursor: not-allowed;
+.mission.active .mission-icon,
+.mission.completed .mission-icon{
+    background:var(--green);
 }
 
-.mission.completed .mission-button {
-    background: #d1ddd5;
-    color: var(--green);
+.mission-info{
+    flex:1;
+}
+
+.mission-kicker{
+    font-size:8px;
+    color:var(--green);
+    letter-spacing:1px;
+    margin-bottom:4px;
+}
+
+.mission-title{
+    font-size:14px;
+    font-weight:bold;
+}
+
+.mission-description{
+    margin-top:5px;
+    font-size:10px;
+    color:#777;
+    line-height:1.8;
+}
+
+.mission-button{
+    width:100%;
+    border:0;
+    margin-top:14px;
+    padding:12px;
+    border-radius:12px;
+    background:var(--green);
+    color:white;
+    font-size:11px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.mission-button:active{
+    transform:scale(.98);
+}
+
+.mission-button:disabled{
+    background:#d7dbd8;
+    color:#777;
+    cursor:not-allowed;
+}
+
+.mission.completed .mission-button{
+    background:#d3e0d7;
+    color:var(--green);
 }
 
 /* REWARD */
 
-.reward {
-    position: relative;
-    z-index: 2;
-    margin-top: 22px;
-    padding: 22px 18px;
-    border-radius: 20px;
-    background: var(--green);
-    color: white;
-    text-align: center;
-    display: none;
-    box-shadow: 0 12px 30px rgba(18,59,42,.18);
+.reward{
+    position:relative;
+    z-index:2;
+    display:none;
+    margin-top:18px;
+    padding:22px 18px;
+    border-radius:21px;
+    background:
+        linear-gradient(135deg,#0f3325,#174832);
+    color:white;
+    text-align:center;
+    overflow:hidden;
+    box-shadow:0 15px 35px rgba(18,59,42,.2);
 }
 
-.reward.show {
-    display: block;
-    animation: rewardIn .5s ease;
+.reward.show{
+    display:block;
+    animation:unlock .6s ease;
 }
 
-@keyframes rewardIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
+@keyframes unlock{
+    from{
+        opacity:0;
+        transform:translateY(12px) scale(.98);
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
     }
 }
 
-.reward-small {
-    font-size: 11px;
-    color: #cbdacf;
-    margin-bottom: 8px;
+.reward-icon{
+    font-size:25px;
+    margin-bottom:7px;
 }
 
-.reward-title {
-    font-size: 21px;
-    font-weight: bold;
+.reward-small{
+    font-size:8px;
+    letter-spacing:2px;
+    color:#bfd2c5;
 }
 
-.reward-text {
-    margin-top: 8px;
-    font-size: 12px;
-    line-height: 1.9;
-    color: #e2ebe5;
+.reward-title{
+    margin-top:7px;
+    font-size:19px;
+    font-weight:bold;
+}
+
+.reward-text{
+    margin-top:7px;
+    color:#dce8df;
+    font-size:10px;
+    line-height:1.9;
 }
 
 /* FOOTER */
 
-.footer {
-    text-align: center;
-    margin-top: 19px;
-    font-size: 10px;
-    color: #999;
-    line-height: 1.9;
+.footer{
+    text-align:center;
+    margin-top:18px;
+    color:#999;
+    font-size:9px;
+    line-height:1.9;
 }
 
-.reset {
-    margin-top: 12px;
-    background: transparent;
-    border: none;
-    color: #aaa;
-    font-size: 9px;
-    cursor: pointer;
+.reset{
+    border:0;
+    background:none;
+    color:#aaa;
+    font-size:8px;
+    margin-top:9px;
+    cursor:pointer;
 }
+
 </style>
 </head>
 
@@ -379,204 +472,78 @@ body {
 
 <div class="container">
 
-    <div class="header">
-        <div class="logo">علی فرد</div>
-        <div class="brand">ALI FARD</div>
+<div class="header">
+
+    <div class="logo">
+        علی فرد
     </div>
 
-    <div class="card">
+    <div class="brand">
+        ALI FARD
+    </div>
 
-        <div class="card-top">
+</div>
 
-            <div class="card-label">
-                DIGITAL EXPERIENCE CARD
+
+<div class="card">
+
+    <div class="top">
+
+        <div class="type">
+            DIGITAL MEMBERSHIP
+        </div>
+
+        <div class="number">
+            WHITE · 01
+        </div>
+
+    </div>
+
+
+    <div class="hero">
+
+        <div class="small-title">
+            YOUR JOURNEY STARTS HERE
+        </div>
+
+        <h1 class="main-title">
+            کارت <span>سفید</span>
+        </h1>
+
+        <div class="description">
+            یک مسیر چهار مرحله‌ای برای ساختن
+            یک تجربه متفاوت در علی فرد.
+        </div>
+
+        <div class="signature">
+            AF
+        </div>
+
+    </div>
+
+
+    <div class="divider"></div>
+
+
+    <div class="progress-area">
+
+        <div class="progress-top">
+
+            <div class="progress-title">
+                مسیر شما
             </div>
 
-            <div class="card-number">
-                WHITE · 01
+            <div class="progress-count" id="progressText">
+                ۰ از ۴
             </div>
 
         </div>
 
-        <div class="title">
-            کارت سفید
-        </div>
+        <div class="progress">
 
-        <div class="subtitle">
-            اینجا شروع یک مسیر متفاوت است؛
-            هر مرحله تو را یک قدم به تجربه ویژه علی فرد نزدیک‌تر می‌کند.
-        </div>
-
-        <div class="progress-box">
-
-            <div class="progress-head">
-
-                <span>
-                    مسیر شما
-                </span>
-
-                <span id="progressText">
-                    ۰ از ۴
-                </span>
-
-            </div>
-
-            <div class="progress">
-
-                <div
-                    class="progress-fill"
-                    id="progressFill">
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="missions">
-
-            <div class="missions-title">
-                مأموریت‌های کارت
-            </div>
-
-            <div class="mission active" id="mission1">
-
-                <div class="mission-header">
-
-                    <div class="mission-number">
-                        ۱
-                    </div>
-
-                    <div class="mission-info">
-
-                        <div class="mission-title">
-                            اولین تجربه
-                        </div>
-
-                        <div class="mission-description">
-                            اولین اصلاح خودت را در مجموعه علی فرد تجربه کن.
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <button
-                    class="mission-button"
-                    onclick="completeMission(1)">
-                    انجام شد ✓
-                </button>
-
-            </div>
-
-
-            <div class="mission locked" id="mission2">
-
-                <div class="mission-header">
-
-                    <div class="mission-number">
-                        ۲
-                    </div>
-
-                    <div class="mission-info">
-
-                        <div class="mission-title">
-                            قرار بعدی
-                        </div>
-
-                        <div class="mission-description">
-                            نوبت بعدی خودت را رزرو کن و مسیرت را ادامه بده.
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <button
-                    class="mission-button"
-                    disabled>
-                    قفل است 🔒
-                </button>
-
-            </div>
-
-
-            <div class="mission locked" id="mission3">
-
-                <div class="mission-header">
-
-                    <div class="mission-number">
-                        ۳
-                    </div>
-
-                    <div class="mission-info">
-
-                        <div class="mission-title">
-                            سرِ نوبتت حاضر باش
-                        </div>
-
-                        <div class="mission-description">
-                            نوبت بعدی را دقیق و سر وقت تجربه کن.
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <button
-                    class="mission-button"
-                    disabled>
-                    قفل است 🔒
-                </button>
-
-            </div>
-
-
-            <div class="mission locked" id="mission4">
-
-                <div class="mission-header">
-
-                    <div class="mission-number">
-                        ۴
-                    </div>
-
-                    <div class="mission-info">
-
-                        <div class="mission-title">
-                            یک قدم دیگر
-                        </div>
-
-                        <div class="mission-description">
-                            مرحله آخر را کامل کن و به جایزه نهایی برس.
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <button
-                    class="mission-button"
-                    disabled>
-                    قفل است 🔒
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="reward" id="reward">
-
-            <div class="reward-small">
-                🎁 مسیر کامل شد
-            </div>
-
-            <div class="reward-title">
-                جایزه ویژه تو آماده است
-            </div>
-
-            <div class="reward-text">
-                تمام مراحل کارت سفید را کامل کردی.
-                جایزه خودت را از علی فرد دریافت کن.
+            <div
+                class="progress-fill"
+                id="progressFill">
             </div>
 
         </div>
@@ -584,35 +551,260 @@ body {
     </div>
 
 
-    <div class="footer">
+    <div class="mission-nav">
 
-        این کارت دیجیتال متعلق به علی فرد است.
-        <br>
+        <div class="step active" id="step1">
 
-        «تجربه خوب، اتفاقی نیست.»
+            <div class="step-circle">
+                ۰۱
+            </div>
 
-        <br>
+            <div class="step-label">
+                شروع
+            </div>
+
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="step" id="step2">
+
+            <div class="step-circle">
+                ۰۲
+            </div>
+
+            <div class="step-label">
+                ادامه
+            </div>
+
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="step" id="step3">
+
+            <div class="step-circle">
+                ۰۳
+            </div>
+
+            <div class="step-label">
+                مسیر
+            </div>
+
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="step" id="step4">
+
+            <div class="step-circle">
+                ۰۴
+            </div>
+
+            <div class="step-label">
+                پایان
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="mission active" id="mission1">
+
+        <div class="mission-head">
+
+            <div class="mission-icon">
+                01
+            </div>
+
+            <div class="mission-info">
+
+                <div class="mission-kicker">
+                    MISSION ONE
+                </div>
+
+                <div class="mission-title">
+                    اولین تجربه
+                </div>
+
+                <div class="mission-description">
+                    اولین اصلاح خودت را در مجموعه علی فرد تجربه کن.
+                </div>
+
+            </div>
+
+        </div>
 
         <button
-            class="reset"
-            onclick="resetCard()">
-            بازنشانی آزمایشی
+            class="mission-button"
+            onclick="completeMission(1)">
+            انجام شد ✓
         </button>
+
+    </div>
+
+
+    <div class="mission locked" id="mission2">
+
+        <div class="mission-head">
+
+            <div class="mission-icon">
+                02
+            </div>
+
+            <div class="mission-info">
+
+                <div class="mission-kicker">
+                    MISSION TWO
+                </div>
+
+                <div class="mission-title">
+                    قرار بعدی
+                </div>
+
+                <div class="mission-description">
+                    نوبت بعدی خودت را رزرو کن و مسیرت را ادامه بده.
+                </div>
+
+            </div>
+
+        </div>
+
+        <button
+            class="mission-button"
+            disabled>
+            قفل است 🔒
+        </button>
+
+    </div>
+
+
+    <div class="mission locked" id="mission3">
+
+        <div class="mission-head">
+
+            <div class="mission-icon">
+                03
+            </div>
+
+            <div class="mission-info">
+
+                <div class="mission-kicker">
+                    MISSION THREE
+                </div>
+
+                <div class="mission-title">
+                    سرِ نوبتت حاضر باش
+                </div>
+
+                <div class="mission-description">
+                    نوبت بعدی را دقیق و سر وقت تجربه کن.
+                </div>
+
+            </div>
+
+        </div>
+
+        <button
+            class="mission-button"
+            disabled>
+            قفل است 🔒
+        </button>
+
+    </div>
+
+
+    <div class="mission locked" id="mission4">
+
+        <div class="mission-head">
+
+            <div class="mission-icon">
+                04
+            </div>
+
+            <div class="mission-info">
+
+                <div class="mission-kicker">
+                    FINAL MISSION
+                </div>
+
+                <div class="mission-title">
+                    یک قدم دیگر
+                </div>
+
+                <div class="mission-description">
+                    مرحله آخر را کامل کن و جایزه ویژه کارت سفید را باز کن.
+                </div>
+
+            </div>
+
+        </div>
+
+        <button
+            class="mission-button"
+            disabled>
+            قفل است 🔒
+        </button>
+
+    </div>
+
+
+    <div class="reward" id="reward">
+
+        <div class="reward-icon">
+            🎁
+        </div>
+
+        <div class="reward-small">
+            UNLOCKED
+        </div>
+
+        <div class="reward-title">
+            جایزه تو آماده است
+        </div>
+
+        <div class="reward-text">
+            مسیر کارت سفید را کامل کردی.
+            حالا وقت دریافت جایزه ویژه علی فرد است.
+        </div>
 
     </div>
 
 </div>
 
 
+<div class="footer">
+
+    ALI FARD · DIGITAL EXPERIENCE
+
+    <br>
+
+    «تجربه خوب، اتفاقی نیست.»
+
+    <br>
+
+    <button
+        class="reset"
+        onclick="resetCard()">
+        بازنشانی آزمایشی
+    </button>
+
+</div>
+
+</div>
+
+
 <script>
 
-const STORAGE_KEY = "ali_fard_white_card";
+const STORAGE_KEY =
+"ali_fard_white_card";
 
 let completed =
-    Number(localStorage.getItem(STORAGE_KEY)) || 0;
+Number(localStorage.getItem(STORAGE_KEY)) || 0;
 
 
-function persianNumber(number) {
+function persianNumber(number){
 
     return String(number)
         .replace(/0/g,"۰")
@@ -629,83 +821,119 @@ function persianNumber(number) {
 }
 
 
-function updateCard() {
+function updateSteps(){
 
-    const total = 4;
+    for(let i=1;i<=4;i++){
 
-    document.getElementById("progressText")
-        .textContent =
-        persianNumber(completed)
-        + " از "
-        + persianNumber(total);
+        const step =
+        document.getElementById("step"+i);
 
+        if(i <= completed){
 
-    const percentage =
-        (completed / total) * 100;
-
-
-    document.getElementById("progressFill")
-        .style.width =
-        percentage + "%";
-
-
-    for(let i = 1; i <= total; i++) {
-
-        const mission =
-            document.getElementById("mission" + i);
-
-        const button =
-            mission.querySelector(".mission-button");
-
-
-        if(i <= completed) {
-
-            mission.classList.remove("locked");
-            mission.classList.remove("active");
-            mission.classList.add("completed");
-
-            button.disabled = true;
-            button.textContent = "تکمیل شد ✓";
+            step.classList.remove("active");
+            step.classList.add("completed");
 
         }
 
-        else if(i === completed + 1) {
+        else if(i === completed + 1){
 
-            mission.classList.remove("locked");
-            mission.classList.add("active");
-
-            button.disabled = false;
-            button.textContent = "انجام شد ✓";
+            step.classList.remove("completed");
+            step.classList.add("active");
 
         }
 
-        else {
+        else{
 
-            mission.classList.remove("active");
-            mission.classList.add("locked");
-
-            button.disabled = true;
-            button.textContent = "قفل است 🔒";
+            step.classList.remove("active");
+            step.classList.remove("completed");
 
         }
-
-    }
-
-
-    if(completed >= total) {
-
-        document
-            .getElementById("reward")
-            .classList.add("show");
 
     }
 
 }
 
 
-function completeMission(number) {
+function updateCard(){
 
-    if(number !== completed + 1) {
+    const total = 4;
+
+    document.getElementById("progressText")
+    .textContent =
+    persianNumber(completed)
+    + " از "
+    + persianNumber(total);
+
+
+    document.getElementById("progressFill")
+    .style.width =
+    ((completed / total) * 100)
+    + "%";
+
+
+    for(let i=1;i<=total;i++){
+
+        const mission =
+        document.getElementById("mission"+i);
+
+        const button =
+        mission.querySelector(".mission-button");
+
+
+        if(i <= completed){
+
+            mission.classList.remove("locked");
+            mission.classList.remove("active");
+            mission.classList.add("completed");
+
+            button.disabled = true;
+            button.textContent =
+            "تکمیل شد ✓";
+
+        }
+
+        else if(i === completed + 1){
+
+            mission.classList.remove("locked");
+            mission.classList.add("active");
+
+            button.disabled = false;
+            button.textContent =
+            "انجام شد ✓";
+
+        }
+
+        else{
+
+            mission.classList.remove("active");
+            mission.classList.add("locked");
+
+            button.disabled = true;
+            button.textContent =
+            "قفل است 🔒";
+
+        }
+
+    }
+
+
+    updateSteps();
+
+
+    if(completed >= total){
+
+        document
+        .getElementById("reward")
+        .classList.add("show");
+
+    }
+
+}
+
+
+function completeMission(number){
+
+    if(number !== completed + 1){
         return;
     }
 
@@ -721,14 +949,11 @@ function completeMission(number) {
 }
 
 
-function resetCard() {
+function resetCard(){
 
-    const confirmReset =
-        confirm(
-            "وضعیت کارت برای تست از ابتدا شود؟"
-        );
-
-    if(!confirmReset) {
+    if(!confirm(
+        "وضعیت کارت برای تست از ابتدا شود؟"
+    )){
         return;
     }
 
@@ -739,8 +964,8 @@ function resetCard() {
     );
 
     document
-        .getElementById("reward")
-        .classList.remove("show");
+    .getElementById("reward")
+    .classList.remove("show");
 
     updateCard();
 
