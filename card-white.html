@@ -1,74 +1,3 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ALI FARD — WHITE CARD</title>
-<style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;min-height:100vh;padding:18px 14px 40px;background:linear-gradient(145deg,#eef1ee,#fafbfa,#e9edea);font-family:Tahoma,Arial;color:#101211}
-.container{max-width:470px;margin:auto}.header{text-align:center;margin-bottom:17px}.logo{font-size:30px;font-weight:900}.brand{margin-top:5px;color:#123b2a;font-size:9px;letter-spacing:5px;font-weight:bold}
-.card{position:relative;overflow:hidden;background:#fff;border:1px solid #d9dedb;border-radius:30px;padding:22px 18px 21px;box-shadow:0 25px 70px #0002}.card:before,.card:after{content:"";position:absolute;border:1px solid #123b2a12;border-radius:50%}.card:before{width:250px;height:250px;top:-165px;left:-100px}.card:after{width:180px;height:180px;bottom:-120px;right:-80px}
-.top,.progress-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}.type{font-size:8px;color:#888;letter-spacing:2px}.number{font-size:9px;color:#123b2a;border:1px solid #cbd6cf;background:#f6f9f7;padding:6px 10px;border-radius:20px;font-weight:bold}
-.hero{position:relative;z-index:2;margin-top:30px}.small-title{font-size:8px;color:#123b2a;letter-spacing:2px;font-weight:bold}.main-title{font-size:31px;font-weight:900;margin:9px 0 0}.main-title span{color:#123b2a}.description{margin-top:11px;font-size:11px;color:#777;line-height:2}.signature{position:absolute;left:4px;top:0;font: bold 32px cursive;color:#123b2a;transform:rotate(-8deg)}
-.quote{position:relative;z-index:2;margin-top:17px;padding-right:11px;border-right:2px solid #123b2a;font-size:10px;color:#555;line-height:1.8}.divider{height:1px;background:#dfe4df;margin:24px 0 18px}.progress-area{position:relative;z-index:2}.progress-title,.progress-count{font-size:10px;font-weight:bold}.progress-count{color:#123b2a}.progress{height:6px;background:#e3e7e4;border-radius:20px;overflow:hidden;margin-top:9px}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#123b2a,#1d5139);transition:.4s}
-.mission-nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;margin:23px 0 19px}.step{display:flex;flex-direction:column;align-items:center;gap:5px}.step-circle{width:35px;height:35px;border-radius:50%;border:1px solid #d5dbd7;background:#f5f6f5;color:#aaa;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold}.step-label{font-size:7px;color:#aaa}.step.active .step-circle{background:#123b2a;color:#fff;border-color:#123b2a}.step.active .step-label,.step.completed .step-label{color:#123b2a;font-weight:bold}.step.completed .step-circle{background:#dce8e0;color:#123b2a;border-color:#bfd0c5}.connector{flex:1;height:1px;background:#dfe3e0;margin:0 4px 17px}
-.mission{position:relative;z-index:2;background:#fafbfa;border:1px solid #dfe4df;border-radius:21px;padding:18px;margin-bottom:11px}.mission.active{background:#fff;border-color:#123b2a;box-shadow:0 12px 30px #123b2a14}.mission.locked{opacity:.48}.mission.completed{background:#eef4ef;border-color:#c9d8ce}.mission-head{display:flex;gap:13px;align-items:center}.mission-icon{width:42px;height:42px;min-width:42px;border-radius:14px;background:#101211;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}.mission.active .mission-icon,.mission.completed .mission-icon{background:#123b2a}.mission-info{flex:1}.mission-kicker{font-size:7px;color:#123b2a;letter-spacing:1.5px;margin-bottom:4px}.mission-title{font-size:14px;font-weight:bold}.mission-description{margin-top:5px;font-size:10px;color:#777;line-height:1.8}.mission-button,.choose-button{width:100%;border:0;margin-top:14px;padding:12px;border-radius:12px;background:#123b2a;color:#fff;font-size:11px;font-weight:bold;cursor:pointer}.mission-button:disabled{background:#d7dbd8;color:#777}.mission.completed .mission-button{background:#d3e0d7;color:#123b2a}.final{border-style:dashed}
-.reward{position:relative;z-index:2;display:none;margin-top:18px;padding:22px 15px;border-radius:22px;background:linear-gradient(135deg,#0f3325,#174832);color:#fff;text-align:center}.reward.show{display:block}.reward-icon{font-size:26px}.reward-small{margin-top:6px;font-size:8px;letter-spacing:2px;color:#bfd2c5}.reward-title{margin-top:7px;font-size:18px;font-weight:bold}.reward-text{margin-top:7px;color:#dce8df;font-size:10px;line-height:1.9}.reward-options{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:17px}.reward-option{border:1px solid #ffffff2e;background:#ffffff14;color:white;border-radius:15px;padding:14px 8px;cursor:pointer}.reward-option.selected{background:#fff;color:#123b2a}.reward-option-icon{font-size:21px;margin-bottom:6px}.reward-option-title{font-size:10px;font-weight:bold;line-height:1.6}.choose-button{display:none;background:#fff;color:#123b2a}.choose-button.show{display:block}.selected-reward{display:none;margin-top:15px;padding:15px;background:#ffffff1a;border:1px solid #ffffff26;border-radius:15px}.selected-reward.show{display:block}.selected-reward-small{font-size:8px;color:#bfd2c5;letter-spacing:1px}.selected-reward-name{margin-top:7px;font-size:15px;font-weight:bold}.selected-reward-note{margin-top:6px;font-size:9px;color:#dce8df}.footer{text-align:center;margin-top:18px;color:#999;font-size:9px;line-height:1.9}.reset{border:0;background:none;color:#aaa;font-size:8px;margin-top:9px;cursor:pointer}
-@media(max-width:360px){.step-circle{width:31px;height:31px;font-size:8px}.step-label{font-size:6px}}
-</style>
-</head>
-<body>
-<div class="container">
-<div class="header"><div class="logo">علی فرد</div><div class="brand">ALI FARD</div></div>
-<div class="card">
-<div class="top"><div class="type">DIGITAL MEMBERSHIP</div><div class="number">WHITE · 01</div></div>
-
-<div class="hero">
-<div class="small-title">YOUR JOURNEY STARTS HERE</div>
-<h1 class="main-title">کارت <span>سفید</span></h1>
-<div class="description">شش مرحله برای ساختن یک تجربه متفاوت.</div>
-<div class="signature">AF</div>
-</div>
-
-<div class="quote">هر مرحله، یک قدم نزدیک‌تر.</div>
-<div class="divider"></div>
-
-<div class="progress-area">
-<div class="progress-top"><div class="progress-title">مسیر شما</div><div class="progress-count" id="progressText">۰ از ۶</div></div>
-<div class="progress"><div class="progress-fill" id="progressFill"></div></div>
-</div>
-
-<div class="mission-nav">
-<div class="step active" id="step1"><div class="step-circle">۰۱</div><div class="step-label">شروع</div></div><div class="connector"></div>
-<div class="step" id="step2"><div class="step-circle">۰۲</div><div class="step-label">نوبت</div></div><div class="connector"></div>
-<div class="step" id="step3"><div class="step-circle">۰۳</div><div class="step-label">حضور</div></div><div class="connector"></div>
-<div class="step" id="step4"><div class="step-circle">۰۴</div><div class="step-label">تجربه</div></div><div class="connector"></div>
-<div class="step" id="step5"><div class="step-circle">۰۵</div><div class="step-label">همراهی</div></div><div class="connector"></div>
-<div class="step" id="step6"><div class="step-circle">۰۶</div><div class="step-label">پایان</div></div>
-</div>
-
-<div id="missions"></div>
-
-<div class="reward" id="reward">
-<div class="reward-icon">🎁</div>
-<div class="reward-small">REWARD UNLOCKED</div>
-<div class="reward-title">جایزه‌ات را انتخاب کن</div>
-<div class="reward-text">مسیرت را کامل کردی؛ حالا یکی از چهار هدیه را انتخاب کن.</div>
-<div class="reward-options">
-<div class="reward-option" data-reward="ماسک مو رایگان" onclick="selectReward(this)"><div class="reward-option-icon">🧴</div><div class="reward-option-title">ماسک مو رایگان</div></div>
-<div class="reward-option" data-reward="ماسک صورت رایگان" onclick="selectReward(this)"><div class="reward-option-icon">🧖</div><div class="reward-option-title">ماسک صورت رایگان</div></div>
-<div class="reward-option" data-reward="شمع صورت رایگان" onclick="selectReward(this)"><div class="reward-option-icon">🕯️</div><div class="reward-option-title">شمع صورت رایگان</div></div>
-<div class="reward-option" data-reward="خط صورت و گردن رایگان" onclick="selectReward(this)"><div class="reward-option-icon">✂️</div><div class="reward-option-title">خط صورت و گردن رایگان</div></div>
-</div>
-<button class="choose-button" id="chooseButton" onclick="confirmReward()">انتخاب من ✓</button>
-<div class="selected-reward" id="selectedReward"><div class="selected-reward-small">YOUR REWARD</div><div class="selected-reward-name" id="selectedRewardName"></div><div class="selected-reward-note">انتخابت ثبت شد؛ این جایزه برای تو محفوظ است.</div></div>
-</div>
-</div>
-
-<div class="footer">ALI FARD · DIGITAL EXPERIENCE<br>«تجربه خوب، اتفاقی نیست.»<br><button class="reset" onclick="resetCard()">بازنشانی آزمایشی</button></div>
-</div>
-
 <script>
 const missions=[
 ["اولین تجربه","اولین اصلاح خودت را در مجموعه علی فرد تجربه کن."],
@@ -78,51 +7,134 @@ const missions=[
 ["همراه علی فرد","صفحه علی فرد را در شبکه‌های اجتماعی دنبال کن."],
 ["آخرین قدم","آخرین مرحله را کامل کن تا انتخاب جایزه برایت باز شود."]
 ];
+
 const key="ali_fard_white_card",rkey="ali_fard_white_reward";
-let completed=+localStorage.getItem(key)||0,selected=null;
-const pn=n=>String(n).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+let completed=Number(localStorage.getItem(key))||0;
+let selected=localStorage.getItem(rkey)||null;
+
+function pn(n){
+ return String(n).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+}
 
 function render(){
-let box=document.getElementById("missions");
-box.innerHTML=missions.map((m,i)=>{
-let n=i+1,done=n<=completed,active=n===completed+1;
-return `<div class="mission ${done?"completed":active?"active":"locked"}">
-<div class="mission-head"><div class="mission-icon">${n<6?("0"+n):"★"}</div><div class="mission-info">
-<div class="mission-kicker">MISSION ${n}</div><div class="mission-title">${m[0]}</div><div class="mission-description">${m[1]}</div></div></div>
-<button class="mission-button" ${active?"":"disabled"} onclick="completeMission(${n})">${done?"تکمیل شد ✓":active?"انجام شد ✓":"قفل است 🔒"}</button></div>`
-}).join("");
-document.getElementById("progressText").textContent=pn(completed)+" از ۶";
-document.getElementById("progressFill").style.width=completed/6*100+"%";
-for(let i=1;i<=6;i++){let s=document.getElementById("step"+i);s.className="step "+(i<=completed?"completed":i===completed+1?"active":"")}
-if(completed===6)document.getElementById("reward").classList.add("show");
+ const box=document.getElementById("missions");
+
+ box.innerHTML=missions.map((m,i)=>{
+   const n=i+1;
+   const done=n<=completed;
+   const active=n===completed+1;
+
+   return `
+   <div class="mission ${done?"completed":active?"active":"locked"}">
+     <div class="mission-head">
+       <div class="mission-icon">${n===6?"★":"0"+n}</div>
+       <div class="mission-info">
+         <div class="mission-kicker">MISSION ${n}</div>
+         <div class="mission-title">${m[0]}</div>
+         <div class="mission-description">${m[1]}</div>
+       </div>
+     </div>
+
+     <button
+       class="mission-button"
+       ${active?`onclick="completeMission(${n})"`:"disabled"}>
+       ${done?"تکمیل شد ✓":active?"انجام شد ✓":"قفل است 🔒"}
+     </button>
+   </div>`;
+ }).join("");
+
+ document.getElementById("progressText").textContent=
+   pn(completed)+" از ۶";
+
+ document.getElementById("progressFill").style.width=
+   (completed/6*100)+"%";
+
+ for(let i=1;i<=6;i++){
+   const step=document.getElementById("step"+i);
+
+   step.classList.remove("active","completed");
+
+   if(i<=completed)
+     step.classList.add("completed");
+   else if(i===completed+1)
+     step.classList.add("active");
+ }
+
+ if(completed===6)
+   document.getElementById("reward").classList.add("show");
 }
 
 function completeMission(n){
-if(n!==completed+1)return;
-completed=n;localStorage.setItem(key,completed);render();
-if(completed===6)document.getElementById("reward").scrollIntoView({behavior:"smooth",block:"center"});
+
+ if(n!==completed+1)return;
+
+ completed=n;
+
+ localStorage.setItem(key,completed);
+
+ render();
+
+ if(completed===6){
+   setTimeout(()=>{
+     document.getElementById("reward")
+       .scrollIntoView({
+         behavior:"smooth",
+         block:"center"
+       });
+   },200);
+ }
 }
 
 function selectReward(el){
-document.querySelectorAll(".reward-option").forEach(x=>x.classList.remove("selected"));
-el.classList.add("selected");selected=el.dataset.reward;document.getElementById("chooseButton").classList.add("show");
+
+ document.querySelectorAll(".reward-option")
+   .forEach(x=>x.classList.remove("selected"));
+
+ el.classList.add("selected");
+
+ selected=el.dataset.reward;
+
+ document.getElementById("chooseButton")
+   .classList.add("show");
 }
 
 function confirmReward(){
-if(!selected)return;
-localStorage.setItem(rkey,selected);
-document.getElementById("selectedRewardName").textContent=selected;
-document.getElementById("selectedReward").classList.add("show");
-document.getElementById("chooseButton").style.display="none";
-document.querySelectorAll(".reward-option").forEach(x=>x.style.pointerEvents="none");
+
+ if(!selected)return;
+
+ localStorage.setItem(rkey,selected);
+
+ document.getElementById("selectedRewardName")
+   .textContent=selected;
+
+ document.getElementById("selectedReward")
+   .classList.add("show");
+
+ document.getElementById("chooseButton")
+   .style.display="none";
+
+ document.querySelectorAll(".reward-option")
+   .forEach(x=>x.style.pointerEvents="none");
 }
 
 function resetCard(){
-localStorage.removeItem(key);localStorage.removeItem(rkey);location.reload();
+
+ localStorage.removeItem(key);
+ localStorage.removeItem(rkey);
+
+ location.reload();
 }
+
 render();
-const saved=localStorage.getItem(rkey);
-if(saved){selected=saved;document.getElementById("selectedRewardName").textContent=saved;document.getElementById("selectedReward").classList.add("show");document.getElementById("chooseButton").style.display="none"}
+
+if(selected){
+ document.getElementById("selectedRewardName")
+   .textContent=selected;
+
+ document.getElementById("selectedReward")
+   .classList.add("show");
+
+ document.getElementById("chooseButton")
+   .style.display="none";
+}
 </script>
-</body>
-</html>
