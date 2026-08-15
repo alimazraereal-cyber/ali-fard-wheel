@@ -39,8 +39,6 @@ body{
     margin:auto;
 }
 
-/* HEADER */
-
 .header{
     text-align:center;
     margin-bottom:17px;
@@ -59,8 +57,6 @@ body{
     letter-spacing:5px;
     font-weight:bold;
 }
-
-/* CARD */
 
 .card{
     position:relative;
@@ -96,8 +92,6 @@ body{
     right:-80px;
 }
 
-/* TOP */
-
 .top{
     position:relative;
     z-index:2;
@@ -121,8 +115,6 @@ body{
     border-radius:20px;
     font-weight:bold;
 }
-
-/* HERO */
 
 .hero{
     position:relative;
@@ -167,8 +159,6 @@ body{
     transform:rotate(-8deg);
 }
 
-/* QUOTE */
-
 .quote{
     position:relative;
     z-index:2;
@@ -180,8 +170,6 @@ body{
     line-height:1.8;
 }
 
-/* DIVIDER */
-
 .divider{
     position:relative;
     z-index:2;
@@ -189,8 +177,6 @@ body{
     background:var(--line);
     margin:24px 0 18px;
 }
-
-/* PROGRESS */
 
 .progress-area{
     position:relative;
@@ -232,8 +218,6 @@ body{
     border-radius:20px;
     transition:.5s ease;
 }
-
-/* STEPS */
 
 .mission-nav{
     position:relative;
@@ -299,8 +283,6 @@ body{
     background:#dfe3e0;
     margin:0 4px 17px;
 }
-
-/* MISSION */
 
 .mission{
     position:relative;
@@ -400,25 +382,19 @@ body{
     color:var(--green);
 }
 
-/* FINAL MISSION */
-
 .mission.final{
     border-style:dashed;
 }
 
-.mission.final .mission-icon{
-    background:#171b18;
-}
-
-/* REWARD */
+/* REWARD AREA */
 
 .reward{
     position:relative;
     z-index:2;
     display:none;
     margin-top:18px;
-    padding:23px 18px;
-    border-radius:21px;
+    padding:22px 15px;
+    border-radius:22px;
     background:linear-gradient(
         135deg,
         #0f3325,
@@ -437,7 +413,7 @@ body{
 @keyframes unlock{
     from{
         opacity:0;
-        transform:translateY(12px) scale(.98);
+        transform:translateY(12px) scale(.97);
     }
     to{
         opacity:1;
@@ -446,11 +422,11 @@ body{
 }
 
 .reward-icon{
-    font-size:25px;
-    margin-bottom:7px;
+    font-size:26px;
 }
 
 .reward-small{
+    margin-top:6px;
     font-size:8px;
     letter-spacing:2px;
     color:#bfd2c5;
@@ -458,7 +434,7 @@ body{
 
 .reward-title{
     margin-top:7px;
-    font-size:19px;
+    font-size:18px;
     font-weight:bold;
 }
 
@@ -469,7 +445,93 @@ body{
     line-height:1.9;
 }
 
-/* FOOTER */
+.reward-options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+    margin-top:17px;
+}
+
+.reward-option{
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.08);
+    color:white;
+    border-radius:15px;
+    padding:14px 8px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.reward-option:hover{
+    background:rgba(255,255,255,.14);
+}
+
+.reward-option.selected{
+    background:#fff;
+    color:var(--green);
+    border-color:#fff;
+    transform:translateY(-2px);
+}
+
+.reward-option-icon{
+    font-size:21px;
+    margin-bottom:6px;
+}
+
+.reward-option-title{
+    font-size:10px;
+    font-weight:bold;
+    line-height:1.6;
+}
+
+.choose-button{
+    width:100%;
+    margin-top:13px;
+    border:0;
+    border-radius:12px;
+    padding:13px;
+    background:#fff;
+    color:var(--green);
+    font-size:11px;
+    font-weight:bold;
+    cursor:pointer;
+    display:none;
+}
+
+.choose-button.show{
+    display:block;
+}
+
+.selected-reward{
+    display:none;
+    margin-top:15px;
+    padding:15px;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:15px;
+}
+
+.selected-reward.show{
+    display:block;
+}
+
+.selected-reward-small{
+    font-size:8px;
+    color:#bfd2c5;
+    letter-spacing:1px;
+}
+
+.selected-reward-name{
+    margin-top:7px;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.selected-reward-note{
+    margin-top:6px;
+    font-size:9px;
+    color:#dce8df;
+}
 
 .footer{
     text-align:center;
@@ -488,6 +550,26 @@ body{
     cursor:pointer;
 }
 
+@media(max-width:360px){
+
+    .step-circle{
+        width:31px;
+        height:31px;
+        font-size:8px;
+    }
+
+    .step-label{
+        font-size:6px;
+    }
+
+    .connector{
+        margin:0 2px 17px;
+    }
+
+    .reward-options{
+        gap:7px;
+    }
+}
 </style>
 </head>
 
@@ -821,7 +903,7 @@ body{
                 </div>
 
                 <div class="mission-description">
-                    آخرین مرحله را کامل کن و جایزه کارت سفید را باز کن.
+                    آخرین مرحله را کامل کن تا انتخاب جایزه برایت باز شود.
                 </div>
 
             </div>
@@ -844,16 +926,113 @@ body{
         </div>
 
         <div class="reward-small">
-            UNLOCKED
+            REWARD UNLOCKED
         </div>
 
         <div class="reward-title">
-            جایزه تو آماده است
+            جایزه‌ات را انتخاب کن
         </div>
 
         <div class="reward-text">
-            مسیر کارت سفید را کامل کردی.
-            حالا وقت دریافت جایزه ویژه علی فرد است.
+            مسیرت را کامل کردی؛ حالا یکی از چهار هدیه را انتخاب کن.
+        </div>
+
+
+        <div class="reward-options">
+
+            <div
+                class="reward-option"
+                data-reward="ماسک مو رایگان"
+                onclick="selectReward(this)">
+
+                <div class="reward-option-icon">
+                    🧴
+                </div>
+
+                <div class="reward-option-title">
+                    ماسک مو رایگان
+                </div>
+
+            </div>
+
+
+            <div
+                class="reward-option"
+                data-reward="ماسک صورت رایگان"
+                onclick="selectReward(this)">
+
+                <div class="reward-option-icon">
+                    🧖
+                </div>
+
+                <div class="reward-option-title">
+                    ماسک صورت رایگان
+                </div>
+
+            </div>
+
+
+            <div
+                class="reward-option"
+                data-reward="شمع صورت رایگان"
+                onclick="selectReward(this)">
+
+                <div class="reward-option-icon">
+                    🕯️
+                </div>
+
+                <div class="reward-option-title">
+                    شمع صورت رایگان
+                </div>
+
+            </div>
+
+
+            <div
+                class="reward-option"
+                data-reward="خط صورت و گردن رایگان"
+                onclick="selectReward(this)">
+
+                <div class="reward-option-icon">
+                    ✂️
+                </div>
+
+                <div class="reward-option-title">
+                    خط صورت و گردن رایگان
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="choose-button"
+            id="chooseButton"
+            onclick="confirmReward()">
+
+            انتخاب من ✓
+
+        </button>
+
+
+        <div
+            class="selected-reward"
+            id="selectedReward">
+
+            <div class="selected-reward-small">
+                YOUR REWARD
+            </div>
+
+            <div
+                class="selected-reward-name"
+                id="selectedRewardName">
+            </div>
+
+            <div class="selected-reward-note">
+                انتخابت ثبت شد؛ این جایزه برای تو محفوظ است.
+            </div>
+
         </div>
 
     </div>
@@ -887,8 +1066,13 @@ body{
 const STORAGE_KEY =
 "ali_fard_white_card";
 
+const REWARD_KEY =
+"ali_fard_white_reward";
+
 let completed =
 Number(localStorage.getItem(STORAGE_KEY)) || 0;
+
+let selectedReward = null;
 
 
 function persianNumber(number){
@@ -961,107 +1145,4 @@ function updateCard(){
     for(let i=1;i<=total;i++){
 
         const mission =
-        document.getElementById("mission"+i);
-
-        const button =
-        mission.querySelector(".mission-button");
-
-
-        if(i <= completed){
-
-            mission.classList.remove("locked");
-            mission.classList.remove("active");
-            mission.classList.add("completed");
-
-            button.disabled = true;
-            button.textContent =
-            "تکمیل شد ✓";
-
-        }
-
-        else if(i === completed + 1){
-
-            mission.classList.remove("locked");
-            mission.classList.add("active");
-
-            button.disabled = false;
-            button.textContent =
-            "انجام شد ✓";
-
-        }
-
-        else{
-
-            mission.classList.remove("active");
-            mission.classList.add("locked");
-
-            button.disabled = true;
-            button.textContent =
-            "قفل است 🔒";
-
-        }
-
-    }
-
-
-    updateSteps();
-
-
-    if(completed >= total){
-
-        document
-        .getElementById("reward")
-        .classList.add("show");
-
-    }
-
-}
-
-
-function completeMission(number){
-
-    if(number !== completed + 1){
-        return;
-    }
-
-    completed = number;
-
-    localStorage.setItem(
-        STORAGE_KEY,
-        completed
-    );
-
-    updateCard();
-
-}
-
-
-function resetCard(){
-
-    if(!confirm(
-        "وضعیت کارت برای تست از ابتدا شود؟"
-    )){
-        return;
-    }
-
-    completed = 0;
-
-    localStorage.removeItem(
-        STORAGE_KEY
-    );
-
-    document
-    .getElementById("reward")
-    .classList.remove("show");
-
-    updateCard();
-
-}
-
-
-updateCard();
-
-</script>
-
-</body>
-</html>
+        document.getElementById("m
