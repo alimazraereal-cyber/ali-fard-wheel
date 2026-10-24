@@ -88,6 +88,21 @@ body{margin:0;min-height:100vh;padding:18px 14px 40px;background:linear-gradient
 .footer{text-align:center;margin-top:18px;color:#999;font-size:9px;line-height:1.9}
 .reset{border:0;background:none;color:#aaa;font-size:8px;margin-top:9px;cursor:pointer}
 
+.pin-overlay{display:none;position:fixed;inset:0;z-index:50;background:#0f1a1499;align-items:center;justify-content:center;padding:16px}
+.pin-overlay.show{display:flex}
+.pin-box{width:100%;max-width:320px;background:#fff;border-radius:24px;padding:22px 18px;text-align:center;box-shadow:0 25px 70px #0004}
+.pin-kicker{font-size:8px;color:#123b2a;letter-spacing:2px;font-weight:bold}
+.pin-title{margin-top:8px;font-size:15px;font-weight:bold}
+.pin-sub{margin-top:6px;font-size:10px;color:#777;line-height:1.8}
+.pin-input{width:100%;margin-top:14px;padding:13px;border:1px solid #cbd6cf;border-radius:12px;font-size:18px;text-align:center;letter-spacing:6px;direction:ltr;outline:none}
+.pin-input:focus{border-color:#123b2a}
+.pin-error{min-height:16px;margin-top:8px;font-size:10px;color:#a3322a}
+.pin-actions{display:flex;gap:8px;margin-top:6px}
+.pin-actions button{flex:1;border:0;border-radius:12px;padding:12px;font-size:11px;font-weight:bold;cursor:pointer}
+.pin-ok{background:#123b2a;color:#fff}
+.pin-ok:disabled{opacity:.6;cursor:wait}
+.pin-cancel{background:#eef1ee;color:#555}
+
 @media(max-width:360px){
 .step-circle{width:31px;height:31px;font-size:8px}
 .step-label{font-size:6px}
@@ -240,7 +255,29 @@ ALI FARD · DIGITAL EXPERIENCE
 
 </div>
 
+<div class="pin-overlay" id="pinOverlay" onclick="if(event.target===this)closePin()">
+<form class="pin-box" onsubmit="submitPin(event)">
+<div class="pin-kicker">STAFF ONLY</div>
+<div class="pin-title" id="pinTitle">تأیید پرسنل</div>
+<div class="pin-sub" id="pinSub">لطفاً گوشی را به پرسنل علی فرد بدهید.</div>
+<input class="pin-input" id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="••••••">
+<div class="pin-error" id="pinError"></div>
+<div class="pin-actions">
+<button type="submit" class="pin-ok" id="pinOk">تأیید</button>
+<button type="button" class="pin-cancel" onclick="closePin()">انصراف</button>
+</div>
+</form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+
+/* ===== Supabase settings ===== */
+const SUPABASE_URL="https://rvsknlnlvnjulznxlvnd.supabase.co";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2c2tubG5sdm5qdWx6bnhsdm5kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4NTMwMjcsImV4cCI6MjEwODQyOTAyN30.w2fDJIE3RfePa8ZCy2AXtRxiQjaQ44mx-YMX9VvyFMw";
+/* ============================= */
+
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 const missions=[
 ["اولین تجربه","اولین اصلاح خودت را در مجموعه علی فرد تجربه کن."],
@@ -253,6 +290,22 @@ const missions=[
 
 const progressKey="ali_fard_white_card_v2";
 const rewardKey="ali_fard_white_reward_v2";
+const cardKey="ali_fard_white_card_id";
+
+function newId(){
+if(window.crypto&&crypto.randomUUID){return crypto.randomUUID();}
+return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(c){
+const r=Math.random()*16|0;return (c==="x"?r:(r&3|8)).toString(16);});
+}
+
+/* شناسه کارت: از لینک (?card=...) یا حافظه مرورگر؛ در غیر این صورت ساخته می‌شود */
+const params=new URLSearchParams(location.search);
+let cardId=params.get("card")||localStorage.getItem(cardKey)||newId();
+localStorage.setItem(cardKey,cardId);
+if(params.get("card")!==cardId){
+params.set("card",cardId);
+history.replaceState(null,"",location.pathname+"?"+params.toString());
+}
 
 let completed=parseInt(localStorage.getItem(progressKey),10);
 
@@ -311,7 +364,7 @@ class="mission-button"
 ${active?"":"disabled"}
 onclick="completeMission(${n})">
 
-${done?"تکمیل شد ✓":active?"انجام شد ✓":"قفل است 🔒"}
+${done?"تکمیل شد ✓":active?"تأیید توسط پرسنل 🔑":"قفل است 🔒"}
 
 </button>
 
@@ -350,30 +403,74 @@ document.getElementById("reward").classList.remove("show");
 
 }
 
+/* ===== تأیید پرسنل ===== */
+let pinAction=null;
+
+function openPin(title,sub,action){
+pinAction=action;
+document.getElementById("pinTitle").textContent=title;
+document.getElementById("pinSub").textContent=sub;
+document.getElementById("pinError").textContent="";
+document.getElementById("pinInput").value="";
+document.getElementById("pinOk").disabled=false;
+document.getElementById("pinOverlay").classList.add("show");
+setTimeout(function(){document.getElementById("pinInput").focus();},50);
+}
+
+function closePin(){
+pinAction=null;
+document.getElementById("pinOverlay").classList.remove("show");
+}
+
+function pinErrorText(err){
+const m=(err&&err.message)||"";
+if(m.indexOf("locked")>-1){return "به‌دلیل رمزهای اشتباه، تا ۱۵ دقیقه قفل است.";}
+if(m.indexOf("pin not set")>-1){return "رمز پرسنل هنوز در Supabase تعیین نشده است.";}
+return "خطا در ارتباط؛ دوباره تلاش کنید.";
+}
+
+function submitPin(e){
+e.preventDefault();
+const pin=document.getElementById("pinInput").value.trim();
+if(!pin||!pinAction){return;}
+document.getElementById("pinOk").disabled=true;
+document.getElementById("pinError").textContent="";
+pinAction(pin);
+}
+
+function pinFailed(text){
+document.getElementById("pinError").textContent=text;
+document.getElementById("pinOk").disabled=false;
+document.getElementById("pinInput").value="";
+document.getElementById("pinInput").focus();
+}
+
 function completeMission(number){
 
 if(number!==completed+1){
 return;
 }
 
-completed=number;
+openPin("تأیید مرحله "+persianNumber(number),"«"+missions[number-1][0]+"» — رمز پرسنل را وارد کنید.",function(pin){
 
+db.rpc("complete_white_mission",{p_id:cardId,p_number:number,p_pin:pin})
+.then(function(res){
+if(res.error){pinFailed(pinErrorText(res.error));return;}
+if(res.data===-1){pinFailed("رمز اشتباه است.");return;}
+
+closePin();
+completed=res.data;
 localStorage.setItem(progressKey,String(completed));
-
 renderMissions();
 
 if(completed===6){
-
 setTimeout(function(){
-
-document.getElementById("reward").scrollIntoView({
-behavior:"smooth",
-block:"center"
+document.getElementById("reward").scrollIntoView({behavior:"smooth",block:"center"});
+},300);
+}
 });
 
-},300);
-
-}
+});
 
 }
 
@@ -398,6 +495,11 @@ return;
 }
 
 localStorage.setItem(rewardKey,selectedReward);
+
+db.rpc("choose_white_reward",{p_id:cardId,p_reward:selectedReward})
+.then(function(res){
+if(res.error){console.error(res.error);}
+});
 
 document.getElementById("selectedRewardName").textContent=
 selectedReward;
@@ -439,15 +541,39 @@ item.style.pointerEvents="none";
 
 function resetCard(){
 
+openPin("بازنشانی کارت","همه مراحل و جایزه این کارت پاک می‌شود. رمز پرسنل را وارد کنید.",function(pin){
+
+db.rpc("reset_white_card",{p_id:cardId,p_pin:pin})
+.then(function(res){
+if(res.error){pinFailed(pinErrorText(res.error));return;}
+if(res.data!==true){pinFailed("رمز اشتباه است.");return;}
 localStorage.removeItem(progressKey);
 localStorage.removeItem(rewardKey);
-
 location.reload();
+});
+
+});
 
 }
 
 renderMissions();
 restoreReward();
+
+/* بارگذاری وضعیت واقعی از Supabase */
+db.rpc("get_white_card",{p_id:cardId}).then(function(res){
+if(res.error||!res.data||!res.data.length){
+if(res.error){console.error(res.error);}
+return;
+}
+const row=res.data[0];
+completed=row.completed||0;
+selectedReward=row.reward||"";
+localStorage.setItem(progressKey,String(completed));
+if(selectedReward){localStorage.setItem(rewardKey,selectedReward);}
+else{localStorage.removeItem(rewardKey);}
+renderMissions();
+restoreReward();
+});
 
 </script>
 
