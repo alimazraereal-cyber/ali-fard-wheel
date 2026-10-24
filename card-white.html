@@ -103,6 +103,9 @@ body{margin:0;min-height:100vh;padding:18px 14px 40px;background:linear-gradient
 .pin-ok:disabled{opacity:.6;cursor:wait}
 .pin-cancel{background:#eef1ee;color:#555}
 
+.info-input{width:100%;margin-top:10px;padding:13px;border:1px solid #cbd6cf;border-radius:12px;font-size:14px;text-align:center;outline:none;font-family:inherit}
+.info-input:focus{border-color:#123b2a}
+.info-input.ltr{direction:ltr;letter-spacing:2px}
 @media(max-width:360px){
 .step-circle{width:31px;height:31px;font-size:8px}
 .step-label{font-size:6px}
@@ -260,11 +263,25 @@ ALI FARD · DIGITAL EXPERIENCE
 <div class="pin-kicker">STAFF ONLY</div>
 <div class="pin-title" id="pinTitle">تأیید پرسنل</div>
 <div class="pin-sub" id="pinSub">لطفاً گوشی را به پرسنل علی فرد بدهید.</div>
-<input class="pin-input" id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="••••••">
+<input class="pin-input" id="pinInput" type="password" inputmode="numeric" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="••••••">
 <div class="pin-error" id="pinError"></div>
 <div class="pin-actions">
 <button type="submit" class="pin-ok" id="pinOk">تأیید</button>
 <button type="button" class="pin-cancel" onclick="closePin()">انصراف</button>
+</div>
+</form>
+</div>
+
+<div class="pin-overlay" id="infoOverlay">
+<form class="pin-box" onsubmit="submitInfo(event)">
+<div class="pin-kicker">WELCOME</div>
+<div class="pin-title">به کارت سفید خوش آمدید</div>
+<div class="pin-sub">برای ثبت کارتتان، اسم و شماره‌ی تلفن خود را وارد کنید.</div>
+<input class="info-input" id="infoName" type="text" maxlength="60" autocomplete="name" placeholder="نام و نام خانوادگی">
+<input class="info-input ltr" id="infoPhone" type="tel" inputmode="tel" maxlength="20" autocomplete="tel" placeholder="09123456789">
+<div class="pin-error" id="infoError"></div>
+<div class="pin-actions">
+<button type="submit" class="pin-ok" id="infoOk">ثبت</button>
 </div>
 </form>
 </div>
@@ -556,6 +573,31 @@ location.reload();
 
 }
 
+/* ===== ثبت اسم و تلفن ===== */
+function openInfo(){
+document.getElementById("infoError").textContent="";
+document.getElementById("infoOk").disabled=false;
+document.getElementById("infoOverlay").classList.add("show");
+}
+function submitInfo(e){
+e.preventDefault();
+const name=document.getElementById("infoName").value.trim();
+const phone=document.getElementById("infoPhone").value.trim();
+const err=document.getElementById("infoError");
+if(name.length<2){err.textContent="نام را وارد کنید.";return;}
+if(phone.replace(/[^0-9۰-۹٠-٩]/g,"").length<10){err.textContent="شماره‌ی تلفن را کامل وارد کنید.";return;}
+document.getElementById("infoOk").disabled=true;
+err.textContent="";
+db.rpc("save_white_card_info",{p_id:cardId,p_name:name,p_phone:phone}).then(function(res){
+if(res.error||res.data!==true){
+err.textContent="ثبت نشد؛ نام و شماره را بررسی کنید و دوباره تلاش کنید.";
+document.getElementById("infoOk").disabled=false;
+return;
+}
+document.getElementById("infoOverlay").classList.remove("show");
+});
+}
+
 renderMissions();
 restoreReward();
 
@@ -573,6 +615,7 @@ if(selectedReward){localStorage.setItem(rewardKey,selectedReward);}
 else{localStorage.removeItem(rewardKey);}
 renderMissions();
 restoreReward();
+if(!row.full_name){openInfo();}
 });
 
 </script>
